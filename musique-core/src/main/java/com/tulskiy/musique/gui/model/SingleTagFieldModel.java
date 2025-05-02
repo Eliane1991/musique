@@ -17,13 +17,12 @@
 
 package com.tulskiy.musique.gui.model;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.swing.table.AbstractTableModel;
-
 import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.util.Util;
+
+import javax.swing.table.AbstractTableModel;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author mliauchuk

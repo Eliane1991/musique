@@ -1,23 +1,21 @@
 package com.tulskiy.musique.plugins.discogs.dialog;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.tulskiy.musique.gui.dialogs.ProgressDialog;
+import com.tulskiy.musique.gui.dialogs.Task;
+import com.tulskiy.musique.playlist.Playlist;
+import com.tulskiy.musique.playlist.Track;
+import com.tulskiy.musique.playlist.TrackData;
+import com.tulskiy.musique.plugins.discogs.DiscogsCaller;
+import com.tulskiy.musique.plugins.discogs.DiscogsListener;
+import com.tulskiy.musique.plugins.discogs.model.*;
+import com.tulskiy.musique.plugins.discogs.util.DiscogsModelUtil;
+import com.tulskiy.musique.system.TrackIO;
+import com.tulskiy.musique.util.Util;
+import org.discogs.model.Artist;
+import org.discogs.model.ArtistRelease;
+import org.discogs.model.LabelRelease;
+import org.discogs.model.Release;
+import org.jaudiotagger.tag.FieldKey;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
@@ -28,29 +26,13 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import org.discogs.model.Artist;
-import org.discogs.model.ArtistRelease;
-import org.discogs.model.LabelRelease;
-import org.discogs.model.Release;
-import org.jaudiotagger.tag.FieldKey;
-
-import com.tulskiy.musique.gui.dialogs.ProgressDialog;
-import com.tulskiy.musique.gui.dialogs.Task;
-import com.tulskiy.musique.playlist.Playlist;
-import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.playlist.TrackData;
-import com.tulskiy.musique.plugins.discogs.DiscogsCaller;
-import com.tulskiy.musique.plugins.discogs.DiscogsListener;
-import com.tulskiy.musique.plugins.discogs.model.DiscogsArtistListModel;
-import com.tulskiy.musique.plugins.discogs.model.DiscogsDefaultListModel;
-import com.tulskiy.musique.plugins.discogs.model.DiscogsReleaseListModel;
-import com.tulskiy.musique.plugins.discogs.model.DiscogsTrackListModel;
-import com.tulskiy.musique.plugins.discogs.model.MusiqueTrackListModel;
-import com.tulskiy.musique.plugins.discogs.model.ReleaseTracklistingModel;
-import com.tulskiy.musique.plugins.discogs.util.DiscogsModelUtil;
-import com.tulskiy.musique.system.TrackIO;
-import com.tulskiy.musique.util.Util;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.File;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class DiscogsDialog extends JDialog implements DiscogsListener {
 	private static final String CARD_RELEASE = "name_58493966786713";

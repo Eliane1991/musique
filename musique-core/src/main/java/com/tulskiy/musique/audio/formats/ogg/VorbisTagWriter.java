@@ -17,13 +17,12 @@
 
 package com.tulskiy.musique.audio.formats.ogg;
 
-import org.jaudiotagger.audio.AudioFileIO;
-import org.jaudiotagger.tag.Tag;
-import org.jaudiotagger.tag.vorbiscomment.VorbisCommentTag;
-
 import com.tulskiy.musique.audio.AudioTagWriter;
 import com.tulskiy.musique.audio.TagWriteException;
 import com.tulskiy.musique.playlist.Track;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.vorbiscomment.VorbisCommentTag;
 
 /**
  * @Author: Denis Tulskiy

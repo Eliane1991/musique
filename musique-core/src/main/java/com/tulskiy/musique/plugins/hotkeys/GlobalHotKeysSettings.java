@@ -24,10 +24,11 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
-import static com.tulskiy.musique.plugins.hotkeys.GlobalHotKeysPlugin.*;
+import static com.tulskiy.musique.plugins.hotkeys.GlobalHotKeysPlugin.HotKeyEvent;
 
 /**
  * Author: Denis Tulskiy

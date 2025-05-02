@@ -17,15 +17,14 @@
 
 package com.tulskiy.musique.playlist.formatting.tokens;
 
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-
 import com.tulskiy.musique.audio.player.Player;
 import com.tulskiy.musique.images.Images;
 import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.system.Application;
 import com.tulskiy.musique.util.Util;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  * Author: Denis Tulskiy

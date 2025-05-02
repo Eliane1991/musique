@@ -17,15 +17,9 @@
 
 package com.tulskiy.musique.audio;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.LineNumberReader;
-import java.io.StringReader;
-import java.nio.charset.Charset;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.tulskiy.musique.audio.formats.cue.CUEParser;
+import com.tulskiy.musique.playlist.Track;
+import com.tulskiy.musique.playlist.TrackData;
 import org.jaudiotagger.audio.generic.GenericAudioHeader;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.KeyNotFoundException;
@@ -34,9 +28,14 @@ import org.jaudiotagger.tag.TagField;
 import org.jaudiotagger.tag.mp4.field.Mp4DiscNoField;
 import org.jaudiotagger.tag.mp4.field.Mp4TrackField;
 
-import com.tulskiy.musique.audio.formats.cue.CUEParser;
-import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.playlist.TrackData;
+import java.io.File;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.io.StringReader;
+import java.nio.charset.Charset;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy

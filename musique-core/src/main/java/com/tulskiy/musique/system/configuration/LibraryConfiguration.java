@@ -17,9 +17,9 @@
 
 package com.tulskiy.musique.system.configuration;
 
-import java.util.List;
-
 import com.tulskiy.musique.system.Application;
+
+import java.util.List;
 
 /**
  * Author: Maksim Liauchuk

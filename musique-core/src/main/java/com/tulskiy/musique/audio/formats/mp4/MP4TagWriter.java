@@ -17,8 +17,12 @@
 
 package com.tulskiy.musique.audio.formats.mp4;
 
-import java.util.Iterator;
-
+import com.tulskiy.musique.audio.AudioTagWriter;
+import com.tulskiy.musique.audio.TagWriteException;
+import com.tulskiy.musique.gui.model.FieldValues;
+import com.tulskiy.musique.playlist.Track;
+import com.tulskiy.musique.playlist.TrackData;
+import com.tulskiy.musique.util.Util;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.tag.FieldDataInvalidException;
 import org.jaudiotagger.tag.FieldKey;
@@ -28,13 +32,6 @@ import org.jaudiotagger.tag.mp4.Mp4FieldKey;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.jaudiotagger.tag.mp4.field.Mp4DiscNoField;
 import org.jaudiotagger.tag.mp4.field.Mp4TrackField;
-
-import com.tulskiy.musique.audio.AudioTagWriter;
-import com.tulskiy.musique.audio.TagWriteException;
-import com.tulskiy.musique.gui.model.FieldValues;
-import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.playlist.TrackData;
-import com.tulskiy.musique.util.Util;
 
 /**
  * @Author: Denis Tulskiy

@@ -17,10 +17,10 @@
 
 package com.tulskiy.musique.gui.model;
 
+import com.tulskiy.musique.util.Util;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.tulskiy.musique.util.Util;
 
 /**
  * @author mliauchuk

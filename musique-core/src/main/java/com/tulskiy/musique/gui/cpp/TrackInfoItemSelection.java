@@ -16,18 +16,14 @@
  */
 package com.tulskiy.musique.gui.cpp;
 
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.tulskiy.musique.gui.model.TrackInfoItem;
 import com.tulskiy.musique.util.FieldKeyMetaHelper;
 import com.tulskiy.musique.util.Util;
+
+import java.awt.datatransfer.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author mliauchuk

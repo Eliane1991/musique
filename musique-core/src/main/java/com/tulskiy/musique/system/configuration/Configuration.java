@@ -16,34 +16,27 @@
  */
 
 package com.tulskiy.musique.system.configuration;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Rectangle;
+import com.tulskiy.musique.plugins.hotkeys.HotkeyConfiguration;
+import com.tulskiy.musique.system.Application;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.ConversionException;
+import org.apache.commons.configuration.XMLConfiguration;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.Iterator;
+import java.io.*;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 import java.util.logging.Logger;
-
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.XMLConfiguration;
-
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
-import com.tulskiy.musique.plugins.hotkeys.HotkeyConfiguration;
-import com.tulskiy.musique.system.Application;
 
 /**
  * Author: Denis Tulskiy
@@ -200,9 +193,20 @@ public class Configuration extends XMLConfiguration {
     @Override
     public void save(Writer writer) {
         logger.fine("Saving configuration");
-        
         try {
-            OutputFormat format = new OutputFormat(createDocument());
+
+            // 创建 Document 对象
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document newDocument = builder.newDocument();
+
+            Element rootElem = newDocument.createElement(this.getRootElementName());
+            newDocument.appendChild(rootElem);
+
+
+
+            OutputFormat format = new OutputFormat(newDocument);
+
             format.setLineWidth(65);
             format.setIndenting(true);
             format.setIndent(2);
@@ -210,11 +214,10 @@ public class Configuration extends XMLConfiguration {
             serializer.serialize(getDocument());
             writer.close();
         }
-        catch (ConfigurationException ce) {
-            logger.severe("Failed to save configuration: " + ce.getMessage());
-        }
         catch (IOException ioe) {
             logger.severe("Failed to save configuration: " + ioe.getMessage());
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -431,6 +434,40 @@ public class Configuration extends XMLConfiguration {
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.addPropertyChangeListener(listener);
+    }
+
+
+    public List getList(String key) {
+        return this.getList(key, new ArrayList());
+    }
+
+    public List getList(String key, List defaultValue) {
+        Object value = this.getProperty(key);
+        Object list;
+        if (value instanceof String) {
+            list = new ArrayList(1);
+            ((List)list).add(this.interpolate((String)value));
+        } else if (value instanceof List) {
+            list = new ArrayList();
+            List l = (List)value;
+            Iterator it = l.iterator();
+
+            while(it.hasNext()) {
+                ((List)list).add(this.interpolate(it.next()));
+            }
+        } else {
+            if (value != null) {
+                if (value.getClass().isArray()) {
+                    return Arrays.asList((Object[])value);
+                }
+
+                throw new ConversionException('\'' + key + "' doesn't map to a List object: " + value + ", a " + value.getClass().getName());
+            }
+
+            list = defaultValue;
+        }
+
+        return (List)list;
     }
 }
 

@@ -17,9 +17,9 @@
 
 package com.tulskiy.musique.audio.formats.mp4;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.tulskiy.musique.audio.AudioFileReader;
+import com.tulskiy.musique.playlist.Track;
+import com.tulskiy.musique.playlist.TrackData;
 import org.jaudiotagger.audio.generic.GenericAudioHeader;
 import org.jaudiotagger.audio.mp4.Mp4FileReader;
 import org.jaudiotagger.tag.Tag;
@@ -29,9 +29,8 @@ import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.jaudiotagger.tag.mp4.field.Mp4DiscNoField;
 import org.jaudiotagger.tag.mp4.field.Mp4TrackField;
 
-import com.tulskiy.musique.audio.AudioFileReader;
-import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.playlist.TrackData;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Author: Denis Tulskiy

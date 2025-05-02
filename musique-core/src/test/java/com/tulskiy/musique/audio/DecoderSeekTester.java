@@ -22,14 +22,13 @@ import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.util.AudioMath;
 
 import javax.sound.sampled.AudioFormat;
-
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
+
+import static org.junit.Assert.*;
 
 /**
  * Author: Denis Tulskiy

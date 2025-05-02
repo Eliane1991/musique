@@ -17,18 +17,17 @@
 
 package com.tulskiy.musique.audio;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
-
+import com.tulskiy.musique.gui.model.FieldValues;
+import com.tulskiy.musique.playlist.Track;
+import com.tulskiy.musique.util.Util;
 import org.jaudiotagger.audio.generic.AbstractTag;
 import org.jaudiotagger.tag.FieldDataInvalidException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.Tag;
 
-import com.tulskiy.musique.gui.model.FieldValues;
-import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.util.Util;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 /**
  * @Author: Denis Tulskiy

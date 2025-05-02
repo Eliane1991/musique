@@ -17,14 +17,13 @@
 
 package com.tulskiy.musique.audio.formats.ogg;
 
+import com.tulskiy.musique.audio.AudioFileReader;
+import com.tulskiy.musique.playlist.Track;
+import com.tulskiy.musique.playlist.TrackData;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.generic.GenericAudioHeader;
 import org.jaudiotagger.audio.ogg.OggFileReader;
 import org.jaudiotagger.tag.Tag;
-
-import com.tulskiy.musique.audio.AudioFileReader;
-import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.playlist.TrackData;
 
 /**
  * @Author: Denis Tulskiy

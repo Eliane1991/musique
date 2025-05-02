@@ -17,18 +17,13 @@
 
 package com.tulskiy.musique.util;
 
-import java.awt.Color;
-import java.awt.Component;
+import com.tulskiy.musique.gui.model.FieldValues;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.List;
 import java.util.Set;
-
-import javax.swing.AbstractButton;
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.UIManager;
-
-import com.tulskiy.musique.gui.model.FieldValues;
 
 /**
  * @Author: Denis Tulskiy

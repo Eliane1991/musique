@@ -25,7 +25,6 @@ import com.tulskiy.musique.playlist.PlaybackOrder;
 import com.tulskiy.musique.playlist.Playlist;
 import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.system.Application;
-import com.tulskiy.musique.util.Util;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

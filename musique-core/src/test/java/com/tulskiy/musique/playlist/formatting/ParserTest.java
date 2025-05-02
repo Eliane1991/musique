@@ -17,16 +17,15 @@
 
 package com.tulskiy.musique.playlist.formatting;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.File;
-
+import com.tulskiy.musique.playlist.Track;
+import com.tulskiy.musique.playlist.formatting.tokens.Expression;
 import org.jaudiotagger.tag.FieldKey;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.playlist.formatting.tokens.Expression;
+import java.io.File;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @Author: Denis Tulskiy

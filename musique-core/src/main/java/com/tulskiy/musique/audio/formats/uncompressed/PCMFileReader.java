@@ -17,19 +17,17 @@
 
 package com.tulskiy.musique.audio.formats.uncompressed;
 
-import java.io.File;
-
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-
-import org.jaudiotagger.tag.FieldKey;
-
 import com.tulskiy.musique.audio.AudioFileReader;
 import com.tulskiy.musique.audio.Decoder;
 import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.playlist.TrackData;
 import com.tulskiy.musique.util.Util;
+import org.jaudiotagger.tag.FieldKey;
+
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import java.io.File;
 
 /**
  * @Author: Denis Tulskiy

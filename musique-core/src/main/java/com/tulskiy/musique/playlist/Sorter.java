@@ -17,7 +17,6 @@
 
 package com.tulskiy.musique.playlist;
 
-import com.tulskiy.musique.gui.playlist.PlaylistTable;
 import com.tulskiy.musique.images.Images;
 import com.tulskiy.musique.playlist.formatting.Parser;
 import com.tulskiy.musique.system.Application;

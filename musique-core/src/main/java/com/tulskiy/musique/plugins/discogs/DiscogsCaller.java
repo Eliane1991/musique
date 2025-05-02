@@ -17,14 +17,14 @@
 
 package com.tulskiy.musique.plugins.discogs;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.discogs.model.Artist;
 import org.discogs.ws.Discogs;
 import org.discogs.ws.search.ArtistSearchResult;
 import org.discogs.ws.search.Search;
 import org.discogs.ws.search.SearchResult;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author mliauchuk

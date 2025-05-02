@@ -18,7 +18,6 @@
 package com.tulskiy.musique.audio.formats.mp4;
 
 import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.util.AudioMath;
 import net.sourceforge.jaad.aac.Decoder;
 import net.sourceforge.jaad.aac.SampleBuffer;
 import net.sourceforge.jaad.mp4.MP4Container;

@@ -1,29 +1,11 @@
 package com.tulskiy.musique.plugins.discogs.dialog;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Window;
-import java.awt.Dialog.ModalityType;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FilenameFilter;
+import com.tulskiy.musique.gui.dialogs.TreeFileChooser;
+import com.tulskiy.musique.plugins.discogs.DiscogsCaller;
+import com.tulskiy.musique.plugins.discogs.DiscogsPlugin;
+import com.tulskiy.musique.system.Application;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
@@ -31,11 +13,11 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import com.tulskiy.musique.gui.dialogs.TreeFileChooser;
-import com.tulskiy.musique.plugins.discogs.DiscogsCaller;
-import com.tulskiy.musique.plugins.discogs.DiscogsPlugin;
-import com.tulskiy.musique.system.Application;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FilenameFilter;
 
 public class SettingsDialog extends JDialog {
 	

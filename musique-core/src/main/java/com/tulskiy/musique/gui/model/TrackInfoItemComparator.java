@@ -17,11 +17,10 @@
 
 package com.tulskiy.musique.gui.model;
 
-import java.util.Comparator;
-
+import com.tulskiy.musique.util.FieldKeyMetaHelper;
 import org.jaudiotagger.tag.KeyNotFoundException;
 
-import com.tulskiy.musique.util.FieldKeyMetaHelper;
+import java.util.Comparator;
 
 /**
  * @author mliauchuk

@@ -17,10 +17,9 @@
 
 package com.tulskiy.musique.plugins.discogs.model;
 
-import org.discogs.model.Track;
-
 import com.tulskiy.musique.plugins.discogs.util.DiscogsModelUtil;
 import com.tulskiy.musique.util.Util;
+import org.discogs.model.Track;
 
 /**
  * @author mliauchuk

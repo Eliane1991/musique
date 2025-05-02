@@ -23,11 +23,9 @@ import com.jcraft.jorbis.VorbisFile;
 import com.tulskiy.musique.audio.Decoder;
 import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.playlist.TrackData;
-
-import javax.sound.sampled.AudioFormat;
-
 import org.jaudiotagger.tag.FieldKey;
 
+import javax.sound.sampled.AudioFormat;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;

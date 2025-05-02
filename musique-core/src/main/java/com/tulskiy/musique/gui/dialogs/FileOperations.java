@@ -17,7 +17,7 @@
 
 package com.tulskiy.musique.gui.dialogs;
 
-import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
+
 import com.tulskiy.musique.gui.components.GroupTable;
 import com.tulskiy.musique.playlist.Playlist;
 import com.tulskiy.musique.playlist.Track;
@@ -32,6 +32,7 @@ import com.tulskiy.musique.util.Util;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -47,8 +48,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.FileChannel;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 /**
  * Author: Denis Tulskiy

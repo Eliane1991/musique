@@ -17,20 +17,15 @@
 
 package com.tulskiy.musique.plugins.hotkeys;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-import java.util.logging.Logger;
-
-import javax.swing.KeyStroke;
-
-import org.apache.commons.collections.CollectionUtils;
-
 import com.tulskiy.musique.plugins.hotkeys.GlobalHotKeysPlugin.HotKeyEvent;
 import com.tulskiy.musique.system.Application;
 import com.tulskiy.musique.system.configuration.Configuration;
+import org.apache.commons.collections4.CollectionUtils;
+
+
+import javax.swing.*;
+import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Author: Maksim Liauchuk

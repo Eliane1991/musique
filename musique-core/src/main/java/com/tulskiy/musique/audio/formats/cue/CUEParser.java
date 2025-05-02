@@ -17,22 +17,16 @@
 
 package com.tulskiy.musique.audio.formats.cue;
 
+import com.tulskiy.musique.audio.AudioFileReader;
+import com.tulskiy.musique.playlist.Track;
+import com.tulskiy.musique.system.TrackIO;
+import jwbroek.cuelib.*;
+import org.jaudiotagger.tag.FieldKey;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.List;
-
-import org.jaudiotagger.tag.FieldKey;
-
-import jwbroek.cuelib.CueParser;
-import jwbroek.cuelib.CueSheet;
-import jwbroek.cuelib.FileData;
-import jwbroek.cuelib.Index;
-import jwbroek.cuelib.TrackData;
-
-import com.tulskiy.musique.audio.AudioFileReader;
-import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.system.TrackIO;
 
 /**
  * @Author: Denis Tulskiy

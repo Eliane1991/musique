@@ -17,13 +17,9 @@
 
 package com.tulskiy.musique.gui.model;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.tulskiy.musique.playlist.Track;
+
+import java.util.*;
 
 /**
  * @author mliauchuk

@@ -17,12 +17,11 @@
 
 package com.tulskiy.musique.plugins.discogs.model;
 
-import java.util.LinkedList;
-import java.util.List;
-
+import com.tulskiy.musique.util.Util;
 import org.discogs.model.ArtistRelease;
 
-import com.tulskiy.musique.util.Util;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author mliauchuk

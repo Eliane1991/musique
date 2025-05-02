@@ -17,20 +17,6 @@
 
 package com.tulskiy.musique.gui.menu;
 
-import java.awt.Desktop;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.swing.ActionMap;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.KeyStroke;
-
 import com.tulskiy.musique.audio.AudioFileReader;
 import com.tulskiy.musique.audio.player.Player;
 import com.tulskiy.musique.gui.dialogs.ConverterDialog;
@@ -46,6 +32,14 @@ import com.tulskiy.musique.system.Application;
 import com.tulskiy.musique.system.TrackIO;
 import com.tulskiy.musique.util.FileUtils;
 import com.tulskiy.musique.util.Util;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Author: Denis Tulskiy

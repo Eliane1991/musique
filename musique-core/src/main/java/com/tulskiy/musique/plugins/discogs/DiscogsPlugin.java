@@ -17,14 +17,6 @@
 
 package com.tulskiy.musique.plugins.discogs;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-
-import javax.swing.*;
-
 import com.tulskiy.musique.gui.menu.Menu;
 import com.tulskiy.musique.playlist.Playlist;
 import com.tulskiy.musique.playlist.Track;
@@ -32,6 +24,13 @@ import com.tulskiy.musique.plugins.discogs.dialog.DiscogsDialog;
 import com.tulskiy.musique.plugins.discogs.dialog.SettingsDialog;
 import com.tulskiy.musique.spi.Plugin;
 import com.tulskiy.musique.system.Application;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * @author mliauchuk

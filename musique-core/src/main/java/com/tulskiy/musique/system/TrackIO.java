@@ -19,13 +19,13 @@ package com.tulskiy.musique.system;
 
 import com.tulskiy.musique.audio.AudioFileReader;
 import com.tulskiy.musique.audio.AudioTagWriter;
-import com.tulskiy.musique.audio.formats.mp4.MP4FileReader;
 import com.tulskiy.musique.audio.formats.ape.APEFileReader;
 import com.tulskiy.musique.audio.formats.ape.APETagWriter;
 import com.tulskiy.musique.audio.formats.cue.CUEFileReader;
 import com.tulskiy.musique.audio.formats.flac.FLACFileReader;
 import com.tulskiy.musique.audio.formats.mp3.MP3FileReader;
 import com.tulskiy.musique.audio.formats.mp3.MP3TagWriter;
+import com.tulskiy.musique.audio.formats.mp4.MP4FileReader;
 import com.tulskiy.musique.audio.formats.mp4.MP4TagWriter;
 import com.tulskiy.musique.audio.formats.ogg.OGGFileReader;
 import com.tulskiy.musique.audio.formats.ogg.VorbisTagWriter;

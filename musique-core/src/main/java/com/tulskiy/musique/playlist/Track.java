@@ -17,8 +17,6 @@
 
 package com.tulskiy.musique.playlist;
 
-import java.io.File;
-import java.net.URI;
 import java.util.Random;
 
 /**

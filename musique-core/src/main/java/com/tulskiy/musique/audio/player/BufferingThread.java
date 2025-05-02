@@ -17,8 +17,6 @@
 
 package com.tulskiy.musique.audio.player;
 
-import java.util.logging.Logger;
-
 import com.tulskiy.musique.audio.Decoder;
 import com.tulskiy.musique.audio.player.io.Buffer;
 import com.tulskiy.musique.playlist.PlaybackOrder;
@@ -26,6 +24,8 @@ import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.playlist.TrackData;
 import com.tulskiy.musique.system.Codecs;
 import com.tulskiy.musique.util.AudioMath;
+
+import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy

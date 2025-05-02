@@ -17,12 +17,9 @@
 
 package com.tulskiy.musique.audio.formats.ape;
 
-import org.jaudiotagger.tag.Tag;
-
 import com.tulskiy.musique.audio.AudioFileReader;
 import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.playlist.TrackData;
-
 import davaguine.jmac.info.APEFileInfo;
 import davaguine.jmac.info.APEHeader;
 import davaguine.jmac.info.ID3Tag;

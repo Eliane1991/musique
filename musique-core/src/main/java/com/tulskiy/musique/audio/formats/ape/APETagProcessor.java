@@ -20,14 +20,12 @@ package com.tulskiy.musique.audio.formats.ape;
 import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.playlist.TrackData;
 import com.tulskiy.musique.util.Util;
-
 import davaguine.jmac.info.APETag;
 import davaguine.jmac.info.ID3Tag;
 import davaguine.jmac.tools.RandomAccessFile;
+import org.jaudiotagger.tag.FieldKey;
 
 import java.io.IOException;
-
-import org.jaudiotagger.tag.FieldKey;
 
 /**
  * Author: Denis Tulskiy

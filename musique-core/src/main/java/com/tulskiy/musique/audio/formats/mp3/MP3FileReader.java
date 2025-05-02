@@ -17,11 +17,13 @@
 
 package com.tulskiy.musique.audio.formats.mp3;
 
-import java.io.IOException;
-import java.util.List;
-
+import com.tulskiy.musique.audio.AudioFileReader;
+import com.tulskiy.musique.audio.formats.ape.APETagProcessor;
 import com.tulskiy.musique.gui.model.FieldValues;
+import com.tulskiy.musique.playlist.Track;
+import com.tulskiy.musique.playlist.TrackData;
 import com.tulskiy.musique.util.Util;
+import davaguine.jmac.info.ID3Tag;
 import org.jaudiotagger.audio.mp3.LameFrame;
 import org.jaudiotagger.audio.mp3.MP3AudioHeader;
 import org.jaudiotagger.audio.mp3.MP3File;
@@ -30,20 +32,14 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagField;
-import org.jaudiotagger.tag.id3.*;
-import org.jaudiotagger.tag.id3.framebody.AbstractFrameBodyTextInfo;
-import org.jaudiotagger.tag.id3.framebody.FrameBodyCOMM;
-import org.jaudiotagger.tag.id3.framebody.FrameBodyPOPM;
-import org.jaudiotagger.tag.id3.framebody.FrameBodyTPOS;
-import org.jaudiotagger.tag.id3.framebody.FrameBodyTRCK;
+import org.jaudiotagger.tag.id3.ID3v1Tag;
+import org.jaudiotagger.tag.id3.ID3v24Frame;
+import org.jaudiotagger.tag.id3.ID3v24Tag;
+import org.jaudiotagger.tag.id3.framebody.*;
 import org.jaudiotagger.tag.id3.valuepair.TextEncoding;
 
-import com.tulskiy.musique.audio.AudioFileReader;
-import com.tulskiy.musique.audio.formats.ape.APETagProcessor;
-import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.playlist.TrackData;
-
-import davaguine.jmac.info.ID3Tag;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @Author: Denis Tulskiy

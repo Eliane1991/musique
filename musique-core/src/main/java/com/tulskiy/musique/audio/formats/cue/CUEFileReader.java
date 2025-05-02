@@ -23,8 +23,6 @@ import com.tulskiy.musique.playlist.Track;
 import java.io.*;
 import java.util.List;
 
-import org.jaudiotagger.tag.Tag;
-
 /**
  * @Author: Denis Tulskiy
  * @Date: 29.06.2009

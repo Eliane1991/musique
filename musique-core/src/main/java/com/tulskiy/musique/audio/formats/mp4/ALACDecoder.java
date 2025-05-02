@@ -19,7 +19,6 @@ package com.tulskiy.musique.audio.formats.mp4;
 
 import com.beatofthedrum.alacdecoder.AlacContext;
 import com.beatofthedrum.alacdecoder.AlacUtils;
-import com.beatofthedrum.alacdecoder.DecodeResult;
 import com.tulskiy.musique.audio.Decoder;
 import com.tulskiy.musique.playlist.Track;
 

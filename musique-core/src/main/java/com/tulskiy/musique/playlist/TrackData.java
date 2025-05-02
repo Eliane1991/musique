@@ -17,17 +17,16 @@
 
 package com.tulskiy.musique.playlist;
 
+import com.tulskiy.musique.gui.model.FieldValues;
+import com.tulskiy.musique.util.Util;
+import org.jaudiotagger.tag.FieldKey;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.Map.Entry;
-
-import org.jaudiotagger.tag.FieldKey;
-
-import com.tulskiy.musique.gui.model.FieldValues;
-import com.tulskiy.musique.util.Util;
 
 /**
  * Author: Denis Tulskiy

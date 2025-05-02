@@ -17,12 +17,11 @@
 
 package com.tulskiy.musique.gui.model;
 
-import java.util.List;
-import java.util.Stack;
-
+import com.tulskiy.musique.playlist.Track;
 import org.jaudiotagger.tag.FieldKey;
 
-import com.tulskiy.musique.playlist.Track;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * @author mliauchuk

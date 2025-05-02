@@ -17,11 +17,11 @@
 
 package com.tulskiy.musique.util;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.KeyNotFoundException;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @Author: Maksim Liauchuk

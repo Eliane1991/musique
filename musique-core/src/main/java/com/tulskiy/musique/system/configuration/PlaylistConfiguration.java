@@ -17,18 +17,17 @@
 
 package com.tulskiy.musique.system.configuration;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.configuration.HierarchicalConfiguration;
-
 import com.tulskiy.musique.gui.playlist.PlaylistColumn;
 import com.tulskiy.musique.playlist.Playlist;
 import com.tulskiy.musique.system.Application;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.configuration.HierarchicalConfiguration;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Author: Maksim Liauchuk

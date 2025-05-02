@@ -17,17 +17,14 @@
 
 package com.tulskiy.musique.gui;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import javax.swing.SwingWorker;
-
-import org.jaudiotagger.tag.FieldKey;
-
 import com.tulskiy.musique.gui.model.FieldValues;
 import com.tulskiy.musique.playlist.Playlist;
 import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.util.Util;
+import org.jaudiotagger.tag.FieldKey;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 /**
 * Author: Denis Tulskiy

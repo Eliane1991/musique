@@ -17,25 +17,13 @@
 
 package com.tulskiy.musique.audio.formats.flac;
 
-import java.io.RandomAccessFile;
-import java.util.HashMap;
-
+import com.tulskiy.musique.audio.AudioFileReader;
+import com.tulskiy.musique.playlist.Track;
+import com.tulskiy.musique.playlist.TrackData;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.flac.FlacFileReader;
 import org.jaudiotagger.audio.generic.GenericAudioHeader;
 import org.jaudiotagger.tag.Tag;
-import org.jaudiotagger.tag.flac.FlacTag;
-import org.jaudiotagger.tag.vorbiscomment.VorbisCommentFieldKey;
-import org.jaudiotagger.tag.vorbiscomment.VorbisCommentTag;
-import org.kc7bfi.jflac.metadata.Metadata;
-import org.kc7bfi.jflac.metadata.StreamInfo;
-import org.kc7bfi.jflac.metadata.VorbisComment;
-
-import com.tulskiy.musique.audio.AudioFileReader;
-import com.tulskiy.musique.audio.formats.flac.oggflac.OggFlacDecoder;
-import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.playlist.TrackData;
-import com.tulskiy.musique.util.Util;
 
 /**
  * @Author: Denis Tulskiy

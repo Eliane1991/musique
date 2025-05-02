@@ -17,20 +17,13 @@
 
 package com.tulskiy.musique.gui.model;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import java.util.Map.Entry;
-
-import javax.swing.table.AbstractTableModel;
-
-import org.jaudiotagger.tag.FieldKey;
-
 import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.util.FieldKeyMetaHelper;
+import org.jaudiotagger.tag.FieldKey;
+
+import javax.swing.table.AbstractTableModel;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * @author mliauchuk

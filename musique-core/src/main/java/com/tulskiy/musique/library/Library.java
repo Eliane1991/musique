@@ -28,11 +28,9 @@ import com.tulskiy.musique.system.TrackIO;
 import com.tulskiy.musique.system.configuration.Configuration;
 import com.tulskiy.musique.system.configuration.LibraryConfiguration;
 import com.tulskiy.musique.util.Util;
+import org.apache.commons.collections4.CollectionUtils;
 
 import javax.swing.tree.TreeNode;
-
-import org.apache.commons.collections.CollectionUtils;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.util.*;

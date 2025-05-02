@@ -24,7 +24,10 @@ import com.tulskiy.musique.util.AudioMath;
 import javazoom.jl.decoder.*;
 
 import javax.sound.sampled.AudioFormat;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.util.LinkedHashMap;

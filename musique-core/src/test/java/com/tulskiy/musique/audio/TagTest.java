@@ -17,10 +17,13 @@
 
 package com.tulskiy.musique.audio;
 
-import static com.tulskiy.musique.system.TrackIO.getAudioFileReader;
-import static com.tulskiy.musique.system.TrackIO.getAudioFileWriter;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import com.tulskiy.musique.gui.model.FieldValues;
+import com.tulskiy.musique.playlist.Track;
+import com.tulskiy.musique.playlist.TrackData;
+import com.tulskiy.musique.util.Util;
+import junit.framework.Assert;
+import org.jaudiotagger.tag.FieldKey;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,15 +32,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
-import junit.framework.Assert;
-
-import org.jaudiotagger.tag.FieldKey;
-import org.junit.Test;
-
-import com.tulskiy.musique.gui.model.FieldValues;
-import com.tulskiy.musique.playlist.Track;
-import com.tulskiy.musique.playlist.TrackData;
-import com.tulskiy.musique.util.Util;
+import static com.tulskiy.musique.system.TrackIO.getAudioFileReader;
+import static com.tulskiy.musique.system.TrackIO.getAudioFileWriter;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Author: Denis Tulskiy

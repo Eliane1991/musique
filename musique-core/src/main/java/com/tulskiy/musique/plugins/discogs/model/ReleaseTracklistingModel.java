@@ -16,19 +16,14 @@
  */
 package com.tulskiy.musique.plugins.discogs.model;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import com.tulskiy.musique.util.Util;
 import org.discogs.model.Release;
 import org.discogs.model.Track;
 
-import com.tulskiy.musique.util.Util;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author mliauchuk

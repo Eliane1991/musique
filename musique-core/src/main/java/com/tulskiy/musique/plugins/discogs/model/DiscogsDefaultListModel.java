@@ -17,7 +17,7 @@
 
 package com.tulskiy.musique.plugins.discogs.model;
 
-import javax.swing.DefaultListModel;
+import javax.swing.*;
 
 /**
  * @author mliauchuk

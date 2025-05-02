@@ -17,15 +17,14 @@
 
 package com.tulskiy.musique.plugins.discogs.util;
 
-import java.util.List;
-import java.util.regex.Pattern;
-
+import com.tulskiy.musique.plugins.discogs.model.ReleaseTracklistingModel;
+import com.tulskiy.musique.util.Util;
 import org.discogs.model.Format;
 import org.discogs.model.Release;
 import org.discogs.model.ReleaseArtist;
 
-import com.tulskiy.musique.plugins.discogs.model.ReleaseTracklistingModel;
-import com.tulskiy.musique.util.Util;
+import java.util.List;
+import java.util.regex.Pattern;
 
 
 /**

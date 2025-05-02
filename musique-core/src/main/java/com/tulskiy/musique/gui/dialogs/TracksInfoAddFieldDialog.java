@@ -17,31 +17,20 @@
 
 package com.tulskiy.musique.gui.dialogs;
 
-import java.awt.BorderLayout;
+import com.tulskiy.musique.gui.components.GroupTable;
+import com.tulskiy.musique.gui.model.MultiTagFieldModel;
+import com.tulskiy.musique.gui.model.TrackInfoItem;
+import com.tulskiy.musique.util.FieldKeyMetaHelper;
+import com.tulskiy.musique.util.FieldKeyMetaHelper.FieldKeyMeta;
+import org.jaudiotagger.tag.FieldKey;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
-import org.jaudiotagger.tag.FieldKey;
-
-import com.tulskiy.musique.gui.components.GroupTable;
-import com.tulskiy.musique.gui.model.MultiTagFieldModel;
-import com.tulskiy.musique.gui.model.TrackInfoItem;
-import com.tulskiy.musique.gui.playlist.PlaylistTable;
-import com.tulskiy.musique.util.FieldKeyMetaHelper;
-import com.tulskiy.musique.util.FieldKeyMetaHelper.FieldKeyMeta;
 
 /**
  * Author: Maksim Liauchuk

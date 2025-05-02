@@ -17,9 +17,6 @@
 
 package com.tulskiy.musique.system;
 
-import java.io.IOException;
-import java.util.logging.LogManager;
-
 /**
  * @Author: Denis Tulskiy
  * @Date: Jan 10, 2010
