@@ -99,8 +99,12 @@ public abstract class AudioFileReader {
     				if (field instanceof Mp4TrackField || field instanceof Mp4DiscNoField) {
     					break;
     				}
-    				track.getTrackData().addTagFieldValues(key, field.toString());
-    			}
+                    try {
+                        track.getTrackData().addTagFieldValues(key, field.toString());
+                    } catch (Exception e) {
+                        System.out.println("key: " + key + " field: " + field.toString());
+                    }
+                }
     		}
 
     		// TODO think about the way

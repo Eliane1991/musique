@@ -65,28 +65,7 @@ public class Application {
 
     private Application() {
         initHome();
-        initLoggers();
         logger.fine("Using '" + CONFIG_HOME + "' as a home directory");
-    }
-
-    private void initLoggers() {
-        LogManager.getLogManager().reset();
-        logger.setLevel(Level.FINE);
-
-        ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setLevel(Level.FINE);
-
-        Formatter formatter = new DefaultLogFormatter();
-        consoleHandler.setFormatter(formatter);
-        logger.addHandler(consoleHandler);
-
-        try {
-            FileHandler fileHandler = new FileHandler(new File(CONFIG_HOME, "musique.log").getAbsolutePath(), 10000, 1, true);
-            fileHandler.setFormatter(formatter);
-            logger.addHandler(fileHandler);
-        } catch (IOException e) {
-            logger.log(Level.WARNING, "Could not open file for logging", e);
-        }
     }
 
     private void initHome() {

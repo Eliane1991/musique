@@ -16,15 +16,15 @@
  */
 
 package com.tulskiy.musique.system.configuration;
-import com.tulskiy.musique.plugins.hotkeys.HotkeyConfiguration;
-import com.tulskiy.musique.system.Application;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.ConversionException;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -32,10 +32,12 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.List;
 import java.util.*;
-import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 /**
@@ -43,43 +45,40 @@ import java.util.logging.Logger;
  * Date: Jun 15, 2010
  */
 public class Configuration extends XMLConfiguration {
-    
+
     public static final int VERSION = 1;
-    
+
     public static final String PROPERTY_INFO_VERSION = "info.version";
 
     private Logger logger = Logger.getLogger(getClass().getName());
-    // TODO move to ConfigurationListener given by Configuration Commons
+
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
-    @Deprecated
     private Map<String, Object> map = new TreeMap<String, Object>();
-    
+
     {
-    	// Disable delimiter mechanism completely for this instance
-    	//
-    	// https://issues.apache.org/jira/browse/CONFIGURATION-268
-    	// We might add a note in the javadoc suggesting that setDelimiterParsingDisabled(true)
-    	// is not recommended if list properties are used in attributes,
-    	// and that changing the list delimiter to an untypical character is preferred.
-    	//
-    	// http://commons.apache.org/configuration/userguide/howto_xml.html
-    	// Using the static setDefaultDelimiter() method of AbstractConfiguration
-    	// you can globally define a different delimiter character
-    	// or - by setting the delimiter to 0 - disabling this mechanism completely.
-		setListDelimiter((char) 0);
-	}
+        // Disable delimiter mechanism completely for this instance
+        //
+        // https://issues.apache.org/jira/browse/CONFIGURATION-268
+        // We might add a note in the javadoc suggesting that setDelimiterParsingDisabled(true)
+        // is not recommended if list properties are used in attributes,
+        // and that changing the list delimiter to an untypical character is preferred.
+        //
+        // http://commons.apache.org/configuration/userguide/howto_xml.html
+        // Using the static setDefaultDelimiter() method of AbstractConfiguration
+        // you can globally define a different delimiter character
+        // or - by setting the delimiter to 0 - disabling this mechanism completely.
+        setListDelimiter((char) 0);
+    }
 
     @Override
-    public void load(Reader reader) {
+    public void load(Reader reader){
         logger.fine("Loading configuration");
-        
+
         try {
             super.load(reader);
         } catch (ConfigurationException e) {
-            // error log disabled as we're gonna try to load deprecated configuration file of v0.2
-//            logger.severe("Failed to load configuration: " + e.getMessage());
-            convertOldConfiguration(reader);
+            logger.severe(String.format("Configuration load error, {0}", e.getMessage()));
         }
 
         int version = getInt(PROPERTY_INFO_VERSION, -1);
@@ -96,117 +95,13 @@ public class Configuration extends XMLConfiguration {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    @Deprecated
-    private void convertOldConfiguration(Reader reader) {
-        // reader has been used, so try to reposition read point to start
-        try {
-			reader.reset();
-		} catch (IOException e) {
-			// just ignore, will try to read from where it is
-		}
-
-        loadFromCustomFormat(reader);
-
-        setFile(new File(Application.getInstance().CONFIG_HOME, "config"));
-        addProperty(PROPERTY_INFO_VERSION, VERSION);
-
-        Iterator<Entry<String, Object>> entries = map.entrySet().iterator();
-        while (entries.hasNext()) {
-            Entry<String, Object> entry = entries.next();
-            String key = /*"musique." +*/ entry.getKey();
-            if (entry.getValue() instanceof List) {
-                List values = (List) entry.getValue();
-                if (key.equals("albumart.stubs")) {
-                    AlbumArtConfiguration.setStubs(values);
-                }
-                else if (key.equals("fileOperations.patterns")) {
-                    FileOperationsConfiguration.setPatterns(values);
-                }
-                else if (key.equals("hotkeys.list")) {
-                    HotkeyConfiguration.setHotkeysRaw(values);
-                }
-                else if (key.equals("library.folders")) {
-                    LibraryConfiguration.setFolders(values);
-                }
-                else if (key.equals("playlist.columns")) {
-                    PlaylistConfiguration.setColumnsRaw(values);
-                }
-                else if (key.equals("playlist.tabs.bounds")) {
-                    PlaylistConfiguration.setTabBoundsRaw(values);
-                }
-                else if (key.equals("playlists")) {
-                    PlaylistConfiguration.setPlaylistsRaw(values);
-                }
-                else {
-                    for (Object value : values) {
-                        addProperty(key, value);
-                    }
-                }
-            }
-            else {
-                if (key.equals("wavpack.encoder.hybrid.wvc")) {
-                    addProperty("encoder.wavpack.hybrid.wvc.enabled", entry.getValue());
-                }
-                else if (key.equals("playlist.activePlaylist")) {
-                    addProperty("playlists.activePlaylist", entry.getValue());
-                }
-                else if (key.equals("playlist.cursorFollowsPlayback")) {
-                    addProperty("playlists.cursorFollowsPlayback", entry.getValue());
-                }
-                else if (key.equals("playlist.groupBy")) {
-                    addProperty("playlists.groupBy", entry.getValue());
-                }
-                else if (key.equals("playlist.lastDir")) {
-                    addProperty("playlists.lastDir", entry.getValue());
-                }
-                else if (key.equals("playlist.playbackFollowsCursor")) {
-                    addProperty("playlists.playbackFollowsCursor", entry.getValue());
-                }
-                else if (key.equals("playlist.tabs.hideSingle")) {
-                    addProperty("playlists.tabs.hideSingle", entry.getValue());
-                }
-                else if (key.startsWith("ape.encoder")) {
-                    addProperty(key.replace("ape.encoder", "encoder.ape"), entry.getValue());
-                }
-                else if (key.startsWith("vorbis.encoder")) {
-                    addProperty(key.replace("vorbis.encoder", "encoder.vorbis"), entry.getValue());
-                }
-                else if (key.startsWith("wavpack.encoder")) {
-                    addProperty(key.replace("wavpack.encoder", "encoder.wavpack"), entry.getValue());
-                }
-                else {
-                    addProperty(key, entry.getValue());
-                }
-            }
-        }
-        
-        map.clear();
-
-        try {
-            save();
-        } catch (ConfigurationException e) {
-            logger.severe("Failed to save converted configuration: " + e.getMessage());
-        }
-    }
-
     @Override
     public void save(Writer writer) {
         logger.fine("Saving configuration");
+
         try {
 
-            // 创建 Document 对象
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document newDocument = builder.newDocument();
-
-            Element rootElem = newDocument.createElement(this.getRootElementName());
-            newDocument.appendChild(rootElem);
-
-
-
-            OutputFormat format = new OutputFormat(newDocument);
-
+            OutputFormat format = new OutputFormat(createDocument());
             format.setLineWidth(65);
             format.setIndenting(true);
             format.setIndent(2);
@@ -214,10 +109,8 @@ public class Configuration extends XMLConfiguration {
             serializer.serialize(getDocument());
             writer.close();
         }
-        catch (IOException ioe) {
-            logger.severe("Failed to save configuration: " + ioe.getMessage());
-        } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
+        catch (ConfigurationException | IOException ce) {
+            logger.severe("Failed to save configuration: " + ce.getMessage());
         }
     }
 
@@ -288,6 +181,7 @@ public class Configuration extends XMLConfiguration {
             setProperty(key, value.toString());
         }
         changeSupport.firePropertyChange(key, old, value);
+
     }
 
     public void remove(String key) {
