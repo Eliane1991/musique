@@ -56,10 +56,9 @@ public class VorbisEncoder implements Encoder {
         if (options != null) {
             quality = options.getFloat("encoder.vorbis.quality", DEFAULT_BITRATE);
         }
-        logger.log(Level.INFO, "Starting encoding with {0} channels, {1} Hz, quality: {2}",
-                new Object[]{fmt.getChannels(), fmt.getSampleRate(), quality});
+        logger.warn( "Starting encoding with {0} channels, {1} Hz, quality: {2}", new Object[]{fmt.getChannels(), fmt.getSampleRate(), quality});
         if (!encoder.vorbis_encode_init_vbr(vi, fmt.getChannels(), (int) fmt.getSampleRate(), quality)) {
-            logger.warning("Failed to Initialize vorbisenc");
+            logger.warn("Failed to Initialize vorbisenc");
             return false;
         }
 

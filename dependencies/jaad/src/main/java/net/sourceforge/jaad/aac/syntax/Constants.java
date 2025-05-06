@@ -19,11 +19,12 @@
  */
 package net.sourceforge.jaad.aac.syntax;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public interface Constants {
 
-	Logger LOGGER = Logger.getLogger("jaad"); //for debugging
+	Logger LOGGER = LoggerFactory.getLogger("jaad"); //for debugging
 	int MAX_ELEMENTS = 16;
 	int BYTE_MASK = 0xFF;
 	int MIN_INPUT_SIZE = 768; //6144 bits/channel

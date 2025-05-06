@@ -31,6 +31,8 @@ import com.tulskiy.musique.playlist.PlaylistManager;
 import com.tulskiy.musique.spi.PluginLoader;
 import com.tulskiy.musique.system.configuration.Configuration;
 import com.tulskiy.musique.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Mixer;
@@ -48,7 +50,7 @@ import java.util.logging.*;
 
 public class Application {
     private static Application ourInstance = new Application();
-    private final Logger logger = Logger.getLogger("com.tulskiy");
+    private final Logger logger = LoggerFactory.getLogger("com.tulskiy");
 
     private Player player;
     private Configuration configuration;
@@ -65,7 +67,29 @@ public class Application {
 
     private Application() {
         initHome();
-        logger.fine("Using '" + CONFIG_HOME + "' as a home directory");
+        initLoggers();
+        logger.info("Using '" + CONFIG_HOME + "' as a home directory");
+    }
+
+    private void initLoggers() {
+        // 重定向标准输出流
+        System.setOut(new PrintStream(new OutputStream() {
+            @Override
+            public void write(int b) {
+                // 记录输出内容
+                logger.info(String.valueOf((char) b));
+            }
+
+            @Override
+            public void write(byte[] b, int off, int len) {
+                // 记录输出内容
+                logger.info(new String(b, off, len));
+            }
+        }));
+
+        // 使用 System.out.println 输出内容
+        System.out.println("initLoggers success.");
+
     }
 
     private void initHome() {
@@ -108,7 +132,7 @@ public class Application {
                 try {
                     configuration.save(new FileWriter(configFile));
                 } catch (IOException e) {
-                    logger.severe("Could not save configuration to " + configFile);
+                    logger.error("Could not save configuration to " + configFile);
                 }
             }
         });

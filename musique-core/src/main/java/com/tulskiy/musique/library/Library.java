@@ -29,19 +29,20 @@ import com.tulskiy.musique.system.configuration.Configuration;
 import com.tulskiy.musique.system.configuration.LibraryConfiguration;
 import com.tulskiy.musique.util.Util;
 import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.tree.TreeNode;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
  * Date: 10/30/10
  */
 public class Library {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(getClass().getName());
     private static final String DEFAULT_VIEW = "$if3(%albumArtist%,'?')|$if1(%album%,[[%year% - ]%album%],'?')$if1($greater(%discTotal%,1),[|Disc %disc%],'')|[%trackNumber%. ]%title%";
     private Configuration config = Application.getInstance().getConfiguration();
     private Playlist data;
@@ -156,7 +157,7 @@ public class Library {
     }
 
     private void rebuildTree() {
-        logger.fine("Rebuilding tree");
+        logger.info("Rebuilding tree");
         long time = System.currentTimeMillis();
         if (rootNode == null) {
             rootNode = new MappedTreeNode("All music");
@@ -190,6 +191,6 @@ public class Library {
                 node.add(new TrackNode(track, new String(path[path.length - 1])));
             }
         }
-        logger.fine("Finished rebuilding tree: total time: " + (System.currentTimeMillis() - time) + " ms");
+        logger.info("Finished rebuilding tree: total time: " + (System.currentTimeMillis() - time) + " ms");
     }
 }

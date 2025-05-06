@@ -19,12 +19,12 @@
 package jwbroek.cuelib;
 
 import jwbroek.io.FileSelector;
-import jwbroek.util.LogUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
 import java.io.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,7 +37,7 @@ final public class CueParser {
     /**
      * Logger for this class.
      */
-    private final static Logger logger = Logger.getLogger(CueParser.class.getCanonicalName());
+    private final static Logger logger = LoggerFactory.getLogger(CueParser.class.getCanonicalName());
 
     // Constants for warning texts. Quick and dirty. Should really be a ResourceBundle.
     private final static String WARNING_EMPTY_LINES = "Empty lines not allowed. Will ignore.";
@@ -154,9 +154,9 @@ final public class CueParser {
      */
     private CueParser() {
         // Intentionally left blank (besides logging). This class doesn't need to be instantiated.
-        CueParser.logger.entering(FileSelector.class.getCanonicalName(), "FileSelector(File)");
-        CueParser.logger.warning("jwbroek.cuelib.CueParser should not be initialized");
-        CueParser.logger.exiting(FileSelector.class.getCanonicalName(), "FileSelector(File)");
+        CueParser.logger.info(FileSelector.class.getCanonicalName(), "FileSelector(File)");
+        CueParser.logger.warn("jwbroek.cuelib.CueParser should not be initialized");
+        CueParser.logger.info(FileSelector.class.getCanonicalName(), "FileSelector(File)");
     }
 
     /**
@@ -168,11 +168,11 @@ final public class CueParser {
      * @throws IOException
      */
     public static CueSheet parse(final InputStream inputStream) throws IOException {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parse(InputStream)", inputStream);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parse(InputStream)", inputStream);
 
         final CueSheet result = CueParser.parse(new LineNumberReader(new InputStreamReader(inputStream)));
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parse(InputStream)", result);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parse(InputStream)", result);
 
         return result;
     }
@@ -185,10 +185,10 @@ final public class CueParser {
      * @throws IOException
      */
     public static CueSheet parse(final File file) throws IOException {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parse(File)", file);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parse(File)", file);
 
         final CueSheet result = CueParser.parse(new LineNumberReader(new FileReader(file)));
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parse(File)", result);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parse(File)", result);
         return result;
     }
 
@@ -200,9 +200,9 @@ final public class CueParser {
      * @throws IOException
      */
     public static CueSheet parse(final LineNumberReader reader) throws IOException {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parse(LineNumberReader)", reader);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parse(LineNumberReader)", reader);
 
-        CueParser.logger.fine("Parsing cue sheet.");
+        CueParser.logger.info("Parsing cue sheet.");
 
         final CueSheet result = new CueSheet();
 
@@ -211,7 +211,7 @@ final public class CueParser {
             String inputLine = reader.readLine();
 
             while (inputLine != null) {
-                CueParser.logger.finest("Processing input line.");
+                CueParser.logger.info("Processing input line.");
 
                 // Normalize by removing left and right whitespace.
                 inputLine = inputLine.trim();
@@ -332,11 +332,11 @@ final public class CueParser {
             }
         }
         finally {
-            CueParser.logger.finest("Closing input reader.");
+            CueParser.logger.info("Closing input reader.");
             reader.close();
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parse(LineNumberReader)", result);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parse(LineNumberReader)", result);
 
         return result;
     }
@@ -351,18 +351,18 @@ final public class CueParser {
      * @return True if there is a match. False otherwise.
      */
     private static boolean startsWith(final LineOfInput input, final String start) {
-        CueParser.logger.entering
+        CueParser.logger.info
                 (CueParser.class.getCanonicalName(), "startsWith(LineOfInput,String)", new Object[]{input, start});
 
         if (input.getInput().startsWith(start)) {
-            CueParser.logger.exiting(CueParser.class.getCanonicalName(), "startsWith(LineOfInput,String)", true);
+            CueParser.logger.info(CueParser.class.getCanonicalName(), "startsWith(LineOfInput,String)", true);
             return true;
         } else if (input.getInput().substring(0, start.length()).equalsIgnoreCase(start)) {
             addWarning(input, WARNING_TOKEN_NOT_UPPERCASE);
-            CueParser.logger.exiting(CueParser.class.getCanonicalName(), "startsWith(LineOfInput,String)", true);
+            CueParser.logger.info(CueParser.class.getCanonicalName(), "startsWith(LineOfInput,String)", true);
             return true;
         } else {
-            CueParser.logger.exiting(CueParser.class.getCanonicalName(), "startsWith(LineOfInput,String)", false);
+            CueParser.logger.info(CueParser.class.getCanonicalName(), "startsWith(LineOfInput,String)", false);
             return false;
         }
     }
@@ -379,7 +379,7 @@ final public class CueParser {
      * @return True if there is a match. False otherwise.
      */
     private static boolean contains(final LineOfInput input, final Pattern pattern) {
-        CueParser.logger.entering
+        CueParser.logger.info
                 (CueParser.class.getCanonicalName(), "contains(LineOfInput,Pattern)", new Object[]{input, pattern});
         final Matcher matcher = pattern.matcher(input.getInput());
 
@@ -387,10 +387,10 @@ final public class CueParser {
             if (matcher.groupCount() > 0 && !matcher.group(1).equals(matcher.group(1).toUpperCase())) {
                 addWarning(input, WARNING_TOKEN_NOT_UPPERCASE);
             }
-            CueParser.logger.exiting(CueParser.class.getCanonicalName(), "contains(LineOfInput,Pattern)", true);
+            CueParser.logger.info(CueParser.class.getCanonicalName(), "contains(LineOfInput,Pattern)", true);
             return true;
         } else {
-            CueParser.logger.exiting(CueParser.class.getCanonicalName(), "contains(LineOfInput,Pattern)", false);
+            CueParser.logger.info(CueParser.class.getCanonicalName(), "contains(LineOfInput,Pattern)", false);
             return false;
         }
     }
@@ -405,7 +405,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseCatalog(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseCatalog(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseCatalog(LineOfInput)", input);
 
         if (startsWith(input, "CATALOG")) {
             String catalogNumber = input.getInput().substring("CATALOG".length()).trim();
@@ -422,7 +422,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseCatalog(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseCatalog(LineOfInput)");
     }
 
     /**
@@ -437,7 +437,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseFile(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseFile(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseFile(LineOfInput)", input);
 
         Matcher fileMatcher = PATTERN_FILE.matcher(input.getInput());
 
@@ -469,7 +469,7 @@ final public class CueParser {
                  )
               )
            {
-             CueParser.logger.warning(WARNING_FILE_IN_WRONG_PLACE);
+             CueParser.logger.warn(WARNING_FILE_IN_WRONG_PLACE);
              input.getAssociatedSheet().addWarning(input, WARNING_FILE_IN_WRONG_PLACE);
            }
             */
@@ -489,7 +489,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseFile(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseFile(LineOfInput)");
     }
 
     /**
@@ -501,13 +501,13 @@ final public class CueParser {
      * @param input
      */
     private static void parseCdTextFile(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseCdTextFile(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseCdTextFile(LineOfInput)", input);
 
         Matcher cdTextFileMatcher = PATTERN_CDTEXTFILE.matcher(input.getInput());
 
         if (startsWith(input, "CDTEXTFILE") && cdTextFileMatcher.matches()) {
             if (input.getAssociatedSheet().getCdTextFile() != null) {
-                CueParser.logger.warning(WARNING_DATUM_APPEARS_TOO_OFTEN);
+                CueParser.logger.warn(WARNING_DATUM_APPEARS_TOO_OFTEN);
                 input.getAssociatedSheet().addWarning(input, WARNING_DATUM_APPEARS_TOO_OFTEN);
             }
 
@@ -522,7 +522,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseCdTextFile(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseCdTextFile(LineOfInput)");
     }
 
     /**
@@ -534,7 +534,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseFlags(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseFlags(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseFlags(LineOfInput)", input);
 
         Matcher flagsMatcher = PATTERN_FLAGS.matcher(input.getInput());
 
@@ -567,7 +567,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseFlags(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseFlags(LineOfInput)");
     }
 
     /**
@@ -585,7 +585,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseIndex(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseIndex(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseIndex(LineOfInput)", input);
 
         Matcher indexMatcher = PATTERN_INDEX.matcher(input.getInput());
 
@@ -632,7 +632,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseIndex(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseIndex(LineOfInput)");
     }
 
     /**
@@ -644,7 +644,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseIsrc(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseIsrc(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseIsrc(LineOfInput)", input);
 
         if (startsWith(input, "ISRC")) {
             String isrcCode = input.getInput().substring("ISRC".length()).trim();
@@ -667,7 +667,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseIsrc(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseIsrc(LineOfInput)");
     }
 
     /**
@@ -683,7 +683,7 @@ final public class CueParser {
      * @param input
      */
     private static void parsePerformer(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parsePerformer(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parsePerformer(LineOfInput)", input);
 
         Matcher performerMatcher = PATTERN_PERFORMER.matcher(input.getInput());
 
@@ -722,7 +722,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parsePerformer(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parsePerformer(LineOfInput)");
     }
 
     /**
@@ -734,7 +734,7 @@ final public class CueParser {
      * @param input
      */
     private static void parsePostgap(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parsePostgap(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parsePostgap(LineOfInput)", input);
 
         Matcher postgapMatcher = PATTERN_POSTGAP.matcher(input.getInput());
 
@@ -749,7 +749,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parsePostgap(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parsePostgap(LineOfInput)");
     }
 
     /**
@@ -761,7 +761,7 @@ final public class CueParser {
      * @param input
      */
     private static void parsePregap(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parsePregap(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parsePregap(LineOfInput)", input);
 
         Matcher pregapMatcher = PATTERN_PREGAP.matcher(input.getInput());
 
@@ -780,7 +780,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parsePregap(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parsePregap(LineOfInput)");
     }
 
     /**
@@ -791,7 +791,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseRemComment(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseRemComment(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseRemComment(LineOfInput)", input);
 
         Matcher matcher = PATTERN_REM_COMMENT.matcher(input.getInput());
 
@@ -805,7 +805,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseRemComment(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseRemComment(LineOfInput)");
     }
 
     /**
@@ -816,7 +816,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseRemDate(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseRemDate(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseRemDate(LineOfInput)", input);
 
         Matcher matcher = PATTERN_REM_DATE.matcher(input.getInput());
 
@@ -830,7 +830,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseRemDate(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseRemDate(LineOfInput)");
     }
 
     /**
@@ -841,7 +841,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseRemDiscid(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseRemDiscid(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseRemDiscid(LineOfInput)", input);
 
         Matcher matcher = PATTERN_REM_DISCID.matcher(input.getInput());
 
@@ -855,7 +855,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseRemDiscid(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseRemDiscid(LineOfInput)");
     }
 
     /**
@@ -866,7 +866,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseRemGenre(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseRemGenre(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseRemGenre(LineOfInput)", input);
 
         Matcher matcher = PATTERN_REM_GENRE.matcher(input.getInput());
 
@@ -880,7 +880,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseRemGenre(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseRemGenre(LineOfInput)");
     }
 
     /**
@@ -898,7 +898,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseRem(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseRem(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseRem(LineOfInput)", input);
 
         if (startsWith(input, "REM")) {
             // This is a comment, but popular implementation like Exact Audio Copy may still
@@ -933,7 +933,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseRem(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseRem(LineOfInput)");
     }
 
     /**
@@ -948,7 +948,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseSongwriter(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseSongwriter(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseSongwriter(LineOfInput)", input);
 
         Matcher songwriterMatcher = PATTERN_SONGWRITER.matcher(input.getInput());
 
@@ -987,7 +987,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseSongwriter(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseSongwriter(LineOfInput)");
     }
 
     /**
@@ -1002,7 +1002,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseTitle(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseTitle(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseTitle(LineOfInput)", input);
 
         Matcher titleMatcher = PATTERN_TITLE.matcher(input.getInput());
 
@@ -1041,7 +1041,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseTitle(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseTitle(LineOfInput)");
     }
 
     /**
@@ -1065,7 +1065,7 @@ final public class CueParser {
      * @param input
      */
     private static void parseTrack(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parseTrack(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseTrack(LineOfInput)", input);
 
         Matcher trackMatcher = PATTERN_TRACK.matcher(input.getInput());
 
@@ -1095,7 +1095,7 @@ final public class CueParser {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parseTrack(LineOfInput)");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parseTrack(LineOfInput)");
     }
 
     /**
@@ -1109,7 +1109,7 @@ final public class CueParser {
      * @param input
      */
     private static Position parsePosition(final LineOfInput input, final String position) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "parsePosition(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "parsePosition(LineOfInput)", input);
 
         Matcher positionMatcher = PATTERN_POSITION.matcher(position);
 
@@ -1138,12 +1138,12 @@ final public class CueParser {
             }
 
             Position result = new Position(minutes, seconds, frames);
-            CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parsePosition(LineOfInput)", result);
+            CueParser.logger.info(CueParser.class.getCanonicalName(), "parsePosition(LineOfInput)", result);
             return result;
         } else {
             addWarning(input, WARNING_UNPARSEABLE_INPUT);
             Position result = new Position();
-            CueParser.logger.exiting(CueParser.class.getCanonicalName(), "parsePosition(LineOfInput)", result);
+            CueParser.logger.info(CueParser.class.getCanonicalName(), "parsePosition(LineOfInput)", result);
             return result;
         }
     }
@@ -1157,7 +1157,7 @@ final public class CueParser {
      *         warning added.
      */
     private static TrackData getLastTrackData(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "getLastTrackData(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "getLastTrackData(LineOfInput)", input);
 
         FileData lastFileData = getLastFileData(input);
         List<TrackData> trackDataList = lastFileData.getTrackData();
@@ -1168,7 +1168,7 @@ final public class CueParser {
         }
 
         TrackData result = trackDataList.get(trackDataList.size() - 1);
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "getLastTrackData(LineOfInput)", result);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "getLastTrackData(LineOfInput)", result);
         return result;
     }
 
@@ -1181,7 +1181,7 @@ final public class CueParser {
      *         added.
      */
     private static FileData getLastFileData(final LineOfInput input) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "getLastFileData(LineOfInput)", input);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "getLastFileData(LineOfInput)", input);
 
         List<FileData> fileDataList = input.getAssociatedSheet().getFileData();
 
@@ -1191,7 +1191,7 @@ final public class CueParser {
         }
 
         FileData result = fileDataList.get(fileDataList.size() - 1);
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "getLastFileData(LineOfInput)", result);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "getLastFileData(LineOfInput)", result);
         return result;
     }
 
@@ -1203,7 +1203,7 @@ final public class CueParser {
      * @param warning The warning to write.
      */
     private static void addWarning(final LineOfInput input, final String warning) {
-        CueParser.logger.warning(warning);
+        CueParser.logger.warn(warning);
         input.getAssociatedSheet().addWarning(input, warning);
     }
 
@@ -1213,7 +1213,7 @@ final public class CueParser {
      * @param args
      */
     public static void main(final String[] args) {
-        CueParser.logger.entering(CueParser.class.getCanonicalName(), "main(String[])", args);
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "main(String[])", args);
         CueSheet sheet = null;
 
         try {
@@ -1249,9 +1249,9 @@ final public class CueParser {
             }
         }
         catch (Exception e) {
-            LogUtil.logStacktrace(logger, Level.SEVERE, e);
+            logger.trace("error", e);
         }
 
-        CueParser.logger.exiting(CueParser.class.getCanonicalName(), "main(String[])");
+        CueParser.logger.info(CueParser.class.getCanonicalName(), "main(String[])");
     }
 }

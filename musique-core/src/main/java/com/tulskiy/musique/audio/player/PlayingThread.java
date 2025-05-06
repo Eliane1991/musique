@@ -21,19 +21,21 @@ import com.tulskiy.musique.audio.player.io.AudioOutput;
 import com.tulskiy.musique.audio.player.io.Buffer;
 import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.util.AudioMath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sound.sampled.AudioFormat;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static com.tulskiy.musique.audio.player.PlayerEvent.PlayerEventCode;
+import static org.slf4j.LoggerFactory.*;
 
 /**
  * Author: Denis Tulskiy
  * Date: 1/15/11
  */
 public class PlayingThread extends Actor implements Runnable {
-    public final Logger logger = Logger.getLogger(getClass().getName());
+    public final Logger logger = getLogger(getClass().getName());
     private static final int BUFFER_SIZE = AudioOutput.BUFFER_SIZE;
 
     private AudioFormat format;
@@ -118,7 +120,7 @@ public class PlayingThread extends Actor implements Runnable {
                         output.write(buf, 0, len);
                     }
                 } catch (Exception e) {
-                    logger.log(Level.WARNING, "Exception while playing. Stopping now", e);
+                    logger.warn( "Exception while playing. Stopping now", e);
                     currentTrack = null;
                     stop();
                 }
@@ -128,7 +130,7 @@ public class PlayingThread extends Actor implements Runnable {
 
     private boolean openNext() {
         try {
-            logger.fine("Getting next track");
+            logger.info("Getting next track");
             Buffer.NextEntry nextEntry = buffer.pollNextTrack();
             if (nextEntry.track == null) {
                 return false;
@@ -149,7 +151,7 @@ public class PlayingThread extends Actor implements Runnable {
             }
             return true;
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Could not open next track", e);
+            logger.warn( "Could not open next track", e);
             return false;
         }
     }

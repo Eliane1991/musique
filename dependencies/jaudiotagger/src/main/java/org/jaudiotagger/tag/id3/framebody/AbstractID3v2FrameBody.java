@@ -157,12 +157,12 @@ public abstract class AbstractID3v2FrameBody extends AbstractTagFrameBody {
         for (AbstractDataType object : objectList)
         //correct dataType.
         {
-//            logger.finest("offset:" + offset);
+//            logger.info("offset:" + offset);
 
             //The read has extended further than the defined frame size (ok to extend upto
             //size because the next datatype may be of length 0.)
             if (offset > (size)) {
-                //logger.warning("Invalid Size for FrameBody");
+                //logger.warn("Invalid Size for FrameBody");
                 throw new InvalidFrameException("Invalid size for Frame Body");
             }
 
@@ -171,7 +171,7 @@ public abstract class AbstractID3v2FrameBody extends AbstractTagFrameBody {
             try {
                 object.readByteArray(buffer, offset);
             } catch (InvalidDataTypeException e) {
-                //logger.warning("Problem reading datatype within Frame Body:" + e.getMessage());
+                //logger.warn("Problem reading datatype within Frame Body:" + e.getMessage());
                 throw e;
             }
             //Increment Offset to start of next datatype.

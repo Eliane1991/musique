@@ -18,17 +18,18 @@
 package com.tulskiy.musique.audio;
 
 import com.tulskiy.musique.system.configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sound.sampled.AudioFormat;
 import java.io.File;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
  * Date: Jul 25, 2010
  */
 public interface Encoder {
-    final Logger logger = Logger.getLogger(Encoder.class.getName());
+    final Logger logger = LoggerFactory.getLogger(Encoder.class.getName());
 
     public boolean open(File outputFile, AudioFormat fmt, Configuration options);
 

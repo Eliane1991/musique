@@ -749,7 +749,7 @@ public class ID3v1Tag extends AbstractID3v1Tag implements Tag {
         if (!seek(byteBuffer)) {
             throw new TagNotFoundException(getLoggingFilename() + ":" + "ID3v1 tag not found");
         }
-        //logger.finer(getLoggingFilename() + ":" + "Reading v1 tag");
+        //logger.infor(getLoggingFilename() + ":" + "Reading v1 tag");
         //Do single file read of data to cut down on file reads
         byte[] dataBuffer = new byte[TAG_LENGTH];
         byteBuffer.position(0);
@@ -767,10 +767,10 @@ public class ID3v1Tag extends AbstractID3v1Tag implements Tag {
         }
         album = Utils.getString(dataBuffer, FIELD_ALBUM_POS, this.FIELD_ALBUM_LENGTH, encoding).trim();
         m = endofStringPattern.matcher(album);
-        //logger.finest(getLoggingFilename() + ":" + "Orig Album is:" + comment + ":");
+        //logger.info(getLoggingFilename() + ":" + "Orig Album is:" + comment + ":");
         if (m.find()) {
             album = album.substring(0, m.start());
-            //logger.finest(getLoggingFilename() + ":" + "Album is:" + album + ":");
+            //logger.info(getLoggingFilename() + ":" + "Album is:" + album + ":");
         }
         year = Utils.getString(dataBuffer, FIELD_YEAR_POS, this.FIELD_YEAR_LENGTH, encoding).trim();
         m = endofStringPattern.matcher(year);
@@ -779,10 +779,10 @@ public class ID3v1Tag extends AbstractID3v1Tag implements Tag {
         }
         comment = Utils.getString(dataBuffer, FIELD_COMMENT_POS, this.FIELD_COMMENT_LENGTH, encoding).trim();
         m = endofStringPattern.matcher(comment);
-        //logger.finest(getLoggingFilename() + ":" + "Orig Comment is:" + comment + ":");
+        //logger.info(getLoggingFilename() + ":" + "Orig Comment is:" + comment + ":");
         if (m.find()) {
             comment = comment.substring(0, m.start());
-            //logger.finest(getLoggingFilename() + ":" + "Comment is:" + comment + ":");
+            //logger.info(getLoggingFilename() + ":" + "Comment is:" + comment + ":");
         }
         genre = dataBuffer[this.FIELD_GENRE_POS];
 

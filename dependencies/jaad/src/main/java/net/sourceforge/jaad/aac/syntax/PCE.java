@@ -22,9 +22,11 @@ package net.sourceforge.jaad.aac.syntax;
 import net.sourceforge.jaad.aac.AACException;
 import net.sourceforge.jaad.aac.Profile;
 import net.sourceforge.jaad.aac.SampleFrequency;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PCE extends Element {
-
+	private final static Logger logger = LoggerFactory.getLogger(PCE.class.getCanonicalName());
 	private static final int MAX_FRONT_CHANNEL_ELEMENTS = 16;
 	private static final int MAX_SIDE_CHANNEL_ELEMENTS = 16;
 	private static final int MAX_BACK_CHANNEL_ELEMENTS = 16;
@@ -109,15 +111,15 @@ public class PCE extends Element {
 		validCCElementsCount = in.readBits(4);
 
 		if(monoMixdown = in.readBool()) {
-			Constants.LOGGER.warning("mono mixdown present, but not yet supported");
+			logger.warn("mono mixdown present, but not yet supported");
 			monoMixdownElementNumber = in.readBits(4);
 		}
 		if(stereoMixdown = in.readBool()) {
-			Constants.LOGGER.warning("stereo mixdown present, but not yet supported");
+			logger.warn("stereo mixdown present, but not yet supported");
 			stereoMixdownElementNumber = in.readBits(4);
 		}
 		if(matrixMixdownIDXPresent = in.readBool()) {
-			Constants.LOGGER.warning("matrix mixdown present, but not yet supported");
+			logger.warn("matrix mixdown present, but not yet supported");
 			matrixMixdownIDX = in.readBits(2);
 			pseudoSurround = in.readBool();
 		}

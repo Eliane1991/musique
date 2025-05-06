@@ -23,9 +23,10 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.generic.Utils;
 import org.jaudiotagger.audio.ogg.util.VorbisHeader;
 import org.jaudiotagger.logging.ErrorMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  * Create the VorbisCommentTag by reading from the raw packet data
@@ -50,7 +51,7 @@ import java.util.logging.Logger;
  */
 public class VorbisCommentReader {
     // Logger Object
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.tag.vorbiscomment.VorbisCommentReader");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.tag.vorbiscomment.VorbisCommentReader");
 
     public static final int FIELD_VENDOR_LENGTH_POS = 0;
     public static final int FIELD_VENDOR_STRING_POS = 4;
@@ -107,10 +108,10 @@ public class VorbisCommentReader {
             //logger.info("Next Comment Length:" + commentLength);
 
             if (commentLength > JAUDIOTAGGER_MAX_COMMENT_LENGTH) {
-                //logger.warning(ErrorMessage.VORBIS_COMMENT_LENGTH_TOO_LARGE.getMsg(commentLength));
+                //logger.warn(ErrorMessage.VORBIS_COMMENT_LENGTH_TOO_LARGE.getMsg(commentLength));
                 break;
             } else if (commentLength > rawdata.length) {
-                //logger.warning(ErrorMessage.VORBIS_COMMENT_LENGTH_LARGE_THAN_HEADER.getMsg(commentLength, rawdata.length));
+                //logger.warn(ErrorMessage.VORBIS_COMMENT_LENGTH_LARGE_THAN_HEADER.getMsg(commentLength, rawdata.length));
                 break;
             } else {
                 b = new byte[commentLength];

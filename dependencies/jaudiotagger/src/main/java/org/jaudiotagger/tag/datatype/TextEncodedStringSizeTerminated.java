@@ -71,7 +71,7 @@ public class TextEncodedStringSizeTerminated extends AbstractString {
      * @throws IndexOutOfBoundsException
      */
     public void readByteArray(byte[] arr, int offset) throws InvalidDataTypeException {
-        //logger.finest("Reading from array from offset:" + offset);
+        //logger.info("Reading from array from offset:" + offset);
 
         //Get the Specified Decoder
         String charSetName = getTextEncodingCharSet();
@@ -92,7 +92,7 @@ public class TextEncodedStringSizeTerminated extends AbstractString {
         CharBuffer outBuffer = CharBuffer.allocate(arr.length - offset);
         CoderResult coderResult = decoder.decode(inBuffer, outBuffer, true);
         if (coderResult.isError()) {
-            //logger.warning("Decoding error:" + coderResult.toString());
+            //logger.warn("Decoding error:" + coderResult.toString());
         }
         decoder.flush(outBuffer);
         outBuffer.flip();
@@ -242,7 +242,7 @@ public class TextEncodedStringSizeTerminated extends AbstractString {
         }
         //Should never happen so if does throw a RuntimeException
         catch (CharacterCodingException ce) {
-            logger.severe(ce.getMessage());
+            logger.error(ce.getMessage());
             throw new RuntimeException(ce);
         }
         return data;
@@ -258,7 +258,7 @@ public class TextEncodedStringSizeTerminated extends AbstractString {
     protected String getTextEncodingCharSet() {
         byte textEncoding = this.getBody().getTextEncoding();
         String charSetName = TextEncoding.getInstanceOf().getValueForId(textEncoding);
-//        logger.finest("text encoding:" + textEncoding + " charset:" + charSetName);
+//        logger.info("text encoding:" + textEncoding + " charset:" + charSetName);
         return charSetName;
     }
 

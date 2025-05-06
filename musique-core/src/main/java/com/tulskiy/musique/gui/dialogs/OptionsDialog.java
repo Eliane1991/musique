@@ -26,6 +26,7 @@ import com.tulskiy.musique.system.configuration.AlbumArtConfiguration;
 import com.tulskiy.musique.system.configuration.Configuration;
 import com.tulskiy.musique.system.configuration.LibraryConfiguration;
 import com.tulskiy.musique.util.Util;
+import org.slf4j.LoggerFactory;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Mixer;
@@ -1052,7 +1053,7 @@ public class OptionsDialog extends JDialog {
         try {
             UIManager.setLookAndFeel(new MetalLookAndFeel());
         } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(OptionsDialog.class.getName()).log(Level.SEVERE, null, ex);
+            LoggerFactory.getLogger(OptionsDialog.class.getName()).error( null, ex);
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

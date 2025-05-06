@@ -18,8 +18,10 @@
  */
 package jwbroek.cuelib;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Set;
-import java.util.logging.Logger;
 
 /**
  * Class for serializing a {@link jwbroek.cuelib.CueSheet CueSheet} back to a string representation. Does the
@@ -35,14 +37,14 @@ public class CueSheetSerializer {
     /**
      * The logger for this class.
      */
-    private final static Logger logger = Logger.getLogger(CueSheetSerializer.class.getCanonicalName());
+    private final static Logger logger = LoggerFactory.getLogger(CueSheetSerializer.class.getCanonicalName());
 
     /**
      * Create a default CueSheetSerializer.
      */
     public CueSheetSerializer() {
-        CueSheetSerializer.logger.entering(CueSheetSerializer.class.getCanonicalName(), "CueSheetSerializer()");
-        CueSheetSerializer.logger.exiting(CueSheetSerializer.class.getCanonicalName(), "CueSheetSerializer()");
+        CueSheetSerializer.logger.info(CueSheetSerializer.class.getCanonicalName(), "CueSheetSerializer()");
+        CueSheetSerializer.logger.info(CueSheetSerializer.class.getCanonicalName(), "CueSheetSerializer()");
     }
 
     /**
@@ -51,11 +53,11 @@ public class CueSheetSerializer {
      * @param indentationValue This String will be used for indentation.
      */
     public CueSheetSerializer(final String indentationValue) {
-        CueSheetSerializer.logger.entering
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName(), "CueSheetSerializer(String)", indentationValue);
-        CueSheetSerializer.logger.config("Setting CueSheetSerializer indentation value to: '" + indentationValue + "'");
+        CueSheetSerializer.logger.info("Setting CueSheetSerializer indentation value to: '" + indentationValue + "'");
         this.indentationValue = indentationValue;
-        CueSheetSerializer.logger.exiting(CueSheetSerializer.class.getCanonicalName(), "CueSheetSerializer(String)");
+        CueSheetSerializer.logger.info(CueSheetSerializer.class.getCanonicalName(), "CueSheetSerializer(String)");
     }
 
     /**
@@ -68,14 +70,14 @@ public class CueSheetSerializer {
      * @return A textual representation of the cue sheet.
      */
     public String serializeCueSheet(final CueSheet cueSheet) {
-        CueSheetSerializer.logger.entering
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName(), "serializeCueSheet(CueSheet)", cueSheet);
         StringBuilder builder = new StringBuilder();
 
         serializeCueSheet(builder, cueSheet, "");
 
         String result = builder.toString();
-        CueSheetSerializer.logger.exiting(CueSheetSerializer.class.getCanonicalName(), "serializeCueSheet(CueSheet)", result);
+        CueSheetSerializer.logger.info(CueSheetSerializer.class.getCanonicalName(), "serializeCueSheet(CueSheet)", result);
         return result;
     }
 
@@ -87,13 +89,13 @@ public class CueSheetSerializer {
      * @param indentation The current indentation.
      */
     private void serializeCueSheet(final StringBuilder builder, final CueSheet cueSheet, final String indentation) {
-        CueSheetSerializer.logger.entering
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName()
                         , "serializeCueSheet(StringBuilder,CueSheet,String)"
                         , new Object[]{builder, cueSheet, indentation}
                 );
 
-        CueSheetSerializer.logger.fine("Serializing cue sheet to cue format.");
+        CueSheetSerializer.logger.info("Serializing cue sheet to cue format.");
 
         addField(builder, "REM GENRE", indentation, cueSheet.getGenre());
         addField(builder, "REM DATE", indentation, cueSheet.getYear());
@@ -109,7 +111,7 @@ public class CueSheetSerializer {
             serializeFileData(builder, fileData, indentation);
         }
 
-        CueSheetSerializer.logger.exiting
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName(), "serializeCueSheet(StringBuilder,CueSheet,String)");
     }
 
@@ -121,7 +123,7 @@ public class CueSheetSerializer {
      * @param indentation The current indentation.
      */
     private void serializeFileData(final StringBuilder builder, final FileData fileData, final String indentation) {
-        CueSheetSerializer.logger.entering
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName()
                         , "serializeFileData(StringBuilder,FileData,String)"
                         , new Object[]{builder, fileData, indentation}
@@ -143,7 +145,7 @@ public class CueSheetSerializer {
             serializeTrackData(builder, trackData, indentation + this.getIndentationValue());
         }
 
-        CueSheetSerializer.logger.exiting
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName(), "serializeFileData(StringBuilder,FileData,String)");
     }
 
@@ -158,7 +160,7 @@ public class CueSheetSerializer {
             , final TrackData trackData
             , final String indentation
     ) {
-        CueSheetSerializer.logger.entering
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName()
                         , "serializeTrackData(StringBuilder,TrackData,String)"
                         , new Object[]{builder, trackData, indentation}
@@ -193,7 +195,7 @@ public class CueSheetSerializer {
             serializeIndex(builder, index, childIndentation);
         }
 
-        CueSheetSerializer.logger.exiting
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName()
                         , "serializeTrackData(StringBuilder,TrackData,String)"
                 );
@@ -207,7 +209,7 @@ public class CueSheetSerializer {
      * @param indentation The current indentation.
      */
     private void serializeFlags(final StringBuilder builder, final Set<String> flags, final String indentation) {
-        CueSheetSerializer.logger.entering
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName()
                         , "serializeFlags(StringBuilder,Set<String>,String)"
                         , new Object[]{builder, flags, indentation}
@@ -219,7 +221,7 @@ public class CueSheetSerializer {
         }
         builder.append('\n');
 
-        CueSheetSerializer.logger.exiting
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName(), "serializeFlags(StringBuilder,Set<String>,String)");
     }
 
@@ -231,7 +233,7 @@ public class CueSheetSerializer {
      * @param indentation The current indentation.
      */
     private void serializeIndex(final StringBuilder builder, final Index index, final String indentation) {
-        CueSheetSerializer.logger.entering
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName()
                         , "serializeIndex(StringBuilder,Index,String)"
                         , new Object[]{builder, index, indentation}
@@ -248,7 +250,7 @@ public class CueSheetSerializer {
 
         builder.append('\n');
 
-        CueSheetSerializer.logger.exiting
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName(), "serializeIndex(StringBuilder,Index,String)");
     }
 
@@ -259,10 +261,10 @@ public class CueSheetSerializer {
      * @return The formatted position.
      */
     private String formatPosition(final Position position) {
-        CueSheetSerializer.logger.entering(CueSheetSerializer.class.getCanonicalName(), "formatPosition(Position)", position);
+        CueSheetSerializer.logger.info(CueSheetSerializer.class.getCanonicalName(), "formatPosition(Position)", position);
         String result = String.format
                 ("%1$02d:%2$02d:%3$02d", position.getMinutes(), position.getSeconds(), position.getFrames());
-        CueSheetSerializer.logger.exiting(CueSheetSerializer.class.getCanonicalName(), "formatPosition(Position)", result);
+        CueSheetSerializer.logger.info(CueSheetSerializer.class.getCanonicalName(), "formatPosition(Position)", result);
         return result;
     }
 
@@ -279,7 +281,7 @@ public class CueSheetSerializer {
             , final String indentation
             , final Position value
     ) {
-        CueSheetSerializer.logger.entering
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName()
                         , "addField(StringBuilder,String,String,Position)"
                         , new Object[]{cueBuilder, command, indentation, value}
@@ -291,7 +293,7 @@ public class CueSheetSerializer {
                     .append(formatPosition(value))
                     .append('\n');
         }
-        CueSheetSerializer.logger.exiting
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName()
                         , "addField(StringBuilder,String,String,Position)"
                 );
@@ -310,7 +312,7 @@ public class CueSheetSerializer {
             , final String indentation
             , final String value
     ) {
-        CueSheetSerializer.logger.entering
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName()
                         , "addField(StringBuilder,String,String,String)"
                         , new Object[]{cueBuilder, command, indentation, value}
@@ -324,7 +326,7 @@ public class CueSheetSerializer {
                     .append('\n');
         }
 
-        CueSheetSerializer.logger.exiting
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName(), "addField(StringBuilder,String,String,String)");
     }
 
@@ -341,7 +343,7 @@ public class CueSheetSerializer {
             , final String indentation
             , final int value
     ) {
-        CueSheetSerializer.logger.entering
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName()
                         , "addField(StringBuilder,String,String,int)"
                         , new Object[]{cueBuilder, command, indentation, value}
@@ -355,7 +357,7 @@ public class CueSheetSerializer {
                     .append('\n');
         }
 
-        CueSheetSerializer.logger.exiting
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName(), "addField(StringBuilder,String,String,int)");
     }
 
@@ -366,18 +368,18 @@ public class CueSheetSerializer {
      * @return The input string, which will be surrounded in double quotes if it contains any whitespace.
      */
     private String quoteIfNecessary(final String input) {
-        CueSheetSerializer.logger.entering(CueSheetSerializer.class.getCanonicalName(), "quoteIfNecessary(String)", input);
+        CueSheetSerializer.logger.info(CueSheetSerializer.class.getCanonicalName(), "quoteIfNecessary(String)", input);
 
         // Search for whitespace
         for (int index = 0; index < input.length(); index++) {
             if (Character.isWhitespace(input.charAt(index))) {
                 String result = '"' + input + '"';
-                logger.exiting(CueSheetSerializer.class.getCanonicalName(), "quoteIfNecessary(String)", result);
+                logger.info(CueSheetSerializer.class.getCanonicalName(), "quoteIfNecessary(String)", result);
                 return result;
             }
         }
 
-        CueSheetSerializer.logger.exiting(CueSheetSerializer.class.getCanonicalName(), "quoteIfNecessary(String)", input);
+        CueSheetSerializer.logger.info(CueSheetSerializer.class.getCanonicalName(), "quoteIfNecessary(String)", input);
         return input;
     }
 
@@ -387,8 +389,8 @@ public class CueSheetSerializer {
      * @return The character sequence for a single indentation value.
      */
     public String getIndentationValue() {
-        CueSheetSerializer.logger.entering(CueSheetSerializer.class.getCanonicalName(), "getIndentationValue()");
-        CueSheetSerializer.logger.exiting
+        CueSheetSerializer.logger.info(CueSheetSerializer.class.getCanonicalName(), "getIndentationValue()");
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName(), "getIndentationValue()", this.indentationValue);
         return this.indentationValue;
     }
@@ -399,9 +401,9 @@ public class CueSheetSerializer {
      * @param indentationValue The character sequence for a single indentation value.
      */
     public void setIndentationValue(final String indentationValue) {
-        CueSheetSerializer.logger.entering
+        CueSheetSerializer.logger.info
                 (CueSheetSerializer.class.getCanonicalName(), "setIndentationValue(String)", indentationValue);
         this.indentationValue = indentationValue;
-        CueSheetSerializer.logger.exiting(CueSheetSerializer.class.getCanonicalName(), "setIndentationValue()");
+        CueSheetSerializer.logger.info(CueSheetSerializer.class.getCanonicalName(), "setIndentationValue()");
     }
 }

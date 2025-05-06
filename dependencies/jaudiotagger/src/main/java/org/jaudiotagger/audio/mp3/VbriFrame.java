@@ -134,7 +134,7 @@ public class VbriFrame {
 
         //We store this so can return here after scanning through buffer
         int startPosition = bb.position();
-//        MP3File.//logger.finest("Checking VBRI Frame at" + startPosition);
+//        MP3File.//logger.info("Checking VBRI Frame at" + startPosition);
 
         bb.position(startPosition + VBRI_OFFSET);
 
@@ -150,7 +150,7 @@ public class VbriFrame {
         if ((!Arrays.equals(identifier, VBRI_VBR_ID))) {
             return false;
         }
-//        MP3File.//logger.finest("Found VBRI Frame");
+//        MP3File.//logger.info("Found VBRI Frame");
         return true;
     }
 

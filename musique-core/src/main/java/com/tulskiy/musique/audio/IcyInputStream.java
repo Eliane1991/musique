@@ -19,6 +19,8 @@ package com.tulskiy.musique.audio;
 
 import com.tulskiy.musique.playlist.Track;
 import org.jaudiotagger.tag.FieldKey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.FilterInputStream;
@@ -26,14 +28,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
  * Date: 4/10/11
  */
 public class IcyInputStream extends FilterInputStream {
-    private static final Logger logger = Logger.getLogger(IcyInputStream.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(IcyInputStream.class.getName());
 
     private Track track;
     private int metaInt = 0;
@@ -51,7 +52,7 @@ public class IcyInputStream extends FilterInputStream {
             icyInputStream.init();
             return icyInputStream;
         } catch (IOException e) {
-            logger.log(Level.WARNING, "Error opening Icy stream", e);
+            logger.warn( "Error opening Icy stream", e);
         }
         return null;
     }
@@ -88,7 +89,7 @@ public class IcyInputStream extends FilterInputStream {
             }
             return sb.toString();
         } catch (IOException e) {
-            logger.log(Level.WARNING, "Error reading Icy stream", e);
+            logger.warn( "Error reading Icy stream", e);
         }
         return null;
     }
@@ -100,10 +101,10 @@ public class IcyInputStream extends FilterInputStream {
         if (contentType.equals("unknown/unknown")) {
             //Java does not parse non-standart headers
             //used by SHOUTCast
-            logger.fine("Reading SHOUTCast response");
+            logger.info("Reading SHOUTCast response");
             String s = readLine();
             if (!s.equals("ICY 200 OK")) {
-                logger.warning("SHOUTCast invalid response: " + s);
+                logger.warn("SHOUTCast invalid response: " + s);
                 return;
             }
 
@@ -132,11 +133,11 @@ public class IcyInputStream extends FilterInputStream {
         }
         try {
             metaInt = Integer.parseInt(metaIntString.trim());
-            logger.fine("Reading metadata information every " + metaInt + " bytes");
+            logger.info("Reading metadata information every " + metaInt + " bytes");
         } catch (NumberFormatException e) {
             metaInt = 0;
         }
-        logger.fine("Content type is: " + contentType);
+        logger.info("Content type is: " + contentType);
     }
 
     @Override

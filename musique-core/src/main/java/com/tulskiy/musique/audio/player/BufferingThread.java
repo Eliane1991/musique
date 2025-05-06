@@ -24,15 +24,15 @@ import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.playlist.TrackData;
 import com.tulskiy.musique.system.Codecs;
 import com.tulskiy.musique.util.AudioMath;
-
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Author: Denis Tulskiy
  * Date: 1/15/11
  */
 public class BufferingThread extends Actor implements Runnable {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(getClass().getName());
     private PlaybackOrder order;
 
     private final Object lock = new Object();
@@ -142,7 +142,7 @@ public class BufferingThread extends Actor implements Runnable {
     }
 
     public void stop(boolean flush) {
-        logger.fine("Stop buffering");
+        logger.info("Stop buffering");
         nextTrack = null;
         pause(flush);
         buffer.addNextTrack(null, null, -1, false);
@@ -176,7 +176,7 @@ public class BufferingThread extends Actor implements Runnable {
 
         if (track != null) {
             TrackData trackData = track.getTrackData();
-            logger.fine("Opening track " + trackData.getLocation());
+            logger.info("Opening track " + trackData.getLocation());
 
             if (trackData.isFile() && !trackData.getFile().exists()) {
                 //try to get the next one
@@ -208,7 +208,7 @@ public class BufferingThread extends Actor implements Runnable {
             }
 
             start();
-            logger.fine("Finished opening track");
+            logger.info("Finished opening track");
             if (forced)
                 playingThread.send(Message.FLUSH);
             playingThread.send(Message.PLAY);

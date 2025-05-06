@@ -24,11 +24,14 @@ import net.sourceforge.jaad.aac.SampleFrequency;
 import net.sourceforge.jaad.aac.ps.PS;
 import net.sourceforge.jaad.aac.syntax.BitStream;
 import net.sourceforge.jaad.aac.syntax.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 import java.util.logging.Level;
 
 public class SBR implements Constants, SBRConstants, SBRTables {
-
+	private final static Logger logger = LoggerFactory.getLogger(SBR.class.getCanonicalName());
 	private final ChannelData[] cd;
 	int sampleRate;
 	boolean reset;
@@ -113,11 +116,11 @@ public class SBR implements Constants, SBRConstants, SBRTables {
 
 		//can't decode before the first header
 		if(header.isDecoded()) decodeData(in, stereo);
-		//else LOGGER.warning("no SBR header found");
+		//else logger.warn("no SBR header found");
 
 		final int len = in.getPosition()-pos;
 		final int bitsLeft = count-len;
-		if(bitsLeft>=8) LOGGER.log(Level.WARNING, "SBR: bits left: {0}", bitsLeft);
+		if(bitsLeft>=8) logger.warn( "SBR: bits left: {0}", bitsLeft);
 		else if(bitsLeft<0) throw new AACException("SBR data overread: "+bitsLeft);
 
 		in.skipBits(bitsLeft);

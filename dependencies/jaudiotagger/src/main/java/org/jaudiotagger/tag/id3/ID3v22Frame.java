@@ -140,17 +140,17 @@ public class ID3v22Frame extends AbstractID3v2Frame {
             Class<AbstractID3v2FrameBody> c = (Class<AbstractID3v2FrameBody>) Class.forName("org.jaudiotagger.tag.id3.framebody.FrameBody" + bodyIdentifier);
             frameBody = c.newInstance();
         } catch (ClassNotFoundException cnfe) {
-            logger.log(Level.SEVERE, cnfe.getMessage(), cnfe);
+            logger.error(cnfe.getMessage(), cnfe);
             frameBody = new FrameBodyUnsupported(identifier);
         }
         //Instantiate Interface/Abstract should not happen
         catch (InstantiationException ie) {
-            logger.log(Level.SEVERE, ie.getMessage(), ie);
+            logger.error(ie.getMessage(), ie);
             throw new RuntimeException(ie);
         }
         //Private Constructor shouild not happen
         catch (IllegalAccessException iae) {
-            logger.log(Level.SEVERE, iae.getMessage(), iae);
+            logger.error(iae.getMessage(), iae);
             throw new RuntimeException(iae);
         }
         frameBody.setHeader(this);
@@ -307,13 +307,13 @@ public class ID3v22Frame extends AbstractID3v2Frame {
             throw new InvalidFrameException(identifier + " has invalid size of:" + frameSize);
         } else if (frameSize == 0) {
             //We dont process this frame or add to framemap becuase contains no useful information
-            //logger.warning("Empty Frame:" + identifier);
+            //logger.warn("Empty Frame:" + identifier);
             throw new EmptyFrameException(identifier + " is empty frame");
         } else if (frameSize > byteBuffer.remaining()) {
-            //logger.warning("Invalid Frame size larger than size before mp3 audio:" + identifier);
+            //logger.warn("Invalid Frame size larger than size before mp3 audio:" + identifier);
             throw new InvalidFrameException(identifier + " is invalid frame");
         } else {
-            //logger.fine("Frame Size Is:" + frameSize);
+            //logger.info("Frame Size Is:" + frameSize);
             //Convert v2.2 to v2.4 id just for reading the data
             String id = ID3Tags.convertFrameID22To24(identifier);
             if (id == null) {
@@ -331,7 +331,7 @@ public class ID3v22Frame extends AbstractID3v2Frame {
                     }
                 }
             }
-            //logger.fine("Identifier was:" + identifier + " reading using:" + id);
+            //logger.info("Identifier was:" + identifier + " reading using:" + id);
 
             //Create Buffer that only contains the body of this frame rather than the remainder of tag
             ByteBuffer frameBodyBuffer = byteBuffer.slice();
@@ -356,7 +356,7 @@ public class ID3v22Frame extends AbstractID3v2Frame {
         BigInteger bi = new BigInteger(buffer);
         int tmpSize = bi.intValue();
         if (tmpSize < 0) {
-            //logger.warning("Invalid Frame Size of:" + tmpSize + "Decoded from bin:" + Integer.toBinaryString(tmpSize) + "Decoded from hex:" + Integer.toHexString(tmpSize));
+            //logger.warn("Invalid Frame Size of:" + tmpSize + "Decoded from bin:" + Integer.toBinaryString(tmpSize) + "Decoded from hex:" + Integer.toHexString(tmpSize));
         }
         return tmpSize;
     }
@@ -405,7 +405,7 @@ public class ID3v22Frame extends AbstractID3v2Frame {
         headerBuffer.put((byte) ((size & 0x00FF0000) >> 16));
         headerBuffer.put((byte) ((size & 0x0000FF00) >> 8));
         headerBuffer.put((byte) (size & 0x000000FF));
-        //logger.fine("Frame Size Is Actual:" + size + ":Encoded bin:" + Integer.toBinaryString(size) + ":Encoded Hex" + Integer.toHexString(size));
+        //logger.info("Frame Size Is Actual:" + size + ":Encoded bin:" + Integer.toBinaryString(size) + ":Encoded Hex" + Integer.toHexString(size));
     }
 
     /**

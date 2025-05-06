@@ -26,12 +26,13 @@ import com.tulskiy.musique.library.Library;
 import com.tulskiy.musique.system.Application;
 import com.tulskiy.musique.system.configuration.Configuration;
 import com.tulskiy.musique.system.configuration.PlaylistConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static com.tulskiy.musique.playlist.PlaylistListener.Event;
 
@@ -39,7 +40,7 @@ public class PlaylistManager {
     private Application app = Application.getInstance();
     private Configuration config = app.getConfiguration();
     private File PLAYLIST_PATH = new File(app.CONFIG_HOME, "playlists");
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private ArrayList<Playlist> playlists = new ArrayList<Playlist>();
     private Playlist activePlaylist;
     private Playlist visiblePlaylist;
@@ -121,7 +122,7 @@ public class PlaylistManager {
         for (File file : files) {
             if (file.getName().endsWith(".mus")) {
                 if (!file.delete()) {
-                    logger.severe("Could not delete old playlist. Check file permissions");
+                    logger.error("Could not delete old playlist. Check file permissions");
                 }
             }
         }

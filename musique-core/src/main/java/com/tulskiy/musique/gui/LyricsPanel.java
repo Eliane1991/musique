@@ -24,6 +24,8 @@ import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.system.Application;
 import com.tulskiy.musique.system.configuration.Configuration;
 import com.tulskiy.musique.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicTextPaneUI;
@@ -41,7 +43,6 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Scanner;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,7 +53,7 @@ import java.util.regex.Pattern;
 public class LyricsPanel extends JPanel {
     private static Application app = Application.getInstance();
     private static Configuration config = app.getConfiguration();
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private final File lyricsDir = new File(app.CONFIG_HOME, "lyrics");
     private final Timer timer;
     private Search search;
@@ -173,7 +174,7 @@ public class LyricsPanel extends JPanel {
                     File file = new File(lyricsDir, artist + " - " + title + ".txt");
                     StringBuilder result = new StringBuilder();
                     if (file.exists()) {
-                        logger.fine("Loading lyrics from file: " + file.getName());
+                        logger.info("Loading lyrics from file: " + file.getName());
                         fi = new Scanner(file);
                         while (fi.hasNextLine())
                             result.append(fi.nextLine()).append("\n");
@@ -220,7 +221,7 @@ public class LyricsPanel extends JPanel {
 //            URL search = new URL(searchURL +
 //                                 "artist=" + URLEncoder.encode(artist, "utf8") +
 //                                 "&title=" + URLEncoder.encode(title, "utf8"));
-//            logger.fine("Searching for lyrics at url: " + URLDecoder.decode(search.toString(), "utf8"));
+//            logger.info("Searching for lyrics at url: " + URLDecoder.decode(search.toString(), "utf8"));
 //            URLConnection conn = search.openConnection();
 //            fi = new Scanner(conn.getInputStream(), "utf-8");
 //            while (fi.hasNextLine()) {

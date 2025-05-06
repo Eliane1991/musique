@@ -21,7 +21,6 @@ package org.jaudiotagger.audio;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
-import java.util.logging.Logger;
 import java.util.ArrayList;
 
 import org.jaudiotagger.audio.exceptions.CannotWriteException;
@@ -33,6 +32,8 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.jaudiotagger.tag.vorbiscomment.VorbisCommentTag;
 import org.jaudiotagger.tag.flac.FlacTag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>This is the main object manipulated by the user representing an audiofile, its properties and its tag.</p>
@@ -48,7 +49,7 @@ import org.jaudiotagger.tag.flac.FlacTag;
  */
 public class AudioFile {
     //Logger
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.audio");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.audio");
 
     /**
      * The physical file that this instance represents.
@@ -169,9 +170,7 @@ public class AudioFile {
      * @throws FileNotFoundException
      */
     public void checkFileExists(File file) throws FileNotFoundException {
-//        logger.info("Reading file:" + "path" + file.getPath() + ":abs:" + file.getAbsolutePath());
         if (!file.exists()) {
-//            logger.severe("Unable to find:" + file.getPath());
             throw new FileNotFoundException(ErrorMessage.UNABLE_TO_FIND_FILE.getMsg(file.getPath()));
         }
     }
@@ -195,7 +194,7 @@ public class AudioFile {
             newFile = new RandomAccessFile(file, "r");
         } else {
             if (!file.canWrite()) {
-//                //logger.severe("Unable to write:" + file.getPath());
+//                //logger.error("Unable to write:" + file.getPath());
                 throw new ReadOnlyFileException(ErrorMessage.NO_PERMISSIONS_TO_WRITE_TO_FILE.getMsg(file.getPath()));
             }
             newFile = new RandomAccessFile(file, "rws");

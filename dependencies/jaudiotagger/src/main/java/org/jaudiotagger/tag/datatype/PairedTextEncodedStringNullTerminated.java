@@ -78,7 +78,7 @@ public class PairedTextEncodedStringNullTerminated extends AbstractDataType {
      * @throws InvalidDataTypeException if unable to find any null terminated Strings
      */
     public void readByteArray(byte[] arr, int offset) throws InvalidDataTypeException {
-//        logger.finer("Reading PairTextEncodedStringNullTerminated from array from offset:" + offset);
+//        logger.infor("Reading PairTextEncodedStringNullTerminated from array from offset:" + offset);
         //Continue until unable to read a null terminated String
         while (true) {
             try {
@@ -109,11 +109,11 @@ public class PairedTextEncodedStringNullTerminated extends AbstractDataType {
             }
 
             if (size == 0) {
-                //logger.warning("No null terminated Strings found");
+                //logger.warn("No null terminated Strings found");
                 throw new InvalidDataTypeException("No null terminated Strings found");
             }
         }
-//        logger.finer("Read  PairTextEncodedStringNullTerminated:" + value + " size:" + size);
+//        logger.infor("Read  PairTextEncodedStringNullTerminated:" + value + " size:" + size);
     }
 
 
@@ -123,7 +123,7 @@ public class PairedTextEncodedStringNullTerminated extends AbstractDataType {
      * @return byteBuffer that should be written to file to persist this dataType.
      */
     public byte[] writeByteArray() {
-//        logger.finer("Writing PairTextEncodedStringNullTerminated");
+//        logger.infor("Writing PairTextEncodedStringNullTerminated");
 
         int localSize = 0;
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -142,14 +142,14 @@ public class PairedTextEncodedStringNullTerminated extends AbstractDataType {
             }
         } catch (IOException ioe) {
             //This should never happen because the write is internal with the JVM it is not to a file
-            logger.log(Level.SEVERE, "IOException in MultipleTextEncodedStringNullTerminated when writing byte array", ioe);
+            logger.error("IOException in MultipleTextEncodedStringNullTerminated when writing byte array", ioe);
             throw new RuntimeException(ioe);
         }
 
         //Update size member variable
         size = localSize;
 //
-        //logger.finer("Written PairTextEncodedStringNullTerminated");
+        //logger.infor("Written PairTextEncodedStringNullTerminated");
         return buffer.toByteArray();
     }
 

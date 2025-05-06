@@ -335,7 +335,7 @@ public class ID3v24Tag extends AbstractID3v2Tag {
                 copyFrameIntoMap(newFrame.getIdentifier(), newFrame);
             }
         } catch (InvalidFrameException ife) {
-            logger.log(Level.SEVERE, "Unable to convert frame:" + frame.getIdentifier());
+            logger.error("Unable to convert frame:" + frame.getIdentifier());
         }
     }
 
@@ -374,7 +374,7 @@ public class ID3v24Tag extends AbstractID3v2Tag {
                 //frame OR it might be that we have two v23 frames that map to TDRC such as TYER,TIME or TDAT
                 if (newFrame.getBody() instanceof FrameBodyTDRC) {
                     if (firstFrame.getBody() instanceof FrameBodyTDRC) {
-                        //logger.finest("Modifying frame in map:" + newFrame.getIdentifier());
+                        //logger.info("Modifying frame in map:" + newFrame.getIdentifier());
                         FrameBodyTDRC body = (FrameBodyTDRC) firstFrame.getBody();
                         FrameBodyTDRC newBody = (FrameBodyTDRC) newFrame.getBody();
 
@@ -401,7 +401,7 @@ public class ID3v24Tag extends AbstractID3v2Tag {
                     } else {
                         //we just lose this frame, weve already got one with the correct id.
                         //TODO may want to store this somewhere
-                        //logger.warning("Found duplicate TDRC frame in invalid situation,discarding:" + newFrame.getIdentifier());
+                        //logger.warn("Found duplicate TDRC frame in invalid situation,discarding:" + newFrame.getIdentifier());
                     }
                 } else {
                     List<AbstractID3v2Frame> list = new ArrayList<AbstractID3v2Frame>();
@@ -526,7 +526,7 @@ public class ID3v24Tag extends AbstractID3v2Tag {
                         newFrame = new ID3v24Frame(field);
                         frameMap.put(newFrame.getIdentifier(), newFrame);
                     } catch (InvalidTagException ex) {
-                        //logger.warning("Unable to convert Lyrics3 to v24 Frame:Frame Identifier");
+                        //logger.warn("Unable to convert Lyrics3 to v24 Frame:Frame Identifier");
                     }
                 }
             }
@@ -588,7 +588,7 @@ public class ID3v24Tag extends AbstractID3v2Tag {
             }
         }
         size += super.getSize();
-        //logger.finer("Tag Size is" + size);
+        //logger.infor("Tag Size is" + size);
         return size;
     }
 
@@ -662,19 +662,19 @@ public class ID3v24Tag extends AbstractID3v2Tag {
 
         //Not allowable/Unknown Flags
         if ((flags & FileConstants.BIT3) != 0) {
-            //logger.warning(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT3));
+            //logger.warn(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT3));
         }
 
         if ((flags & FileConstants.BIT2) != 0) {
-            //logger.warning(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT2));
+            //logger.warn(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT2));
         }
 
         if ((flags & FileConstants.BIT1) != 0) {
-            //logger.warning(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT1));
+            //logger.warn(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT1));
         }
 
         if ((flags & FileConstants.BIT0) != 0) {
-            //logger.warning(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT0));
+            //logger.warn(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT0));
         }
 
 
@@ -691,7 +691,7 @@ public class ID3v24Tag extends AbstractID3v2Tag {
         }
 
         if (footer) {
-            //logger.warning(ErrorMessage.ID3_TAG_FOOTER.getMsg(getLoggingFilename()));
+            //logger.warn(ErrorMessage.ID3_TAG_FOOTER.getMsg(getLoggingFilename()));
         }
     }
 
@@ -789,7 +789,7 @@ public class ID3v24Tag extends AbstractID3v2Tag {
      * @param size
      */
     protected void readFrames(ByteBuffer byteBuffer, int size) {
-        //logger.finest(getLoggingFilename() + ":" + "Start of frame body at" + byteBuffer.position());
+        //logger.info(getLoggingFilename() + ":" + "Start of frame body at" + byteBuffer.position());
         //Now start looking for frames
         ID3v24Frame next;
         frameMap = new LinkedHashMap();
@@ -798,24 +798,24 @@ public class ID3v24Tag extends AbstractID3v2Tag {
         //Read the size from the Tag Header
         this.fileReadSize = size;
         // Read the frames until got to upto the size as specified in header
-        //logger.finest(getLoggingFilename() + ":" + "Start of frame body at:" + byteBuffer.position() + ",frames data size is:" + size);
+        //logger.info(getLoggingFilename() + ":" + "Start of frame body at:" + byteBuffer.position() + ",frames data size is:" + size);
         while (byteBuffer.position() <= size) {
             String id;
             try {
                 //Read Frame
-                //logger.finest(getLoggingFilename() + ":" + "looking for next frame at:" + byteBuffer.position());
+                //logger.info(getLoggingFilename() + ":" + "looking for next frame at:" + byteBuffer.position());
                 next = new ID3v24Frame(byteBuffer, getLoggingFilename());
                 id = next.getIdentifier();
                 loadFrameIntoMap(id, next);
             }
             //Found Padding, no more frames
             catch (PaddingException ex) {
-                logger.config(getLoggingFilename() + ":Found padding starting at:" + byteBuffer.position());
+                logger.info(getLoggingFilename() + ":Found padding starting at:" + byteBuffer.position());
                 break;
             }
             //Found Empty Frame
             catch (EmptyFrameException ex) {
-                //logger.warning(getLoggingFilename() + ":" + "Empty Frame:" + ex.getMessage());
+                //logger.warn(getLoggingFilename() + ":" + "Empty Frame:" + ex.getMessage());
                 this.emptyFrameBytes += TAG_HEADER_LENGTH;
             } catch (InvalidFrameIdentifierException ifie) {
                 //logger.info(getLoggingFilename() + ":" + "Invalid Frame Identifier:" + ifie.getMessage());
@@ -825,7 +825,7 @@ public class ID3v24Tag extends AbstractID3v2Tag {
             }
             //Problem trying to find frame
             catch (InvalidFrameException ife) {
-                //logger.warning(getLoggingFilename() + ":" + "Invalid Frame:" + ife.getMessage());
+                //logger.warn(getLoggingFilename() + ":" + "Invalid Frame:" + ife.getMessage());
                 this.invalidFrames++;
                 //Don't try and find any more frames
                 break;
@@ -833,7 +833,7 @@ public class ID3v24Tag extends AbstractID3v2Tag {
             //Failed reading frame but may just have invalid data but correct length so lets carry on
             //in case we can read the next frame
             catch (InvalidDataTypeException idete) {
-                //logger.warning(getLoggingFilename() + ":Corrupt Frame:" + idete.getMessage());
+                //logger.warn(getLoggingFilename() + ":Corrupt Frame:" + idete.getMessage());
                 this.invalidFrames++;
                 continue;
             }

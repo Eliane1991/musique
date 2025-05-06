@@ -17,17 +17,19 @@
 
 package com.tulskiy.musique.audio.player;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
  * Date: 1/15/11
  */
 public abstract class Actor {
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     public enum Message {
         // player messages
@@ -66,7 +68,7 @@ public abstract class Actor {
                             e.printStackTrace();
                             break;
                         } catch (Exception e) {
-                            logger.log(Level.WARNING, "Error processing message " + message, e);
+                            logger.warn( "Error processing message " + message, e);
                         }
                     }
             }

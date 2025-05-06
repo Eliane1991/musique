@@ -24,13 +24,15 @@
  */
 package org.jaudiotagger.tag.id3;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 import java.util.Arrays;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -42,7 +44,7 @@ import java.util.regex.Pattern;
 abstract public class AbstractID3v1Tag extends AbstractID3Tag {
 
     //Logger
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.tag.id3");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.tag.id3");
 
 
     public AbstractID3v1Tag() {
@@ -130,10 +132,10 @@ abstract public class AbstractID3v1Tag extends AbstractID3Tag {
         fc.read(byteBuffer);
         byteBuffer.rewind();
         if (AbstractID3v1Tag.seekForV1OrV11Tag(byteBuffer)) {
-            logger.config("Deleted ID3v1 tag");
+            logger.info("Deleted ID3v1 tag");
             file.setLength(file.length() - TAG_LENGTH);
         } else {
-            logger.config("Unable to find ID3v1 tag to deleteField");
+            logger.info("Unable to find ID3v1 tag to deleteField");
         }
     }
 

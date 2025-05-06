@@ -49,17 +49,17 @@ public class VorbisDecoder implements Decoder {
         try {
             this.track = track;
             if (trackData.isFile()) {
-                logger.fine("Opening file: " + trackData.getFile());
+                logger.info("Opening file: " + trackData.getFile());
                 vorbisFile = new VorbisFile(trackData.getFile().getAbsolutePath());
                 streaming = false;
                 oldBitrate = trackData.getBitrate();
             } else if (trackData.isStream()) {
                 URL url = trackData.getLocation().toURL();
-                logger.fine("Opening stream: " + URLDecoder.decode(url.toString(), "utf8"));
+                logger.info("Opening stream: " + URLDecoder.decode(url.toString(), "utf8"));
                 URLConnection urlConnection = url.openConnection();
                 String contentType = urlConnection.getContentType();
                 if (!contentType.equals("application/ogg")) {
-                    logger.warning("Wrong content type: " + contentType);
+                    logger.warn("Wrong content type: " + contentType);
                     return false;
                 }
                 InputStream is = urlConnection.getInputStream();

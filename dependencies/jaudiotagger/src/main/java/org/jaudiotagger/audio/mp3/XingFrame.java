@@ -121,7 +121,7 @@ public class XingFrame {
         byte[] identifier = new byte[XING_IDENTIFIER_BUFFER_SIZE];
         header.get(identifier);
         if (Arrays.equals(identifier, XING_VBR_ID)) {
-//            MP3File.//logger.finest("Is Vbr");
+//            MP3File.//logger.info("Is Vbr");
             vbr = true;
         }
     }
@@ -226,7 +226,7 @@ public class XingFrame {
         if ((!Arrays.equals(identifier, XING_VBR_ID)) && (!Arrays.equals(identifier, XING_CBR_ID))) {
             return false;
         }
-//        MP3File.//logger.finest("Found Xing Frame");
+//        MP3File.//logger.info("Found Xing Frame");
         return true;
     }
 

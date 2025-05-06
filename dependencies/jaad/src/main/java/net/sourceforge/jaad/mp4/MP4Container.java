@@ -28,7 +28,8 @@ import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import net.sourceforge.jaad.aac.sbr.SBR;
 import net.sourceforge.jaad.mp4.api.Brand;
 import net.sourceforge.jaad.mp4.api.Movie;
 import net.sourceforge.jaad.mp4.boxes.Box;
@@ -36,6 +37,8 @@ import net.sourceforge.jaad.mp4.boxes.BoxFactory;
 import net.sourceforge.jaad.mp4.boxes.BoxTypes;
 import net.sourceforge.jaad.mp4.boxes.impl.FileTypeBox;
 import net.sourceforge.jaad.mp4.boxes.impl.ProgressiveDownloadInformationBox;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The MP4Container is the central class for the MP4 demultiplexer. It reads the
@@ -66,17 +69,7 @@ import net.sourceforge.jaad.mp4.boxes.impl.ProgressiveDownloadInformationBox;
  */
 public class MP4Container {
 
-	static {
-		Logger log = Logger.getLogger("MP4 API");
-		for(Handler h : log.getHandlers()) {
-			log.removeHandler(h);
-		}
-		log.setLevel(Level.WARNING);
-
-		final ConsoleHandler h = new ConsoleHandler();
-		h.setLevel(Level.ALL);
-		log.addHandler(h);
-	}
+	private final static Logger logger = LoggerFactory.getLogger(MP4Container.class.getCanonicalName());
 	private final MP4InputStream in;
 	private final List<Box> boxes;
 	private Brand major, minor;

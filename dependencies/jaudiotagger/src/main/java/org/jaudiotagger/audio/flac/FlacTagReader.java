@@ -25,19 +25,20 @@ import org.jaudiotagger.tag.InvalidFrameException;
 import org.jaudiotagger.tag.flac.FlacTag;
 import org.jaudiotagger.tag.vorbiscomment.VorbisCommentReader;
 import org.jaudiotagger.tag.vorbiscomment.VorbisCommentTag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Read Flac Tag
  */
 public class FlacTagReader {
     // Logger Object
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.audio.flac");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.audio.flac");
 
     private VorbisCommentReader vorbisCommentReader = new VorbisCommentReader();
 
@@ -69,9 +70,9 @@ public class FlacTagReader {
                         MetadataBlockDataPicture mbdp = new MetadataBlockDataPicture(mbh, raf);
                         images.add(mbdp);
                     } catch (IOException ioe) {
-                        //logger.warning("Unable to read picture metablock, ignoring:" + ioe.getMessage());
+                        //logger.warn("Unable to read picture metablock, ignoring:" + ioe.getMessage());
                     } catch (InvalidFrameException ive) {
-                        //logger.warning("Unable to read picture metablock, ignoring" + ive.getMessage());
+                        //logger.warn("Unable to read picture metablock, ignoring" + ive.getMessage());
                     }
 
                     break;

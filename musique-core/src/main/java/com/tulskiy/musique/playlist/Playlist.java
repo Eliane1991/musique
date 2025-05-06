@@ -28,6 +28,8 @@ import com.tulskiy.musique.util.AudioMath;
 import com.tulskiy.musique.util.Util;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.datatype.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URI;
@@ -35,7 +37,6 @@ import java.net.URL;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
@@ -62,7 +63,7 @@ public class Playlist extends ArrayList<Track> {
     private static final int VERSION = 3;
     private static final byte[] MAGIC = "BARABASHKA".getBytes();
 
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(getClass().getName());
     private ArrayList<PlaylistListener> listeners = new ArrayList<PlaylistListener>();
     private String name;
     private boolean sortAscending = true;
@@ -102,7 +103,7 @@ public class Playlist extends ArrayList<Track> {
         try {
             //remove the garbage
             cleanUp();
-            logger.fine("Saving playlist: " + file.getName());
+            logger.info("Saving playlist: " + file.getName());
             DataOutputStream dos = new DataOutputStream(
                     new BufferedOutputStream(new FileOutputStream(file)));
             dos.write(MAGIC);
@@ -157,26 +158,26 @@ public class Playlist extends ArrayList<Track> {
             dos.close();
             regroup();
         } catch (IOException e) {
-            logger.warning("Failed to save playlist " + file.getName() + ": " + e.getMessage());
+            logger.warn("Failed to save playlist " + file.getName() + ": " + e.getMessage());
         }
     }
 
     public void load(File file) {
         try {
             TrackDataCache cache = TrackDataCache.getInstance();
-            logger.fine("Loading musique playlist: " + file.getName());
+            logger.info("Loading musique playlist: " + file.getName());
             DataInputStream dis = new DataInputStream(
                     new BufferedInputStream(new FileInputStream(file)));
 
             byte[] b = new byte[MAGIC.length];
             dis.readFully(b);
             if (!Arrays.equals(b, MAGIC)) {
-                logger.warning("Wrong magic word");
+                logger.warn("Wrong magic word");
                 throw new RuntimeException();
             }
             int version = dis.readInt();
             if (version > VERSION) {
-                logger.warning("Playlist has newer version, expected: " + VERSION + " got: " + version);
+                logger.warn("Playlist has newer version, expected: " + VERSION + " got: " + version);
                 throw new RuntimeException();
             }
             int size = dis.readInt();
@@ -267,7 +268,7 @@ public class Playlist extends ArrayList<Track> {
 
             dis.close();
         } catch (Exception e) {
-            logger.warning("Failed to load playlist " + file.getName() + ": " + e.getMessage());
+            logger.warn("Failed to load playlist " + file.getName() + ": " + e.getMessage());
         }
     }
 
@@ -294,7 +295,7 @@ public class Playlist extends ArrayList<Track> {
     public List<String> loadM3U(String location) {
         Scanner fi;
         ArrayList<String> items = new ArrayList<String>();
-        logger.fine("Loading M3U from: " + location);
+        logger.info("Loading M3U from: " + location);
         try {
             File parent = null;
             if (location.toLowerCase().startsWith("http://")) {
@@ -359,7 +360,7 @@ public class Playlist extends ArrayList<Track> {
     public List<String> loadPLS(String location) {
         Scanner fi;
         ArrayList<String> items = new ArrayList<String>();
-        logger.fine("Loading PLS from: " + location);
+        logger.info("Loading PLS from: " + location);
 
         try {
             if (location.toLowerCase().startsWith("http://")) {
@@ -369,7 +370,7 @@ public class Playlist extends ArrayList<Track> {
             }
 
             if (!fi.nextLine().equalsIgnoreCase("[playlist]")) {
-                logger.warning("PLS has to start with [playlist]: " + location);
+                logger.warn("PLS has to start with [playlist]: " + location);
                 return items;
             }
 
@@ -501,7 +502,7 @@ public class Playlist extends ArrayList<Track> {
     }
 
     public void sort(String expression, boolean toggle) {
-        logger.fine("Sorting playlist with expression: " + expression);
+        logger.info("Sorting playlist with expression: " + expression);
         if (toggle && expression.equals(sortBy)) {
             sortAscending = !sortAscending;
         } else {
@@ -519,7 +520,7 @@ public class Playlist extends ArrayList<Track> {
 
     public void setGroupBy(String expression) {
         groupBy = expression;
-        logger.fine("Grouping playlist with expression: " + expression);
+        logger.info("Grouping playlist with expression: " + expression);
         groupExpression = Util.isEmpty(expression) ? null : Parser.parse(expression);
 
         firePlaylistChanged();

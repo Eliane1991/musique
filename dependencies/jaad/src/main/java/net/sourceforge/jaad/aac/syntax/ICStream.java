@@ -28,11 +28,14 @@ import net.sourceforge.jaad.aac.gain.GainControl;
 import net.sourceforge.jaad.aac.huffman.HCB;
 import net.sourceforge.jaad.aac.huffman.Huffman;
 import net.sourceforge.jaad.aac.tools.TNS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.logging.Level;
 
 //TODO: apply pulse data
 public class ICStream implements Constants, HCB, ScaleFactorTable, IQTable {
-
+	private final static Logger logger = LoggerFactory.getLogger(ICStream.class.getCanonicalName());
 	private static final int SF_DELTA = 60;
 	private static final int SF_OFFSET = 200;
 	private static int randomState = 0x1F2E3D4C;
@@ -82,7 +85,7 @@ public class ICStream implements Constants, HCB, ScaleFactorTable, IQTable {
 		pulseDataPresent = in.readBool();
 		if(pulseDataPresent) {
 			if(info.isEightShortFrame()) throw new AACException("pulse data not allowed for short frames");
-			LOGGER.log(Level.FINE, "PULSE");
+			logger.warn("PULSE");
 			decodePulseData(in);
 		}
 
@@ -95,7 +98,7 @@ public class ICStream implements Constants, HCB, ScaleFactorTable, IQTable {
 		gainControlPresent = in.readBool();
 		if(gainControlPresent) {
 			if(gainControl==null) gainControl = new GainControl(frameLength);
-			LOGGER.log(Level.FINE, "GAIN");
+			logger.warn("GAIN");
 			gainControl.decode(in, info.getWindowSequence());
 		}
 

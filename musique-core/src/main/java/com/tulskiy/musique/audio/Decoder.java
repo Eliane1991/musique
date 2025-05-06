@@ -18,16 +18,17 @@
 package com.tulskiy.musique.audio;
 
 import com.tulskiy.musique.playlist.Track;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sound.sampled.AudioFormat;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
  * Date: 12.06.2009
  */
 public interface Decoder {
-    final Logger logger = Logger.getLogger(Decoder.class.getName());
+    final Logger logger = LoggerFactory.getLogger(Decoder.class.getName());
 
     /**
      * Open the file and prepare for decoding.

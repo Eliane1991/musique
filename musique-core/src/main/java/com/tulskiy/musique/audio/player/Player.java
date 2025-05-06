@@ -21,9 +21,10 @@ import com.tulskiy.musique.audio.player.io.AudioOutput;
 import com.tulskiy.musique.audio.player.io.Buffer;
 import com.tulskiy.musique.playlist.PlaybackOrder;
 import com.tulskiy.musique.playlist.Track;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import static com.tulskiy.musique.audio.player.Actor.Message;
 
@@ -32,7 +33,7 @@ import static com.tulskiy.musique.audio.player.Actor.Message;
  * Date: Jan 21, 2010
  */
 public class Player {
-    public final Logger logger = Logger.getLogger(getClass().getName());
+    public final Logger logger = LoggerFactory.getLogger(getClass().getName());
     private static final int BUFFER_SIZE = (int) Math.pow(2, 18);
 
     private PlayingThread playingThread;
@@ -146,7 +147,7 @@ public class Player {
     }
 
     synchronized void fireEvent(PlayerEvent.PlayerEventCode event) {
-        logger.fine("Player Event: " + event);
+        logger.info("Player Event: " + event);
         PlayerEvent e = new PlayerEvent(event);
         for (PlayerListener listener : listeners) {
             listener.onEvent(e);

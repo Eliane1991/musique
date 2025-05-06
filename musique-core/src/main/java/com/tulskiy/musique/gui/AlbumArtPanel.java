@@ -26,6 +26,8 @@ import com.tulskiy.musique.playlist.formatting.tokens.Expression;
 import com.tulskiy.musique.system.Application;
 import com.tulskiy.musique.system.configuration.AlbumArtConfiguration;
 import com.tulskiy.musique.system.configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.Timer;
 import javax.swing.*;
@@ -37,14 +39,13 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.List;
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
  * Date: Jul 19, 2010
  */
 public class AlbumArtPanel extends JPanel {
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     private Application app = Application.getInstance();
     private Configuration config = app.getConfiguration();
@@ -114,7 +115,7 @@ public class AlbumArtPanel extends JPanel {
                             if (image == null) {
                                 if (file.length() > 102400) //100 Kb
                                     continue;
-                                logger.fine("Loading Album Art from file: " + file);
+                                logger.info("Loading Album Art from file: " + file);
                                 final ImageIcon newImage = new ImageIcon(file.getAbsolutePath());
                                 double iconHeight = newImage.getIconHeight();
                                 double iconWidth = newImage.getIconWidth();
@@ -130,7 +131,7 @@ public class AlbumArtPanel extends JPanel {
                                 }
                                 cache.put(file, image);
                             } else {
-                                logger.fine("Loading Album Art from cache for file: " + file);
+                                logger.info("Loading Album Art from cache for file: " + file);
                             }
                             break;
                         } catch (Exception ignored) {

@@ -166,7 +166,7 @@ public class GlobalHotKeysPlugin extends Plugin {
 
         private void parseConfig() {
             activeHotKeys.clear();
-            activeHotKeys.putAll(HotkeyConfiguration.getHotkeys(logger));
+            activeHotKeys.putAll(HotkeyConfiguration.getHotkeys());
         }
     }
 }

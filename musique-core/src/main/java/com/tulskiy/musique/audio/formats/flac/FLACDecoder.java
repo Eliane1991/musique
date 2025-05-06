@@ -44,7 +44,7 @@ public class FLACDecoder implements Decoder {
 
     public synchronized boolean open(Track track) {
         try {
-            logger.fine("Opening file: " + track.getTrackData().getFile());
+            logger.info("Opening file: " + track.getTrackData().getFile());
             inputFile = new RandomAccessFile(track.getTrackData().getFile(), "r");
 //            ogg = iFile.getAudioHeader().getCodec().equals("Ogg FLAC");
 //            if (ogg) {

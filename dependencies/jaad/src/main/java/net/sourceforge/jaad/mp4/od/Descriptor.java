@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sourceforge.jaad.mp4.MP4InputStream;
+import org.slf4j.LoggerFactory;
 
 /**
  * The abstract base class and factory for all descriptors (defined in ISO
@@ -69,7 +70,7 @@ public abstract class Descriptor {
 		//skip remaining bytes
 		final long remaining = size-(in.getOffset()-desc.start);
 		if(remaining>0) {
-			Logger.getLogger("MP4 Boxes").log(Level.INFO, "Descriptor: bytes left: {0}, offset: {1}", new Long[]{remaining, in.getOffset()});
+			LoggerFactory.getLogger("MP4 Boxes").info( "Descriptor: bytes left: {0}, offset: {1}", new Long[]{remaining, in.getOffset()});
 			in.skipBytes(remaining);
 		}
 		desc.size += read; //include type and size fields
@@ -100,7 +101,7 @@ public abstract class Descriptor {
 			//desc = new SLConfigDescriptor();
 			//break;
 			default:
-				Logger.getLogger("MP4 Boxes").log(Level.INFO, "Unknown descriptor type: {0}", tag);
+				LoggerFactory.getLogger("MP4 Boxes").info( "Unknown descriptor type: {0}", tag);
 				desc = new UnknownDescriptor();
 		}
 		return desc;

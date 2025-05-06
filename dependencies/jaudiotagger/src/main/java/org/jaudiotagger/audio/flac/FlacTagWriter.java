@@ -23,19 +23,20 @@ import org.jaudiotagger.audio.exceptions.CannotWriteException;
 import org.jaudiotagger.audio.flac.metadatablock.*;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.flac.FlacTag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Write Flac Tag
  */
 public class FlacTagWriter {
     // Logger Object
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.audio.flac");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.audio.flac");
 
     private MetadataBlock streamInfoBlock;
     private List<MetadataBlock> metadataBlockPadding = new ArrayList<MetadataBlock>(1);

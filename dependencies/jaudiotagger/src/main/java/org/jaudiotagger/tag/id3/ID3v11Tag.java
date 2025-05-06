@@ -181,7 +181,7 @@ public class ID3v11Tag extends ID3v1Tag {
                     try {
                         this.genre = (byte) ID3Tags.findNumber(text);
                     } catch (Exception ex) {
-                        //logger.log(Level.WARNING, getLoggingFilename() + ":" + "Unable to convert TCON frame to format suitable for v11 tag", ex);
+                        //logger.warn( getLoggingFilename() + ":" + "Unable to convert TCON frame to format suitable for v11 tag", ex);
                         this.genre = (byte) ID3v1Tag.GENRE_UNDEFINED;
                     }
                 }
@@ -424,7 +424,7 @@ public class ID3v11Tag extends ID3v1Tag {
         if (!seek(byteBuffer)) {
             throw new TagNotFoundException("ID3v1 tag not found");
         }
-        //logger.finer("Reading v1.1 tag");
+        //logger.infor("Reading v1.1 tag");
 
         //Do single file read of data to cut down on file reads
         byte[] dataBuffer = new byte[TAG_LENGTH];

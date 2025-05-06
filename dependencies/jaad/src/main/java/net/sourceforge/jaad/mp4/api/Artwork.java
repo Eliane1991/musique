@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import net.sourceforge.jaad.mp4.boxes.impl.meta.ITunesMetadataBox.DataType;
+import org.slf4j.LoggerFactory;
 
 public class Artwork {
 
@@ -95,7 +96,7 @@ public class Artwork {
 			return image;
 		}
 		catch(IOException e) {
-			Logger.getLogger("MP4 API").log(Level.SEVERE, "Artwork.getImage failed: {0}", e.toString());
+			LoggerFactory.getLogger("MP4 API").error("Artwork.getImage failed: {0}", e.toString());
 			throw e;
 		}
 	}

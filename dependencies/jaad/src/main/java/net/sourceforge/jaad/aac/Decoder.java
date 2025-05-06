@@ -25,6 +25,9 @@ import net.sourceforge.jaad.aac.syntax.PCE;
 import net.sourceforge.jaad.aac.syntax.SyntacticElements;
 import net.sourceforge.jaad.aac.filterbank.FilterBank;
 import net.sourceforge.jaad.aac.transport.ADIFHeader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -35,16 +38,8 @@ import java.util.logging.Level;
  */
 public class Decoder implements Constants {
 
-	static {
-		for(Handler h : LOGGER.getHandlers()) {
-			LOGGER.removeHandler(h);
-		}
-		LOGGER.setLevel(Level.WARNING);
-
-		final ConsoleHandler h = new ConsoleHandler();
-		h.setLevel(Level.ALL);
-		LOGGER.addHandler(h);
-	}
+	private final static Logger logger = LoggerFactory.getLogger(Decoder.class.getCanonicalName());
+	
 	private final DecoderConfig config;
 	private final SyntacticElements syntacticElements;
 	private final FilterBank filterBank;
@@ -81,9 +76,9 @@ public class Decoder implements Constants {
 
 		in = new BitStream();
 
-		LOGGER.log(Level.FINE, "profile: {0}", config.getProfile());
-		LOGGER.log(Level.FINE, "sf: {0}", config.getSampleFrequency().getFrequency());
-		LOGGER.log(Level.FINE, "channels: {0}", config.getChannelConfiguration().getDescription());
+		logger.warn("profile: {0}", config.getProfile());
+		logger.warn("sf: {0}", config.getSampleFrequency().getFrequency());
+		logger.warn("channels: {0}", config.getChannelConfiguration().getDescription());
 	}
 
 	public DecoderConfig getConfig() {
@@ -104,7 +99,7 @@ public class Decoder implements Constants {
 		}
 		catch(AACException e) {
 			if(!e.isEndOfStream()) throw e;
-			else LOGGER.warning("unexpected end of frame");
+			else logger.warn("unexpected end of frame");
 		}
 	}
 

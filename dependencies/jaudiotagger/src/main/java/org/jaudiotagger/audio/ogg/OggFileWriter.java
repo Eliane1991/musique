@@ -22,10 +22,11 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.CannotWriteException;
 import org.jaudiotagger.audio.generic.AudioFileWriter;
 import org.jaudiotagger.tag.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.logging.Logger;
 
 /**
  * Write tag data to Ogg File
@@ -34,7 +35,7 @@ import java.util.logging.Logger;
  */
 public class OggFileWriter extends AudioFileWriter {
     // Logger Object
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.audio.ogg");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.audio.ogg");
 
     private OggVorbisTagWriter vtw = new OggVorbisTagWriter();
 

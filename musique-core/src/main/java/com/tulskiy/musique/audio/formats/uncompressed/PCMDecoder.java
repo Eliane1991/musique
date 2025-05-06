@@ -36,7 +36,7 @@ public class PCMDecoder implements Decoder {
 
     public boolean open(Track track) {
         try {
-            logger.fine("Opening file: " + track.getTrackData().getFile());
+            logger.info("Opening file: " + track.getTrackData().getFile());
             this.inputFile = track;
             audioInputStream = AudioSystem.getAudioInputStream(track.getTrackData().getFile());
             audioInputStream = AudioSystem.getAudioInputStream(new AudioFormat(audioInputStream.getFormat().getSampleRate(), audioInputStream.getFormat().getSampleSizeInBits(), audioInputStream.getFormat().getChannels(), true, false), audioInputStream);

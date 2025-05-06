@@ -22,12 +22,9 @@ import org.apache.commons.configuration.ConversionException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -38,7 +35,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.List;
 import java.util.*;
-import java.util.logging.Logger;
+
 
 /**
  * Author: Denis Tulskiy
@@ -46,11 +43,7 @@ import java.util.logging.Logger;
  */
 public class Configuration extends XMLConfiguration {
 
-    public static final int VERSION = 1;
-
-    public static final String PROPERTY_INFO_VERSION = "info.version";
-
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
@@ -73,31 +66,18 @@ public class Configuration extends XMLConfiguration {
 
     @Override
     public void load(Reader reader){
-        logger.fine("Loading configuration");
+        logger.info("Loading configuration");
 
         try {
             super.load(reader);
         } catch (ConfigurationException e) {
-            logger.severe(String.format("Configuration load error, {0}", e.getMessage()));
-        }
-
-        int version = getInt(PROPERTY_INFO_VERSION, -1);
-        if (version > VERSION) {
-            logger.warning(String.format("Configuration of newer v%d found, but v%d is latest supported." +
-                    " Backward compatibility is not guaranteed.", version, VERSION));
-        }
-        else if (version == -1) {
-            logger.warning("Configuration of unknown version is loaded." +
-                    " Backward compatibility is not guaranteed.");
-        }
-        else {
-            logger.config(String.format("Configuration of v%d is loaded.", version));
+            logger.error(String.format("Configuration load error, {0}", e.getMessage()));
         }
     }
 
     @Override
     public void save(Writer writer) {
-        logger.fine("Saving configuration");
+        logger.info("Saving configuration");
 
         try {
 
@@ -110,7 +90,7 @@ public class Configuration extends XMLConfiguration {
             writer.close();
         }
         catch (ConfigurationException | IOException ce) {
-            logger.severe("Failed to save configuration: " + ce.getMessage());
+            logger.error("Failed to save configuration: " + ce.getMessage());
         }
     }
 
@@ -154,7 +134,7 @@ public class Configuration extends XMLConfiguration {
             if (array != null)
                 map.put(key, array);
         } catch (IOException e) {
-            logger.severe("Failed to load configuration: " + e.getMessage());
+            logger.error("Failed to load configuration: " + e.getMessage());
         }
     }
 
@@ -294,7 +274,7 @@ public class Configuration extends XMLConfiguration {
         remove(key);
         if (values == null) {
             // TODO refactor when dev cycle finished (right now check implemented for debug in emergency case)
-            logger.severe("Illegal argument (empty list). Please check calling code.");
+            logger.error("Illegal argument (empty list). Please check calling code.");
         }
         for (Object value : values) {
             add(key, value);

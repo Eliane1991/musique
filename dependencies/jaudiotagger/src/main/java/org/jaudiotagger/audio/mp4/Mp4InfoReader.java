@@ -23,11 +23,12 @@ import org.jaudiotagger.audio.exceptions.CannotReadVideoException;
 import org.jaudiotagger.audio.generic.GenericAudioHeader;
 import org.jaudiotagger.audio.mp4.atom.*;
 import org.jaudiotagger.logging.ErrorMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
-import java.util.logging.Logger;
 
 /**
  * Read audio info from file.
@@ -54,7 +55,7 @@ import java.util.logging.Logger;
  */
 public class Mp4InfoReader {
     // Logger Object
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.audio.mp4.atom");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.audio.mp4.atom");
 
     public GenericAudioHeader read(RandomAccessFile raf) throws CannotReadException, IOException {
         Mp4AudioHeader info = new Mp4AudioHeader();

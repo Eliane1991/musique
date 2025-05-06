@@ -17,23 +17,25 @@
 
 package com.tulskiy.musique.spi;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
  * Date: 2/27/11
  */
 public class PluginLoader {
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(getClass().getName());
     private ArrayList<Plugin> activePlugins = new ArrayList<Plugin>();
 
     public void load() {
-        logger.fine("Loading plugins");
+        logger.info("Loading plugins");
 //            URLClassLoader classLoader = new URLClassLoader(new URL[]{
 //                    new File("musique.jar").toURI().toURL(),
 //            });
@@ -41,19 +43,19 @@ public class PluginLoader {
             ServiceLoader<Plugin> loader = ServiceLoader.load(Plugin.class, getClass().getClassLoader());
             for (Plugin plugin : loader) {
             try {
-                logger.fine("Loading plugin: " + plugin);
+                logger.info("Loading plugin: " + plugin);
                 if (plugin.init()) {
                     activePlugins.add(plugin);
                 }
             } catch (Throwable e) {
-                logger.log(Level.WARNING, "Error loading " + plugin.getDescription(), e);
+                logger.warn( "Error loading " + plugin.getDescription(), e);
             }
         }
         } catch (Throwable e) {
             e.printStackTrace();
-            logger.log(Level.WARNING, "Error loading plugins", e);
+            logger.warn("Error loading plugins", e);
         }
-        logger.fine("Finished loading plugins");
+        logger.info("Finished loading plugins");
     }
 
     public void shutdown() {

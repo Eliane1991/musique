@@ -130,7 +130,7 @@ public class FrameBodyTDRC extends AbstractFrameBodyTextInfo implements ID3v24Fr
             String result = formatDate.format(date);
             return result;
         } catch (ParseException e) {
-            //logger.warning("Unable to parse:" + text);
+            //logger.warn("Unable to parse:" + text);
         }
         return "";
     }
@@ -163,18 +163,18 @@ public class FrameBodyTDRC extends AbstractFrameBodyTextInfo implements ID3v24Fr
     }
 
     public void setYear(String year) {
-        //logger.finest("Setting year to" + year);
+        //logger.info("Setting year to" + year);
         this.year = year;
     }
 
     public void setTime(String time) {
-        //logger.finest("Setting time to:" + time);
+        //logger.info("Setting time to:" + time);
         this.time = time;
     }
 
 
     public void setDate(String date) {
-        //logger.finest("Setting date to:" + date);
+        //logger.info("Setting date to:" + date);
         this.date = date;
     }
 
@@ -272,7 +272,7 @@ public class FrameBodyTDRC extends AbstractFrameBodyTextInfo implements ID3v24Fr
                 //Do nothing;
             } catch (NumberFormatException nfe) {
                 //Do nothing except log warning because not really expecting this to happen
-                logger.log(Level.WARNING, "Date Formatter:" + formatters.get(i).toPattern() + "failed to parse:" + getText() + "with " + nfe.getMessage(), nfe);
+                logger.warn( "Date Formatter:" + formatters.get(i).toPattern() + "failed to parse:" + getText() + "with " + nfe.getMessage(), nfe);
             }
         }
     }
@@ -322,7 +322,7 @@ public class FrameBodyTDRC extends AbstractFrameBodyTextInfo implements ID3v24Fr
     //TODO currently if user has entered Year and Month, we only store in v23, should we store month with 
     //first day
     private void extractID3v23Formats(final Date dateRecord, final int precision) {
-        //logger.fine("Precision is:" + precision + "for date:" + dateRecord.toString());
+        //logger.info("Precision is:" + precision + "for date:" + dateRecord.toString());
         Date d = dateRecord;
 
         //Precision Year

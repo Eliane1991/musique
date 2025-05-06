@@ -18,10 +18,12 @@
  */
 package org.jaudiotagger.audio.flac.metadatablock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
-import java.util.logging.Logger;
 
 /**
  * Stream Info
@@ -51,7 +53,7 @@ public class MetadataBlockDataStreamInfo implements MetadataBlockData {
     public static final int STREAM_INFO_DATA_LENGTH = 34;
 
     // Logger Object
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.audio.flac.MetadataBlockDataStreamInfo");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.audio.flac.MetadataBlockDataStreamInfo");
 
     private int minBlockSize, maxBlockSize, minFrameSize, maxFrameSize, samplingRate, samplingRatePerChannel, bitsPerSample, channelNumber, totalNumberOfSamples;
     private double songLength;

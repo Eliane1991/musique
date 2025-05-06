@@ -27,6 +27,8 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagField;
 import org.jaudiotagger.tag.mp4.field.Mp4DiscNoField;
 import org.jaudiotagger.tag.mp4.field.Mp4TrackField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +37,6 @@ import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
@@ -44,10 +45,10 @@ import java.util.logging.Logger;
 public abstract class AudioFileReader {
     private static CUEParser cueParser;
     protected static Charset defaultCharset = Charset.forName("iso8859-1");
-    protected final Logger logger = Logger.getLogger(getClass().getName());
+    protected final Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     public void read(File file, List<Track> list) {
-        logger.log(Level.FINEST, "Reading file : {0}", file);
+        logger.warn( "Reading file : {}", file);
         Track track = read(file);
         String cueSheet = track.getTrackData().getCueSheet();
         if (cueSheet != null && cueSheet.length() > 0) {

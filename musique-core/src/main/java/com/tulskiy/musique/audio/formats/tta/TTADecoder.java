@@ -49,7 +49,7 @@ public class TTADecoder implements Decoder {
 
             return true;
         } catch (FileNotFoundException e) {
-            logger.log(Level.WARNING, "File not found", e);
+            logger.warn( "File not found", e);
         }
         return false;
     }
@@ -70,7 +70,7 @@ public class TTADecoder implements Decoder {
             track.getTrackData().setBitrate(decoder.get_current_bitrate());
             return decoder.process_stream(buf);
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Decoder Error", e);
+            logger.warn( "Decoder Error", e);
             return -1;
         }
     }
@@ -82,7 +82,7 @@ public class TTADecoder implements Decoder {
             try {
                 decoder.close();
             } catch (IOException e) {
-                logger.log(Level.WARNING, "Could not close decoder", e);
+                logger.warn( "Could not close decoder", e);
             }
         decoder = null;
         info = null;

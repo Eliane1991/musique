@@ -68,7 +68,7 @@ public class AACDecoder implements com.tulskiy.musique.audio.Decoder {
             errorCount = 0;
             return true;
         } catch (IOException e) {
-            logger.log(Level.WARNING, "Could not open AAC stream", e);
+            logger.warn( "Could not open AAC stream", e);
         }
         return false;
     }
@@ -93,7 +93,7 @@ public class AACDecoder implements com.tulskiy.musique.audio.Decoder {
             return length;
         } catch (IOException e) {
             if (track.getTrackData().isStream()) {
-                logger.log(Level.WARNING, "Error decoding AAC stream", e);
+                logger.warn( "Error decoding AAC stream", e);
                 close();
                 //save it here because we set errorCount to 0 in open
                 int oldErr = errorCount++;
@@ -116,7 +116,7 @@ public class AACDecoder implements com.tulskiy.musique.audio.Decoder {
             try {
                 in.close();
             } catch (IOException e) {
-                logger.log(Level.WARNING, "Could not close AAC stream", e);
+                logger.warn( "Could not close AAC stream", e);
             }
         }
 

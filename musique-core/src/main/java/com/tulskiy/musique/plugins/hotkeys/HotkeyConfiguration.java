@@ -21,18 +21,19 @@ import com.tulskiy.musique.plugins.hotkeys.GlobalHotKeysPlugin.HotKeyEvent;
 import com.tulskiy.musique.system.Application;
 import com.tulskiy.musique.system.configuration.Configuration;
 import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import javax.swing.*;
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * Author: Maksim Liauchuk
  * Date: Aug 27, 2011
  */
 public class HotkeyConfiguration {
-    
+    private static final Logger logger = LoggerFactory.getLogger(HotkeyConfiguration.class.getName());
     private HotkeyConfiguration() {
         // prevent instantiation
     }
@@ -42,7 +43,7 @@ public class HotkeyConfiguration {
         return "hotkeys.hotkey";
     }
     
-    public static Map<KeyStroke, HotKeyEvent> getHotkeys(Logger logger) {
+    public static Map<KeyStroke, HotKeyEvent> getHotkeys() {
         Configuration config = Application.getInstance().getConfiguration();
         List<String> hotkeysRaw = (List<String>) config.getList(getHotkeyKey());
         Map<KeyStroke, HotKeyEvent> hotkeys = new LinkedHashMap<KeyStroke, HotKeyEvent>();
@@ -56,7 +57,7 @@ public class HotkeyConfiguration {
 
                     hotkeys.put(keyStroke, event);
                 } catch (IllegalArgumentException e) {
-                    logger.warning("Could not parse hotkey for string: " + hotkeyRaw);
+                    logger.warn("Could not parse hotkey for string: " + hotkeyRaw);
                 }
             }
         }

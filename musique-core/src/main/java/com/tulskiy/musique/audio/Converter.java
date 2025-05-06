@@ -25,18 +25,19 @@ import com.tulskiy.musique.system.Codecs;
 import com.tulskiy.musique.system.TrackIO;
 import com.tulskiy.musique.system.configuration.Configuration;
 import com.tulskiy.musique.util.AudioMath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.io.File;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
  * Date: Jul 27, 2010
  */
 public class Converter {
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private Configuration config = Application.getInstance().getConfiguration();
     private Expression fileNameFormat;
     private Encoder encoder;
@@ -177,7 +178,7 @@ public class Converter {
 
     public boolean openEncoder() {
         if (decoder == null) {
-            logger.severe("Need to initialize decoder before encoder!");
+            logger.error("Need to initialize decoder before encoder!");
         }
 
         logger.info("Converting track: " + track.getTrackData().getLocation());
@@ -192,12 +193,12 @@ public class Converter {
         }
 
         if (parent == null || !parent.isDirectory()) {
-            logger.warning("Don't know where to save track: " + track.getTrackData().getLocation());
+            logger.warn("Don't know where to save track: " + track.getTrackData().getLocation());
             return false;
         }
 
         if (!parent.canWrite()) {
-            logger.warning("Cannot write to folder: " + parent);
+            logger.warn("Cannot write to folder: " + parent);
             return false;
         }
         //noinspection ResultOfMethodCallIgnored
@@ -235,7 +236,7 @@ public class Converter {
         logger.info("Saving track to file: " + output.getAbsolutePath());
         encoder = Codecs.getEncoder(format);
         if (!encoder.open(output, decoder.getAudioFormat(), config)) {
-            logger.warning("Couldn't initialize encoder for track: " + track.getTrackData().getLocation());
+            logger.warn("Couldn't initialize encoder for track: " + track.getTrackData().getLocation());
             return false;
         }
         return true;

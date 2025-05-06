@@ -25,11 +25,12 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.logging.ErrorMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.logging.Logger;
 import java.util.logging.Level;
 
 /*
@@ -45,7 +46,7 @@ import java.util.logging.Level;
 public abstract class AudioFileReader {
 
     // Logger Object
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.audio.generic");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.audio.generic");
     private static final int MINIMUM_SIZE_FOR_VALID_AUDIO_FILE = 150;
 
     /*
@@ -78,9 +79,6 @@ public abstract class AudioFileReader {
       * @exception CannotReadException If anything went bad during the read of this file
       */
     public AudioFile read(File f) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException {
-        if (logger.isLoggable(Level.INFO)) {
-            //logger.info(ErrorMessage.GENERAL_READ.getMsg(f.getAbsolutePath()));
-        }
 
         if (!f.canRead()) {
             throw new CannotReadException(ErrorMessage.GENERAL_READ_FAILED_FILE_TOO_SMALL.getMsg(f.getAbsolutePath()));
@@ -103,7 +101,7 @@ public abstract class AudioFileReader {
         } catch (CannotReadException cre) {
             throw cre;
         } catch (Exception e) {
-            logger.log(Level.SEVERE, ErrorMessage.GENERAL_READ.getMsg(f.getAbsolutePath()), e);
+            logger.error(ErrorMessage.GENERAL_READ.getMsg(f.getAbsolutePath()), e);
             throw new CannotReadException(f.getAbsolutePath() + ":" + e.getMessage(), e);
         } finally {
             try {
@@ -111,7 +109,7 @@ public abstract class AudioFileReader {
                     raf.close();
                 }
             } catch (Exception ex) {
-                logger.log(Level.WARNING, ErrorMessage.GENERAL_READ_FAILED_UNABLE_TO_CLOSE_RANDOM_ACCESS_FILE.getMsg(f.getAbsolutePath()));
+                logger.warn( ErrorMessage.GENERAL_READ_FAILED_UNABLE_TO_CLOSE_RANDOM_ACCESS_FILE.getMsg(f.getAbsolutePath()));
             }
         }
     }

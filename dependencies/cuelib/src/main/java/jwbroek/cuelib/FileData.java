@@ -18,9 +18,11 @@
  */
 package jwbroek.cuelib;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Simple representation of a FILE block in a cue sheet.
@@ -31,7 +33,7 @@ public class FileData
   /**
    * The logger for this class.
    */
-  private final static Logger logger = Logger.getLogger(FileData.class.getCanonicalName());
+  private final static Logger logger = LoggerFactory.getLogger(FileData.class.getCanonicalName());
   /**
    * The track data for this file data.
    */
@@ -55,9 +57,9 @@ public class FileData
    */
   public FileData(final CueSheet parent)
   {
-    FileData.logger.entering(FileData.class.getCanonicalName(), "FileData(CueSheet)", parent);
+    FileData.logger.info(FileData.class.getCanonicalName(), "FileData(CueSheet)", parent);
     this.parent = parent;
-    FileData.logger.exiting(FileData.class.getCanonicalName(), "FileData(CueSheet)");
+    FileData.logger.info(FileData.class.getCanonicalName(), "FileData(CueSheet)");
   }
   
   /**
@@ -69,7 +71,7 @@ public class FileData
    */
   public FileData(final CueSheet parent, final String file, final String fileType)
   {
-    FileData.logger.entering
+    FileData.logger.info
       ( FileData.class.getCanonicalName()
       , "FileData(CueSheet,String,String)"
       , new Object[] {parent, file, fileType}
@@ -77,7 +79,7 @@ public class FileData
     this.parent = parent;
     this.file = file;
     this.fileType = fileType;
-    FileData.logger.exiting(FileData.class.getCanonicalName(), "FileData(CueSheet,String,String)");
+    FileData.logger.info(FileData.class.getCanonicalName(), "FileData(CueSheet,String,String)");
   }
 
   /**
@@ -86,7 +88,7 @@ public class FileData
    */
   public List<Index> getAllIndices()
   {
-    FileData.logger.entering(FileData.class.getCanonicalName(), "getAllIndices()");
+    FileData.logger.info(FileData.class.getCanonicalName(), "getAllIndices()");
     List<Index> allIndices = new ArrayList<Index>();
     
     for (TrackData trackData: this.trackData)
@@ -94,7 +96,7 @@ public class FileData
       allIndices.addAll(trackData.getIndices());
     }
     
-    FileData.logger.exiting(FileData.class.getCanonicalName(), "getAllIndices()", allIndices);
+    FileData.logger.info(FileData.class.getCanonicalName(), "getAllIndices()", allIndices);
     return allIndices;
   }
   
@@ -104,8 +106,8 @@ public class FileData
    */
   public String getFile()
   {
-    FileData.logger.entering(FileData.class.getCanonicalName(), "getFile()");
-    FileData.logger.exiting(FileData.class.getCanonicalName(), "getFile()", this.file);
+    FileData.logger.info(FileData.class.getCanonicalName(), "getFile()");
+    FileData.logger.info(FileData.class.getCanonicalName(), "getFile()", this.file);
     return this.file;
   }
   
@@ -115,9 +117,9 @@ public class FileData
    */
   public void setFile(final String file)
   {
-    FileData.logger.entering(FileData.class.getCanonicalName(), "setFile(String)", file);
+    FileData.logger.info(FileData.class.getCanonicalName(), "setFile(String)", file);
     this.file = file;
-    FileData.logger.exiting(FileData.class.getCanonicalName(), "setFile(String)");
+    FileData.logger.info(FileData.class.getCanonicalName(), "setFile(String)");
   }
   
   /**
@@ -128,8 +130,8 @@ public class FileData
    */
   public String getFileType()
   {
-    FileData.logger.entering(FileData.class.getCanonicalName(), "getFileType()");
-    FileData.logger.exiting(FileData.class.getCanonicalName(), "getFileType()", this.fileType);
+    FileData.logger.info(FileData.class.getCanonicalName(), "getFileType()");
+    FileData.logger.info(FileData.class.getCanonicalName(), "getFileType()", this.fileType);
     return this.fileType;
   }
   
@@ -141,9 +143,9 @@ public class FileData
    */
   public void setFileType(final String fileType)
   {
-    FileData.logger.entering(FileData.class.getCanonicalName(), "setFileType(String)", fileType);
+    FileData.logger.info(FileData.class.getCanonicalName(), "setFileType(String)", fileType);
     this.fileType = fileType;
-    FileData.logger.exiting(FileData.class.getCanonicalName(), "setFileType(String)");
+    FileData.logger.info(FileData.class.getCanonicalName(), "setFileType(String)");
   }
   
   /**
@@ -152,8 +154,8 @@ public class FileData
    */
   public List<TrackData> getTrackData()
   {
-    FileData.logger.entering(FileData.class.getCanonicalName(), "getTrackData()");
-    FileData.logger.exiting(FileData.class.getCanonicalName(), "getTrackData()", this.trackData);
+    FileData.logger.info(FileData.class.getCanonicalName(), "getTrackData()");
+    FileData.logger.info(FileData.class.getCanonicalName(), "getTrackData()", this.trackData);
     return this.trackData;
   }
   
@@ -163,8 +165,8 @@ public class FileData
    */
   public CueSheet getParent()
   {
-    FileData.logger.entering(FileData.class.getCanonicalName(), "getParent()");
-    FileData.logger.exiting(FileData.class.getCanonicalName(), "getParent()", this.parent);
+    FileData.logger.info(FileData.class.getCanonicalName(), "getParent()");
+    FileData.logger.info(FileData.class.getCanonicalName(), "getParent()", this.parent);
     return this.parent;
   }
 
@@ -174,8 +176,8 @@ public class FileData
    */
   public void setParent(final CueSheet parent)
   {
-    FileData.logger.entering(FileData.class.getCanonicalName(), "setParent(CueSheet)", parent);
+    FileData.logger.info(FileData.class.getCanonicalName(), "setParent(CueSheet)", parent);
     this.parent = parent;
-    FileData.logger.exiting(FileData.class.getCanonicalName(), "setParent(CueSheet)");
+    FileData.logger.info(FileData.class.getCanonicalName(), "setParent(CueSheet)");
   }
 }

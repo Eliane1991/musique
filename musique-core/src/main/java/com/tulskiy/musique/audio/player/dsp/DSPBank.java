@@ -17,8 +17,10 @@
 
 package com.tulskiy.musique.audio.player.dsp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
@@ -26,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class DSPBank {
     private static final int DEFAULT_SAMPLES_SIZE = (int) (44100 * 4 * 0.2);
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     private ArrayList<Processor> processors = new ArrayList<Processor>();
     private int count;

@@ -18,7 +18,8 @@
  */
 package jwbroek.cuelib;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple representation of a line of input for use by CueParser.
@@ -29,7 +30,7 @@ public class LineOfInput
   /**
    * The logger for this class.
    */
-  private final static Logger logger = Logger.getLogger(LineOfInput.class.getCanonicalName());
+  private final static Logger logger = LoggerFactory.getLogger(LineOfInput.class.getCanonicalName());
   /**
    * Number of this line.
    */
@@ -51,7 +52,7 @@ public class LineOfInput
    */
   public LineOfInput(final int lineNumber, final String input, final CueSheet associatedSheet)
   {
-    LineOfInput.logger.entering
+    LineOfInput.logger.info
       ( LineOfInput.class.getCanonicalName()
       , "LineOfInput(int,String,CueSheet)"
       , new Object[] {lineNumber, input, associatedSheet}
@@ -59,7 +60,7 @@ public class LineOfInput
     this.lineNumber = lineNumber;
     this.input = input;
     this.associatedSheet = associatedSheet;
-    LineOfInput.logger.exiting(Index.class.getCanonicalName(), "LineOfInput(int,String,CueSheet)");
+    LineOfInput.logger.info(Index.class.getCanonicalName(), "LineOfInput(int,String,CueSheet)");
   }
   
   /**
@@ -68,8 +69,8 @@ public class LineOfInput
    */
   public CueSheet getAssociatedSheet()
   {
-    LineOfInput.logger.entering(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()");
-    LineOfInput.logger.exiting(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()", this.associatedSheet);
+    LineOfInput.logger.info(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()");
+    LineOfInput.logger.info(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()", this.associatedSheet);
     return this.associatedSheet;
   }
 
@@ -79,8 +80,8 @@ public class LineOfInput
    */
   public String getInput()
   {
-    LineOfInput.logger.entering(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()");
-    LineOfInput.logger.exiting(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()", this.input);
+    LineOfInput.logger.info(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()");
+    LineOfInput.logger.info(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()", this.input);
     return this.input;
   }
 
@@ -90,8 +91,8 @@ public class LineOfInput
    */
   public int getLineNumber()
   {
-    LineOfInput.logger.entering(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()");
-    LineOfInput.logger.exiting(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()", this.lineNumber);
+    LineOfInput.logger.info(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()");
+    LineOfInput.logger.info(LineOfInput.class.getCanonicalName(), "getAssociatedSheet()", this.lineNumber);
     return this.lineNumber;
   }
 }

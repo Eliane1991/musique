@@ -24,9 +24,10 @@ import com.tulskiy.musique.gui.menu.TracksMenu;
 import com.tulskiy.musique.playlist.PlaylistManager;
 import com.tulskiy.musique.system.Application;
 import com.tulskiy.musique.system.configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
@@ -37,7 +38,7 @@ public abstract class Plugin {
     protected static final Player player = application.getPlayer();
     protected static final Configuration config = application.getConfiguration();
     protected static final PlaylistManager playlistManager = application.getPlaylistManager();
-    protected final Logger logger = Logger.getLogger(getClass().getName());
+    protected final Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     public abstract boolean init();
 

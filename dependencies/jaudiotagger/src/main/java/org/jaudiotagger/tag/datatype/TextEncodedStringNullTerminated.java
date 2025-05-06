@@ -60,7 +60,7 @@ public class TextEncodedStringNullTerminated extends AbstractString {
         }
         int bufferSize;
 //
-        //logger.finer("Reading from array starting from offset:" + offset);
+        //logger.infor("Reading from array starting from offset:" + offset);
         int size;
 
         //Get the Specified Decoder
@@ -85,7 +85,7 @@ public class TextEncodedStringNullTerminated extends AbstractString {
                     buffer.mark();
                     buffer.reset();
                     endPosition = buffer.position() - 1;
-//                    logger.finest("Null terminator found starting at:" + endPosition);
+//                    logger.info("Null terminator found starting at:" + endPosition);
 
                     isNullTerminatorFound = true;
                     break;
@@ -97,7 +97,7 @@ public class TextEncodedStringNullTerminated extends AbstractString {
                             buffer.mark();
                             buffer.reset();
                             endPosition = buffer.position() - 2;
-//                            logger.finest("UTF16:Null terminator found starting  at:" + endPosition);
+//                            logger.info("UTF16:Null terminator found starting  at:" + endPosition);
                             isNullTerminatorFound = true;
                             break;
                         } else {
@@ -108,7 +108,7 @@ public class TextEncodedStringNullTerminated extends AbstractString {
                         buffer.mark();
                         buffer.reset();
                         endPosition = buffer.position() - 1;
-                        //logger.warning("UTF16:Should be two null terminator marks but only found one starting at:" + endPosition);
+                        //logger.warn("UTF16:Should be two null terminator marks but only found one starting at:" + endPosition);
 
                         isNullTerminatorFound = true;
                         break;
@@ -129,7 +129,7 @@ public class TextEncodedStringNullTerminated extends AbstractString {
         }
 //
 
-        //logger.finest("End Position is:" + endPosition + "Offset:" + offset);
+        //logger.info("End Position is:" + endPosition + "Offset:" + offset);
 
         //Set Size so offset is ready for next field (includes the null terminator)
         size = endPosition - offset;
@@ -143,7 +143,7 @@ public class TextEncodedStringNullTerminated extends AbstractString {
         //catch and then set value to empty string. (We don't read the null terminator
         //because we dont want to display this)
         bufferSize = endPosition - offset;
-//        logger.finest("Text size is:" + bufferSize);
+//        logger.info("Text size is:" + bufferSize);
         if (bufferSize == 0) {
             value = "";
         } else {
@@ -153,7 +153,7 @@ public class TextEncodedStringNullTerminated extends AbstractString {
             decoder.reset();
             CoderResult coderResult = decoder.decode(inBuffer, outBuffer, true);
             if (coderResult.isError()) {
-                //logger.warning("Problem decoding text encoded null terminated string:" + coderResult.toString());
+                //logger.warn("Problem decoding text encoded null terminated string:" + coderResult.toString());
             }
             decoder.flush(outBuffer);
             outBuffer.flip();
@@ -191,7 +191,7 @@ public class TextEncodedStringNullTerminated extends AbstractString {
         }
         //Should never happen so if does throw a RuntimeException
         catch (CharacterCodingException ce) {
-            logger.severe(ce.getMessage());
+            logger.error(ce.getMessage());
             throw new RuntimeException(ce);
         }
         setSize(data.length);
@@ -201,7 +201,7 @@ public class TextEncodedStringNullTerminated extends AbstractString {
     protected String getTextEncodingCharSet() {
         byte textEncoding = this.getBody().getTextEncoding();
         String charSetName = TextEncoding.getInstanceOf().getValueForId(textEncoding);
-        //logger.finest("text encoding:" + textEncoding + " charset:" + charSetName);
+        //logger.info("text encoding:" + textEncoding + " charset:" + charSetName);
         return charSetName;
     }
 }

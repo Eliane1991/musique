@@ -42,6 +42,7 @@ import net.sourceforge.jaad.mp4.boxes.impl.meta.NeroMetadataTagsBox;
 import net.sourceforge.jaad.mp4.boxes.impl.meta.ThreeGPPAlbumBox;
 import net.sourceforge.jaad.mp4.boxes.impl.meta.ThreeGPPLocationBox;
 import net.sourceforge.jaad.mp4.boxes.impl.meta.ThreeGPPMetadataBox;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class contains the metadata for a movie. It parses different metadata
@@ -298,7 +299,7 @@ public class MetaData {
 				put(Field.RELEASE_DATE, new Date(Integer.parseInt(value)));
 			}
 			catch(NumberFormatException e) {
-				Logger.getLogger("MP4 API").log(Level.INFO, "unable to parse 3GPP metadata: recording year value: {0}", value);
+				LoggerFactory.getLogger("MP4 API").info( "unable to parse 3GPP metadata: recording year value: {0}", value);
 			}
 		}
 		if(udta.hasChild(BoxTypes.THREE_GPP_TITLE_BOX)) put(Field.TITLE, ((ThreeGPPMetadataBox) udta.getChild(BoxTypes.THREE_GPP_TITLE_BOX)).getData());
@@ -445,7 +446,7 @@ public class MetaData {
 			}
 		}
 		catch(IOException e) {
-			Logger.getLogger("MP4 API").log(Level.SEVERE, "Exception in MetaData.parseID3: {0}", e.toString());
+			LoggerFactory.getLogger("MP4 API").error( "Exception in MetaData.parseID3: {0}", e.toString());
 		}
 	}
 
@@ -482,7 +483,7 @@ public class MetaData {
 				if(key.equals(NERO_TAGS[19])) put(Field.TEMPO, Integer.parseInt(val));
 			}
 			catch(NumberFormatException e) {
-				Logger.getLogger("MP4 API").log(Level.SEVERE, "Exception in MetaData.parseNeroTags: {0}", e.toString());
+				LoggerFactory.getLogger("MP4 API").error( "Exception in MetaData.parseNeroTags: {0}", e.toString());
 			}
 		}
 	}

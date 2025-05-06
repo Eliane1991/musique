@@ -60,7 +60,7 @@ public class MP4Decoder implements com.tulskiy.musique.audio.Decoder {
             initDecoder(0);
             return true;
         } catch (IOException e) {
-            logger.log(Level.WARNING, "Error opening file " + track.getTrackData().getFile().getAbsolutePath(), e);
+            logger.warn( "Error opening file " + track.getTrackData().getFile().getAbsolutePath(), e);
         }
         return false;
     }
@@ -140,7 +140,7 @@ public class MP4Decoder implements com.tulskiy.musique.audio.Decoder {
         try {
             initDecoder(sample);
         } catch (IOException e) {
-            logger.log(Level.WARNING, "Error while trying to see to sample " + sample, e);
+            logger.warn( "Error while trying to see to sample " + sample, e);
         }
     }
 
@@ -166,7 +166,7 @@ public class MP4Decoder implements com.tulskiy.musique.audio.Decoder {
             offset = 0;
             return len - off;
         } catch (IOException e) {
-            logger.log(Level.WARNING, "Error decoding mp4 file", e);
+            logger.warn( "Error decoding mp4 file", e);
         }
         return -1;
     }
@@ -178,7 +178,7 @@ public class MP4Decoder implements com.tulskiy.musique.audio.Decoder {
             in = null;
             decoder = null;
         } catch (IOException e) {
-            logger.log(Level.WARNING, "Error closing file input stream", e);
+            logger.warn( "Error closing file input stream", e);
         }
     }
 }

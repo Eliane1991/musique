@@ -19,6 +19,7 @@ package com.tulskiy.musique.system.configuration;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.io.StringReader;
@@ -38,7 +39,7 @@ public class ConfigTest {
 
     @Before
     public void setUp() {
-        Logger.getLogger(getClass().getName()).setLevel(Level.OFF);
+        LoggerFactory.getLogger(getClass().getName());
         config = new Configuration();
 
 //        String configStr =

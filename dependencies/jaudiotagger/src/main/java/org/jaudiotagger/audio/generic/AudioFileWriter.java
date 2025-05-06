@@ -24,11 +24,12 @@ import org.jaudiotagger.audio.exceptions.CannotWriteException;
 import org.jaudiotagger.audio.exceptions.ModifyVetoException;
 import org.jaudiotagger.logging.ErrorMessage;
 import org.jaudiotagger.tag.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.logging.Logger;
 
 /**
  * This abstract class is the skeleton for tag writers.
@@ -47,7 +48,7 @@ public abstract class AudioFileWriter {
     private static final int MINIMUM_FILESIZE = 150;
 
     // Logger Object
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.audio.generic");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.audio.generic");
 
     /**
      * If not <code>null</code>, this listener is used to notify the listener
@@ -114,12 +115,12 @@ public abstract class AudioFileWriter {
                 if (tempF.length() > 0 && !revert) {
                     boolean deleteResult = af.getFile().delete();
                     if (deleteResult == false) {
-                            //logger.warning(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_ORIGINAL_FILE.getMsg(af.getFile().getPath(), tempF.getPath()));
+                            //logger.warn(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_ORIGINAL_FILE.getMsg(af.getFile().getPath(), tempF.getPath()));
                         throw new CannotWriteException(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_ORIGINAL_FILE.getMsg(af.getFile().getPath(), tempF.getPath()));
                     }
                     boolean renameResult = tempF.renameTo(af.getFile());
                     if (renameResult == false) {
-                            //logger.warning(ErrorMessage.GENERAL_WRITE_FAILED_TO_RENAME_TO_ORIGINAL_FILE.getMsg(af.getFile().getPath(), tempF.getPath()));
+                            //logger.warn(ErrorMessage.GENERAL_WRITE_FAILED_TO_RENAME_TO_ORIGINAL_FILE.getMsg(af.getFile().getPath(), tempF.getPath()));
                         throw new CannotWriteException(ErrorMessage.GENERAL_WRITE_FAILED_TO_RENAME_TO_ORIGINAL_FILE.getMsg(af.getFile().getPath(), tempF.getPath()));
                     }
                     result = tempF;
@@ -128,18 +129,18 @@ public abstract class AudioFileWriter {
                     if (tempF.exists()) {
                         if (!tempF.delete()) {
                             //Non critical failed deletion
-                            //logger.warning(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(tempF.getPath()));
+                            //logger.warn(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(tempF.getPath()));
                         }
                     }
                 } else {
                     //It was created but never used
                     if (!tempF.delete()) {
                         //Non critical failed deletion
-                        //logger.warning(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(tempF.getPath()));
+                        //logger.warn(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(tempF.getPath()));
                     }
                 }
             } catch (Exception ex) {
-//                //logger.severe("AudioFileWriter exception cleaning up delete:" + af.getFile().getPath() + " or" + tempF.getAbsolutePath() + ":" + ex);
+//                //logger.error("AudioFileWriter exception cleaning up delete:" + af.getFile().getPath() + " or" + tempF.getAbsolutePath() + ":" + ex);
             }
             // Notify listener
             if (this.modificationListener != null) {
@@ -206,12 +207,12 @@ public abstract class AudioFileWriter {
         }
 
         if (!af.getFile().canWrite()) {
-//            //logger.severe(ErrorMessage.GENERAL_WRITE_FAILED.getMsg(af.getFile().getPath()));
+//            //logger.error(ErrorMessage.GENERAL_WRITE_FAILED.getMsg(af.getFile().getPath()));
             throw new CannotWriteException(ErrorMessage.GENERAL_WRITE_FAILED.getMsg(af.getFile().getPath()));
         }
 
         if (af.getFile().length() <= MINIMUM_FILESIZE) {
-//            //logger.severe(ErrorMessage.GENERAL_WRITE_FAILED_BECAUSE_FILE_IS_TOO_SMALL.getMsg(af.getFile().getPath()));
+//            //logger.error(ErrorMessage.GENERAL_WRITE_FAILED_BECAUSE_FILE_IS_TOO_SMALL.getMsg(af.getFile().getPath()));
             throw new CannotWriteException(ErrorMessage.GENERAL_WRITE_FAILED_BECAUSE_FILE_IS_TOO_SMALL.getMsg(af.getFile().getPath()));
         }
     }
@@ -242,7 +243,7 @@ public abstract class AudioFileWriter {
         }
         //Unable to create temporary file, can happen in Vista if have Create Files/Write Data set to Deny
         catch (IOException ioe) {
-//            //logger.log(Level.SEVERE, ErrorMessage.GENERAL_WRITE_FAILED_TO_CREATE_TEMPORARY_FILE_IN_FOLDER.getMsg(af.getFile().getName(), af.getFile().getParentFile().getAbsolutePath()), ioe);
+//            //logger.error(ErrorMessage.GENERAL_WRITE_FAILED_TO_CREATE_TEMPORARY_FILE_IN_FOLDER.getMsg(af.getFile().getName(), af.getFile().getParentFile().getAbsolutePath()), ioe);
             throw new CannotWriteException(ErrorMessage.GENERAL_WRITE_FAILED_TO_CREATE_TEMPORARY_FILE_IN_FOLDER.getMsg(af.getFile().getName(),
                     af.getFile().getParentFile().getAbsolutePath()));
         }
@@ -255,7 +256,7 @@ public abstract class AudioFileWriter {
         }
         //Unable to write to writable file, can happen in Vista if have Create Folders/Append Data set to Deny
         catch (IOException ioe) {
-//            //logger.log(Level.SEVERE, ErrorMessage.GENERAL_WRITE_FAILED_TO_OPEN_FILE_FOR_EDITING.getMsg(af.getFile().getAbsolutePath()), ioe);
+//            //logger.error(ErrorMessage.GENERAL_WRITE_FAILED_TO_OPEN_FILE_FOR_EDITING.getMsg(af.getFile().getAbsolutePath()), ioe);
 
             //If we managed to open either file, delete it.
             try {
@@ -267,13 +268,13 @@ public abstract class AudioFileWriter {
                 }
             } catch (IOException ioe2) {
                 //Warn but assume has worked okay
-//                //logger.log(Level.WARNING, ErrorMessage.GENERAL_WRITE_PROBLEM_CLOSING_FILE_HANDLE.getMsg(af.getFile(), ioe.getMessage()), ioe2);
+//                //logger.warn( ErrorMessage.GENERAL_WRITE_PROBLEM_CLOSING_FILE_HANDLE.getMsg(af.getFile(), ioe.getMessage()), ioe2);
             }
 
             //Delete the temp file ( we cannot delet until closed correpsonding rafTemp)
             if (!newFile.delete()) {
                 //Non critical failed deletion
-                //logger.warning(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(newFile.getAbsolutePath()));
+                //logger.warn(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(newFile.getAbsolutePath()));
             }
 
             throw new CannotWriteException(ErrorMessage.GENERAL_WRITE_FAILED_TO_OPEN_FILE_FOR_EDITING.getMsg(af.getFile().getAbsolutePath()));
@@ -296,7 +297,7 @@ public abstract class AudioFileWriter {
                 throw new CannotWriteException(veto);
             }
         } catch (Exception e) {
-//            //logger.log(Level.SEVERE, ErrorMessage.GENERAL_WRITE_FAILED_BECAUSE.getMsg(af.getFile(), e.getMessage()), e);
+//            //logger.error(ErrorMessage.GENERAL_WRITE_FAILED_BECAUSE.getMsg(af.getFile(), e.getMessage()), e);
 
             try {
                 if (raf != null) {
@@ -307,14 +308,14 @@ public abstract class AudioFileWriter {
                 }
             } catch (IOException ioe) {
                 //Warn but assume has worked okay
-//                //logger.log(Level.WARNING, ErrorMessage.GENERAL_WRITE_PROBLEM_CLOSING_FILE_HANDLE.getMsg(af.getFile().getAbsolutePath(), ioe.getMessage()), ioe);
+//                //logger.warn( ErrorMessage.GENERAL_WRITE_PROBLEM_CLOSING_FILE_HANDLE.getMsg(af.getFile().getAbsolutePath(), ioe.getMessage()), ioe);
             }
 
             //Delete the temporary file because either it was never used so lets just tidy up or we did start writing to it but
             //the write failed and we havent renamed it back to the original file so we can just delete it.
             if (!newFile.delete()) {
                 //Non critical failed deletion
-                //logger.warning(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(newFile.getAbsolutePath()));
+                //logger.warn(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(newFile.getAbsolutePath()));
             }
             throw new CannotWriteException(ErrorMessage.GENERAL_WRITE_FAILED_BECAUSE.getMsg(af.getFile(), e.getMessage()));
         } finally {
@@ -327,7 +328,7 @@ public abstract class AudioFileWriter {
                 }
             } catch (IOException ioe) {
                 //Warn but assume has worked okay
-//                //logger.log(Level.WARNING, ErrorMessage.GENERAL_WRITE_PROBLEM_CLOSING_FILE_HANDLE.getMsg(af.getFile().getAbsolutePath(), ioe.getMessage()), ioe);
+//                //logger.warn( ErrorMessage.GENERAL_WRITE_PROBLEM_CLOSING_FILE_HANDLE.getMsg(af.getFile().getAbsolutePath(), ioe.getMessage()), ioe);
             }
         }
 
@@ -341,7 +342,7 @@ public abstract class AudioFileWriter {
             File originalFileBackup = new File(af.getFile().getParentFile().getPath(), AudioFile.getBaseFilename(af.getFile()) + ".old");
             boolean renameResult = af.getFile().renameTo(originalFileBackup);
             if (renameResult == false) {
-//                //logger.log(Level.SEVERE,ErrorMessage.GENERAL_WRITE_FAILED_TO_RENAME_ORIGINAL_FILE_TO_BACKUP.getMsg(af.getFile().getPath(), originalFileBackup.getName()));
+//                //logger.warn(Level.SEVERE,ErrorMessage.GENERAL_WRITE_FAILED_TO_RENAME_ORIGINAL_FILE_TO_BACKUP.getMsg(af.getFile().getPath(), originalFileBackup.getName()));
                 throw new CannotWriteException(ErrorMessage.GENERAL_WRITE_FAILED_TO_RENAME_ORIGINAL_FILE_TO_BACKUP.getMsg(af.getFile().getPath(), originalFileBackup.getName()));
             }
 
@@ -351,23 +352,23 @@ public abstract class AudioFileWriter {
                 //Renamed failed so lets do some checks rename the backup back to the original file
                 //New File doesnt exist
                 if (!newFile.exists()) {
-                    //logger.warning(ErrorMessage.GENERAL_WRITE_FAILED_NEW_FILE_DOESNT_EXIST.getMsg(newFile.getAbsolutePath()));
+                    //logger.warn(ErrorMessage.GENERAL_WRITE_FAILED_NEW_FILE_DOESNT_EXIST.getMsg(newFile.getAbsolutePath()));
                 }
 
                 //Rename the backup back to the original
                 if (!originalFileBackup.renameTo(af.getFile())) {
                     //TODO now if this happens we are left with testfile.old instead of testfile.mp4
-                    //logger.warning(ErrorMessage.GENERAL_WRITE_FAILED_TO_RENAME_ORIGINAL_BACKUP_TO_ORIGINAL.getMsg(originalFileBackup.getAbsolutePath(), af.getFile().getName()));
+                    //logger.warn(ErrorMessage.GENERAL_WRITE_FAILED_TO_RENAME_ORIGINAL_BACKUP_TO_ORIGINAL.getMsg(originalFileBackup.getAbsolutePath(), af.getFile().getName()));
                 }
 
-                //logger.warning(ErrorMessage.GENERAL_WRITE_FAILED_TO_RENAME_TO_ORIGINAL_FILE.getMsg(af.getFile().getAbsolutePath(), newFile.getName()));
+                //logger.warn(ErrorMessage.GENERAL_WRITE_FAILED_TO_RENAME_TO_ORIGINAL_FILE.getMsg(af.getFile().getAbsolutePath(), newFile.getName()));
                 throw new CannotWriteException(ErrorMessage.GENERAL_WRITE_FAILED_TO_RENAME_TO_ORIGINAL_FILE.getMsg(af.getFile().getAbsolutePath(), newFile.getName()));
             } else {
                 //Rename was okay so we can now delete the backup of the original
                 boolean deleteResult = originalFileBackup.delete();
                 if (!deleteResult) {
                     //Not a disaster but can't delete the backup so make a warning
-                    //logger.warning(ErrorMessage.GENERAL_WRITE_WARNING_UNABLE_TO_DELETE_BACKUP_FILE.getMsg(originalFileBackup.getAbsolutePath()));
+                    //logger.warn(ErrorMessage.GENERAL_WRITE_WARNING_UNABLE_TO_DELETE_BACKUP_FILE.getMsg(originalFileBackup.getAbsolutePath()));
                 }
             }
 
@@ -375,14 +376,14 @@ public abstract class AudioFileWriter {
             if (newFile.exists()) {
                 if (!newFile.delete()) {
                     //Non critical failed deletion
-                    //logger.warning(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(newFile.getPath()));
+                    //logger.warn(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(newFile.getPath()));
                 }
             }
         } else {
             //Delete the temporary file that wasn't ever used           
             if (!newFile.delete()) {
                 //Non critical failed deletion
-                //logger.warning(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(newFile.getPath()));
+                //logger.warn(ErrorMessage.GENERAL_WRITE_FAILED_TO_DELETE_TEMPORARY_FILE.getMsg(newFile.getPath()));
             }
         }
 

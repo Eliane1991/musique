@@ -26,13 +26,14 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.jaudiotagger.tag.mp4.Mp4TagCreator;
 import org.jaudiotagger.utils.tree.DefaultMutableTreeNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.logging.Logger;
 
 
 /**
@@ -81,7 +82,7 @@ import java.util.logging.Logger;
  */
 public class Mp4TagWriter {
     // Logger Object
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.tag.mp4");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.tag.mp4");
 
     private Mp4TagCreator tc = new Mp4TagCreator();
 
@@ -718,12 +719,12 @@ public class Mp4TagWriter {
             //sure that the discrepancy if any is preserved
             Mp4StcoBox newStco = newAtomTree.getStco();
 //
-//            logger.finer("stco:Original First Offset" + stco.getFirstOffSet());
-//            logger.finer("stco:Original Diff" + (int) (stco.getFirstOffSet() - mdatHeader.getFilePos()));
-//            logger.finer("stco:Original Mdat Pos" + mdatHeader.getFilePos());
-//            logger.finer("stco:New First Offset" + newStco.getFirstOffSet());
-//            logger.finer("stco:New Diff" + (int) ((newStco.getFirstOffSet() - newMdatHeader.getFilePos())));
-//            logger.finer("stco:New Mdat Pos" + newMdatHeader.getFilePos());
+//            logger.infor("stco:Original First Offset" + stco.getFirstOffSet());
+//            logger.infor("stco:Original Diff" + (int) (stco.getFirstOffSet() - mdatHeader.getFilePos()));
+//            logger.infor("stco:Original Mdat Pos" + mdatHeader.getFilePos());
+//            logger.infor("stco:New First Offset" + newStco.getFirstOffSet());
+//            logger.infor("stco:New Diff" + (int) ((newStco.getFirstOffSet() - newMdatHeader.getFilePos())));
+//            logger.infor("stco:New Mdat Pos" + newMdatHeader.getFilePos());
             int diff = (int) (stco.getFirstOffSet() - mdatHeader.getFilePos());
             if ((newStco.getFirstOffSet() - newMdatHeader.getFilePos()) != diff) {
                 int discrepancy = (int) ((newStco.getFirstOffSet() - newMdatHeader.getFilePos()) - diff);

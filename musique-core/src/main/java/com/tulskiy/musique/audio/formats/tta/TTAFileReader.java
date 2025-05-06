@@ -49,7 +49,7 @@ public class TTAFileReader extends AudioFileReader{
             trackData.setBitrate(info.bitrate);
             return track;
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Error reading file " + trackData.getFile(), e);
+            logger.warn( "Error reading file " + trackData.getFile(), e);
         }
 
         return null;

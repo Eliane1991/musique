@@ -18,7 +18,8 @@
  */
 package jwbroek.cuelib;
 
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the Message interface. Implements a specific type of message that can be freely chosen.
@@ -30,7 +31,7 @@ public abstract class MessageImplementation implements Message
   /**
    * The logger for this class.
    */
-  private final static Logger logger = Logger.getLogger(MessageImplementation.class.getCanonicalName());
+  private final static Logger logger = LoggerFactory.getLogger(MessageImplementation.class.getCanonicalName());
   /**
    * The input this message applies to.
    */
@@ -54,13 +55,13 @@ public abstract class MessageImplementation implements Message
    */
   public MessageImplementation(final String type)
   {
-    MessageImplementation.logger.entering
+    MessageImplementation.logger.info
       (MessageImplementation.class.getCanonicalName(), "MessageImplementation(String)", type);
     this.input = "";
     this.lineNumber = -1;
     this.message = "";
     this.type = type;
-    MessageImplementation.logger.exiting(MessageImplementation.class.getCanonicalName(), "MessageImplementation(String)");
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "MessageImplementation(String)");
   }
   
   /**
@@ -71,7 +72,7 @@ public abstract class MessageImplementation implements Message
    */
   public MessageImplementation(final String type, final LineOfInput lineOfInput, final String message)
   {
-    MessageImplementation.logger.entering
+    MessageImplementation.logger.info
       ( MessageImplementation.class.getCanonicalName()
       , "MessageImplementation(String,LineOfInput,String)"
       , new Object[] {type, lineOfInput, message}
@@ -80,7 +81,7 @@ public abstract class MessageImplementation implements Message
     this.lineNumber = lineOfInput.getLineNumber();
     this.message = message;
     this.type = type;
-    MessageImplementation.logger.exiting
+    MessageImplementation.logger.info
       (MessageImplementation.class.getCanonicalName(), "MessageImplementation(String,LineOfInput,String)");
   }
   
@@ -93,7 +94,7 @@ public abstract class MessageImplementation implements Message
    */
   public MessageImplementation(String type, String input, int lineNumber, String message)
   {
-    MessageImplementation.logger.entering
+    MessageImplementation.logger.info
       ( MessageImplementation.class.getCanonicalName()
       , "MessageImplementation(String,String,int.String)"
       , new Object[] {type, input, lineNumber, message}
@@ -102,7 +103,7 @@ public abstract class MessageImplementation implements Message
     this.lineNumber = lineNumber;
     this.message = message;
     this.type = type;
-    MessageImplementation.logger.exiting
+    MessageImplementation.logger.info
       (MessageImplementation.class.getCanonicalName(), "MessageImplementation(String,String,int.String)");
   }
 
@@ -112,10 +113,10 @@ public abstract class MessageImplementation implements Message
    */
   public String toString()
   {
-    MessageImplementation.logger.entering(MessageImplementation.class.getCanonicalName(), "toString()");
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "toString()");
     StringBuilder builder = new StringBuilder(input).append('\n');
     builder.append(type).append(" [Line ").append(lineNumber).append("] ").append(message).append('\n');
-    MessageImplementation.logger.exiting
+    MessageImplementation.logger.info
       (MessageImplementation.class.getCanonicalName(), "toString()", builder.toString());
     return builder.toString();
   }
@@ -126,8 +127,8 @@ public abstract class MessageImplementation implements Message
    */
   public String getInput()
   {
-    MessageImplementation.logger.entering(MessageImplementation.class.getCanonicalName(), "getInput()");
-    MessageImplementation.logger.exiting(MessageImplementation.class.getCanonicalName(), "getInput()", this.input);
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "getInput()");
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "getInput()", this.input);
     return this.input;
   }
 
@@ -137,9 +138,9 @@ public abstract class MessageImplementation implements Message
    */
   public void setInput(final String input)
   {
-    MessageImplementation.logger.entering(MessageImplementation.class.getCanonicalName(), "setInput(String)", input);
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "setInput(String)", input);
     this.input = input;
-    MessageImplementation.logger.exiting(MessageImplementation.class.getCanonicalName(), "setInput(String)");
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "setInput(String)");
   }
 
   /**
@@ -148,8 +149,8 @@ public abstract class MessageImplementation implements Message
    */
   public int getLineNumber()
   {
-    MessageImplementation.logger.entering(MessageImplementation.class.getCanonicalName(), "getLineNumber()");
-    MessageImplementation.logger.exiting
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "getLineNumber()");
+    MessageImplementation.logger.info
       (MessageImplementation.class.getCanonicalName(), "getLineNumber()", this.lineNumber);
     return this.lineNumber;
   }
@@ -160,10 +161,10 @@ public abstract class MessageImplementation implements Message
    */
   public void setLineNumber(final int lineNumber)
   {
-    MessageImplementation.logger.entering
+    MessageImplementation.logger.info
       (MessageImplementation.class.getCanonicalName(), "setLineNumber(int)", lineNumber);
     this.lineNumber = lineNumber;
-    MessageImplementation.logger.exiting(MessageImplementation.class.getCanonicalName(), "setLineNumber(int)");
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "setLineNumber(int)");
   }
 
   /**
@@ -172,8 +173,8 @@ public abstract class MessageImplementation implements Message
    */
   public String getMessage()
   {
-    MessageImplementation.logger.entering(MessageImplementation.class.getCanonicalName(), "getMessage()");
-    MessageImplementation.logger.exiting(MessageImplementation.class.getCanonicalName(), "getMessage()", this.message);
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "getMessage()");
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "getMessage()", this.message);
     return this.message;
   }
 
@@ -183,8 +184,8 @@ public abstract class MessageImplementation implements Message
    */
   public void setMessage(final String message)
   {
-    MessageImplementation.logger.entering(MessageImplementation.class.getCanonicalName(), "setMessage(String)", message);
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "setMessage(String)", message);
     this.message = message;
-    MessageImplementation.logger.exiting(MessageImplementation.class.getCanonicalName(), "setMessage(String)");
+    MessageImplementation.logger.info(MessageImplementation.class.getCanonicalName(), "setMessage(String)");
   }
 }

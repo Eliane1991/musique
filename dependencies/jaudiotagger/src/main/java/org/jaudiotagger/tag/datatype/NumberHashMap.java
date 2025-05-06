@@ -200,7 +200,7 @@ public class NumberHashMap extends NumberFixedLength implements HashMapInterface
             if (!hasEmptyValue) {
                 throw new InvalidDataTypeException(ErrorMessage.MP3_REFERENCE_KEY_INVALID.getMsg(identifier, intValue));
             } else if (identifier.equals(DataTypes.OBJ_PICTURE_TYPE)) {
-                //logger.warning(ErrorMessage.MP3_PICTURE_TYPE_INVALID.getMsg(value));
+                //logger.warn(ErrorMessage.MP3_PICTURE_TYPE_INVALID.getMsg(value));
             }
         }
     }

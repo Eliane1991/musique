@@ -22,9 +22,12 @@ package net.sourceforge.jaad.aac.sbr;
 import net.sourceforge.jaad.aac.AACException;
 import net.sourceforge.jaad.aac.syntax.BitStream;
 import net.sourceforge.jaad.aac.syntax.Constants;
+import net.sourceforge.jaad.aac.syntax.PCE;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class ChannelData implements SBRConstants, HuffmanTables {
-
+	private final static Logger logger = LoggerFactory.getLogger(ChannelData.class.getCanonicalName());
 	private static final int[] LOG2TABLE = {0, 0, 1, 2, 2, 3, 3, 3, 3, 4};
 	//read
 	int frameClass;
@@ -192,7 +195,7 @@ class ChannelData implements SBRConstants, HuffmanTables {
 		else L_Q = 1;
 
 		if(!envelopeTimeBorderVector()) {
-			Constants.LOGGER.warning("envelopeTimeBorderVector failed");
+			logger.warn("envelopeTimeBorderVector failed");
 			frameClass = savedFrameClass;
 			L_E = savedL_E;
 			L_Q = savedL_Q;

@@ -22,22 +22,23 @@ package org.jaudiotagger.audio.ogg.util;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.generic.GenericAudioHeader;
 import org.jaudiotagger.logging.ErrorMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
-import java.util.logging.Logger;
 
 /**
  * Read encoding info, only implemented for vorbis streams
  */
 public class OggInfoReader {
     // Logger Object
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.audio.ogg.atom");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.audio.ogg.atom");
 
     public GenericAudioHeader read(RandomAccessFile raf) throws CannotReadException, IOException {
         GenericAudioHeader info = new GenericAudioHeader();
-//        //logger.fine("Started");
+//        //logger.info("Started");
         long oldPos;
 
         //Check start of file does it have Ogg pattern
@@ -111,7 +112,7 @@ public class OggInfoReader {
             info.setBitrate(computeBitrate(info.getTrackLength(), raf.length()));
             info.setVariableBitRate(true);
         }
-//        //logger.fine("Finished");
+//        //logger.info("Finished");
         return info;
     }
 

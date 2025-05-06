@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.logging.Logger;
 
 import jwbroek.cuelib.CueSheet.MetaDataField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple representation of a TRACK block of a cue sheet.
@@ -35,7 +36,7 @@ public class TrackData
   /**
    * The logger for this class.
    */
-  private final static Logger logger = Logger.getLogger(TrackData.class.getCanonicalName());
+  private final static Logger logger = LoggerFactory.getLogger(TrackData.class.getCanonicalName());
   /**
    * The indices in this track,
    */
@@ -90,9 +91,9 @@ public class TrackData
    */
   public TrackData(final FileData parent)
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "TrackData(FileData)", parent);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "TrackData(FileData)", parent);
     this.parent = parent;
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "TrackData(FileData)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "TrackData(FileData)");
   }
   
   /**
@@ -103,7 +104,7 @@ public class TrackData
    */
   public TrackData(final FileData parent, final int number, final String dataType)
   {
-    TrackData.logger.entering
+    TrackData.logger.info
       ( TrackData.class.getCanonicalName()
       , "TrackData(FileData,int,String)"
       , new Object[] {parent, number, dataType}
@@ -111,7 +112,7 @@ public class TrackData
     this.parent = parent;
     this.number = number;
     this.dataType = dataType;
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "TrackData(FileData,int,String)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "TrackData(FileData,int,String)");
   }
   
   /**
@@ -124,7 +125,7 @@ public class TrackData
    */
   public String getMetaData(final MetaDataField metaDataField) throws IllegalArgumentException
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getMetaData(MetaDataField)", metaDataField);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getMetaData(MetaDataField)", metaDataField);
     String result;
     switch (metaDataField)
     {
@@ -157,7 +158,7 @@ public class TrackData
         break;
     }
     
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getMetaData()", result);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getMetaData()", result);
     return result;
   }
 
@@ -167,8 +168,8 @@ public class TrackData
    */
   public String getDataType()
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getDataType()");
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getDataType()", this.dataType);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getDataType()");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getDataType()", this.dataType);
     return this.dataType;
   }
   
@@ -178,9 +179,9 @@ public class TrackData
    */
   public void setDataType(final String dataType)
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "setDataType(String)", dataType);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setDataType(String)", dataType);
     this.dataType = dataType;
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "setDataType(String)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setDataType(String)");
   }
   
   /**
@@ -189,8 +190,8 @@ public class TrackData
    */
   public String getIsrcCode()
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getIsrcCode()");
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getIsrcCode()", this.isrcCode);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getIsrcCode()");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getIsrcCode()", this.isrcCode);
     return this.isrcCode;
   }
   
@@ -200,9 +201,9 @@ public class TrackData
    */
   public void setIsrcCode(final String isrcCode)
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "setIsrcCode(String)", isrcCode);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setIsrcCode(String)", isrcCode);
     this.isrcCode = isrcCode;
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "setIsrcCode(String)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setIsrcCode(String)");
   }
   
   /**
@@ -211,8 +212,8 @@ public class TrackData
    */
   public int getNumber()
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getNumber()");
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getNumber()", this.number);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getNumber()");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getNumber()", this.number);
     return this.number;
   }
   
@@ -222,9 +223,9 @@ public class TrackData
    */
   public void setNumber(final int number)
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "setNumber(int)", number);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setNumber(int)", number);
     this.number = number;
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "setNumber(int)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setNumber(int)");
   }
   
   /**
@@ -233,8 +234,8 @@ public class TrackData
    */
   public String getPerformer()
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getPerformer()");
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getPerformer()", this.performer);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getPerformer()");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getPerformer()", this.performer);
     return this.performer;
   }
   
@@ -245,9 +246,9 @@ public class TrackData
    */
   public void setPerformer(final String performer)
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "setPerformer(String)", performer);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setPerformer(String)", performer);
     this.performer = performer;
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "setPerformer(String)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setPerformer(String)");
   }
   
   /**
@@ -256,8 +257,8 @@ public class TrackData
    */
   public Position getPostgap()
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getPostgap()");
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getPostgap()", this.postgap);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getPostgap()");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getPostgap()", this.postgap);
     return this.postgap;
   }
   
@@ -267,9 +268,9 @@ public class TrackData
    */
   public void setPostgap(final Position postgap)
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "setPostgap(Position)", postgap);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setPostgap(Position)", postgap);
     this.postgap = postgap;
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "setPostgap(Position)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setPostgap(Position)");
   }
   
   /**
@@ -278,8 +279,8 @@ public class TrackData
    */
   public Position getPregap()
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getPregap()");
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getPregap()", this.pregap);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getPregap()");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getPregap()", this.pregap);
     return this.pregap;
   }
   
@@ -289,9 +290,9 @@ public class TrackData
    */
   public void setPregap(final Position pregap)
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "setPregap(Position)", pregap);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setPregap(Position)", pregap);
     this.pregap = pregap;
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "setPregap(Position)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setPregap(Position)");
   }
   
   /**
@@ -300,8 +301,8 @@ public class TrackData
    */
   public String getSongwriter()
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getSongwriter()");
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getSongwriter()", this.songwriter);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getSongwriter()");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getSongwriter()", this.songwriter);
     return this.songwriter;
   }
   
@@ -313,9 +314,9 @@ public class TrackData
    */
   public void setSongwriter(final String songwriter)
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "setSongwriter(String)", songwriter);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setSongwriter(String)", songwriter);
     this.songwriter = songwriter;
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "setSongwriter(String)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setSongwriter(String)");
   }
   
   /**
@@ -324,8 +325,8 @@ public class TrackData
    */
   public String getTitle()
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getTitle()");
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getTitle()", this.title);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getTitle()");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getTitle()", this.title);
     return this.title;
   }
   
@@ -337,9 +338,9 @@ public class TrackData
    */
   public void setTitle(final String title)
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "setTitle(String)", title);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setTitle(String)", title);
     this.title = title;
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "setTitle(String)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setTitle(String)");
   }
   
   /**
@@ -349,7 +350,7 @@ public class TrackData
    */
   public Index getIndex(final int number)
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getIndex(int)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getIndex(int)");
     
     Index result = null;
     
@@ -365,7 +366,7 @@ public class TrackData
       }
     }
     
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getIndex(int)", result);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getIndex(int)", result);
     return result;
   }
   
@@ -375,8 +376,8 @@ public class TrackData
    */
   public List<Index> getIndices()
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getIndices()");
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getIndices()", this.indices);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getIndices()");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getIndices()", this.indices);
     return this.indices;
   }
   
@@ -386,8 +387,8 @@ public class TrackData
    */
   public Set<String> getFlags()
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getFlags()");
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getFlags()", this.flags);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getFlags()");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getFlags()", this.flags);
     return this.flags;
   }
 
@@ -397,8 +398,8 @@ public class TrackData
    */
   public FileData getParent()
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "getParent()");
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "getParent()", this.parent);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getParent()");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "getParent()", this.parent);
     return this.parent;
   }
 
@@ -408,8 +409,8 @@ public class TrackData
    */
   public void setParent(final FileData parent)
   {
-    TrackData.logger.entering(TrackData.class.getCanonicalName(), "setParent(FileData)", parent);
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setParent(FileData)", parent);
     this.parent = parent;
-    TrackData.logger.exiting(TrackData.class.getCanonicalName(), "setParent(FileData)");
+    TrackData.logger.info(TrackData.class.getCanonicalName(), "setParent(FileData)");
   }
 }

@@ -146,13 +146,13 @@ public class MP3Decoder implements com.tulskiy.musique.audio.Decoder {
             URI location = trackData.getLocation();
             InputStream fis;
             if (trackData.isFile()) {
-                logger.fine("Opening file: " + trackData.getFile());
+                logger.info("Opening file: " + trackData.getFile());
                 streaming = false;
                 fis = new FileInputStream(trackData.getFile());
                 streamSize = trackData.getFile().length();
             } else {
             	trackData.setCodec("MP3 Stream");
-                logger.fine("Opening stream: " + URLDecoder.decode(location.toString(), "utf8"));
+                logger.info("Opening stream: " + URLDecoder.decode(location.toString(), "utf8"));
                 streaming = true;
                 fis = IcyInputStream.create(track);
                 decoder = new Decoder();

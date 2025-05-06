@@ -25,9 +25,12 @@ import net.sourceforge.jaad.aac.SampleFrequency;
 import net.sourceforge.jaad.aac.ps2.PS;
 import net.sourceforge.jaad.aac.syntax.BitStream;
 import net.sourceforge.jaad.aac.syntax.Constants;
+import net.sourceforge.jaad.aac.syntax.ICStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SBR implements SBRConstants {
-
+	private final static Logger logger = LoggerFactory.getLogger(SBR.class.getCanonicalName());
 	//arguments
 	private boolean stereo;
 	private int sampleFrequency;
@@ -77,7 +80,7 @@ public class SBR implements SBRConstants {
 		final int pos = in.getPosition();
 
 		if(crc) {
-			Constants.LOGGER.info("SBR CRC bits present");
+			logger.info("SBR CRC bits present");
 			in.skipBits(10); //TODO: implement crc check
 		}
 
@@ -93,14 +96,14 @@ public class SBR implements SBRConstants {
 			//check for remaining bits (byte-align) and skip them
 			final int len = in.getPosition()-pos;
 			final int bitsLeft = count-len;
-			if(bitsLeft>=8) Constants.LOGGER.log(Level.WARNING, "SBR: bits left: {0}", bitsLeft);
+			if(bitsLeft>=8) logger.warn( "SBR: bits left: {0}", bitsLeft);
 			else if(bitsLeft<0) throw new AACException("SBR data overread: "+bitsLeft);
 			in.skipBits(bitsLeft);
 		}
 		else {
 			final int left = count-pos+in.getPosition();
 			in.skipBits(left);
-			Constants.LOGGER.log(Level.INFO, "SBR frame without header, skipped {0} bits", left);
+			logger.warn( "SBR frame without header, skipped {0} bits", left);
 		}
 	}
 

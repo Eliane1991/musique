@@ -188,7 +188,7 @@ public class ID3v23Tag extends AbstractID3v2Tag {
                 copyFrameIntoMap(newFrame.getIdentifier(), newFrame);
             }
         } catch (InvalidFrameException ife) {
-            logger.log(Level.SEVERE, "Unable to convert frame:" + frame.getIdentifier());
+            logger.error("Unable to convert frame:" + frame.getIdentifier());
         }
     }
 
@@ -383,23 +383,23 @@ public class ID3v23Tag extends AbstractID3v2Tag {
 
         //Not allowable/Unknown Flags
         if ((flags & FileConstants.BIT4) != 0) {
-            //logger.warning(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT4));
+            //logger.warn(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT4));
         }
 
         if ((flags & FileConstants.BIT3) != 0) {
-            //logger.warning(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT3));
+            //logger.warn(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT3));
         }
 
         if ((flags & FileConstants.BIT2) != 0) {
-            //logger.warning(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT2));
+            //logger.warn(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT2));
         }
 
         if ((flags & FileConstants.BIT1) != 0) {
-            //logger.warning(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT1));
+            //logger.warn(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT1));
         }
 
         if ((flags & FileConstants.BIT0) != 0) {
-            //logger.warning(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT0));
+            //logger.warn(ErrorMessage.ID3_INVALID_OR_UNKNOWN_FLAG_SET.getMsg(getLoggingFilename(), FileConstants.BIT0));
         }
 
         if (isUnsynchronization()) {
@@ -430,7 +430,7 @@ public class ID3v23Tag extends AbstractID3v2Tag {
             byte extFlag = buffer.get();
             crcDataFlag = (extFlag & MASK_V23_CRC_DATA_PRESENT) != 0;
             if (crcDataFlag) {
-                //logger.warning(ErrorMessage.ID3_TAG_CRC_FLAG_SET_INCORRECTLY.getMsg(getLoggingFilename()));
+                //logger.warn(ErrorMessage.ID3_TAG_CRC_FLAG_SET_INCORRECTLY.getMsg(getLoggingFilename()));
             }
             //2nd Flag Byte (not used)
             buffer.get();
@@ -448,7 +448,7 @@ public class ID3v23Tag extends AbstractID3v2Tag {
             byte extFlag = buffer.get();
             crcDataFlag = (extFlag & MASK_V23_CRC_DATA_PRESENT) != 0;
             if (!crcDataFlag) {
-                //logger.warning(ErrorMessage.ID3_TAG_CRC_FLAG_SET_INCORRECTLY.getMsg(getLoggingFilename()));
+                //logger.warn(ErrorMessage.ID3_TAG_CRC_FLAG_SET_INCORRECTLY.getMsg(getLoggingFilename()));
             }
             //2nd Flag Byte (not used)
             buffer.get();
@@ -465,7 +465,7 @@ public class ID3v23Tag extends AbstractID3v2Tag {
         //Extended header size is only allowed to be six or ten bytes so this is invalid but instead
         //of giving up lets guess its six bytes and carry on and see if we can read file ok
         else {
-            //logger.warning(ErrorMessage.ID3_EXTENDED_HEADER_SIZE_INVALID.getMsg(getLoggingFilename(), extendedHeaderSize));
+            //logger.warn(ErrorMessage.ID3_EXTENDED_HEADER_SIZE_INVALID.getMsg(getLoggingFilename(), extendedHeaderSize));
             buffer.position(buffer.position() - FIELD_TAG_EXT_SIZE_LENGTH);
         }
     }
@@ -522,7 +522,7 @@ public class ID3v23Tag extends AbstractID3v2Tag {
 
         //Read the size from the Tag Header
         this.fileReadSize = size;
-        //logger.finest(getLoggingFilename() + ":Start of frame body at:" + byteBuffer.position() + ",frames data size is:" + size);
+        //logger.info(getLoggingFilename() + ":Start of frame body at:" + byteBuffer.position() + ",frames data size is:" + size);
 
         // Read the frames until got to up to the size as specified in header or until
         // we hit an invalid frame identifier or padding
@@ -530,22 +530,22 @@ public class ID3v23Tag extends AbstractID3v2Tag {
             String id;
             try {
                 //Read Frame
-                //logger.finest(getLoggingFilename() + ":Looking for next frame at:" + byteBuffer.position());
+                //logger.info(getLoggingFilename() + ":Looking for next frame at:" + byteBuffer.position());
                 next = new ID3v23Frame(byteBuffer, getLoggingFilename());
                 id = next.getIdentifier();
                 loadFrameIntoMap(id, next);
             }
             //Found Padding, no more frames
             catch (PaddingException ex) {
-                logger.config(getLoggingFilename() + ":Found padding starting at:" + byteBuffer.position());
+                logger.info(getLoggingFilename() + ":Found padding starting at:" + byteBuffer.position());
                 break;
             }
             //Found Empty Frame, log it - empty frames should not exist
             catch (EmptyFrameException ex) {
-                //logger.warning(getLoggingFilename() + ":Empty Frame:" + ex.getMessage());
+                //logger.warn(getLoggingFilename() + ":Empty Frame:" + ex.getMessage());
                 this.emptyFrameBytes += ID3v23Frame.FRAME_HEADER_SIZE;
             } catch (InvalidFrameIdentifierException ifie) {
-                //logger.warning(getLoggingFilename() + ":Invalid Frame Identifier:" + ifie.getMessage());
+                //logger.warn(getLoggingFilename() + ":Invalid Frame Identifier:" + ifie.getMessage());
                 this.invalidFrames++;
                 //Don't try and find any more frames
                 break;
@@ -553,7 +553,7 @@ public class ID3v23Tag extends AbstractID3v2Tag {
             //Problem trying to find frame, often just occurs because frameHeader includes padding
             //and we have reached padding
             catch (InvalidFrameException ife) {
-                //logger.warning(getLoggingFilename() + ":Invalid Frame:" + ife.getMessage());
+                //logger.warn(getLoggingFilename() + ":Invalid Frame:" + ife.getMessage());
                 this.invalidFrames++;
                 //Don't try and find any more frames
                 break;
@@ -561,7 +561,7 @@ public class ID3v23Tag extends AbstractID3v2Tag {
             //Failed reading frame but may just have invalid data but correct length so lets carry on
             //in case we can read the next frame
             catch (InvalidDataTypeException idete) {
-                //logger.warning(getLoggingFilename() + ":Corrupt Frame:" + idete.getMessage());
+                //logger.warn(getLoggingFilename() + ":Corrupt Frame:" + idete.getMessage());
                 this.invalidFrames++;
                 continue;
             }

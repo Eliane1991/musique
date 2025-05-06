@@ -30,10 +30,13 @@ import net.sourceforge.jaad.aac.tools.LTPrediction;
 import net.sourceforge.jaad.aac.sbr2.SBR;
 import net.sourceforge.jaad.aac.tools.IS;
 import net.sourceforge.jaad.aac.tools.MS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.logging.Level;
 
 public class SyntacticElements implements Constants {
-
+	private final static Logger logger = LoggerFactory.getLogger(SyntacticElements.class.getCanonicalName());
 	//global properties
 	private DecoderConfig config;
 	private boolean sbrPresent, psPresent;
@@ -80,36 +83,36 @@ public class SyntacticElements implements Constants {
 				switch(type) {
 					case ELEMENT_SCE:
 					case ELEMENT_LFE:
-						LOGGER.finest("SCE");
+						logger.info("SCE");
 						prev = decodeSCE_LFE(in);
 						break;
 					case ELEMENT_CPE:
-						LOGGER.finest("CPE");
+						logger.info("CPE");
 						prev = decodeCPE(in);
 						break;
 					case ELEMENT_CCE:
-						LOGGER.finest("CCE");
+						logger.info("CCE");
 						decodeCCE(in);
 						prev = null;
 						break;
 					case ELEMENT_DSE:
-						LOGGER.finest("DSE");
+						logger.info("DSE");
 						decodeDSE(in);
 						prev = null;
 						break;
 					case ELEMENT_PCE:
-						LOGGER.finest("PCE");
+						logger.info("PCE");
 						decodePCE(in);
 						prev = null;
 						break;
 					case ELEMENT_FIL:
-						LOGGER.finest("FIL");
+						logger.info("FIL");
 						decodeFIL(in, prev);
 						prev = null;
 						break;
 				}
 			}
-			LOGGER.finest("END");
+			logger.info("END");
 			content = false;
 			prev = null;
 		}
@@ -276,7 +279,7 @@ public class SyntacticElements implements Constants {
 		//SBR
 		int chs = 1;
 		if(sbrPresent) {
-			if(data[channel].length==config.getFrameLength()) LOGGER.log(Level.WARNING, "SBR data present, but buffer has normal size!");
+			if(data[channel].length==config.getFrameLength()) logger.warn( "SBR data present, but buffer has normal size!");
 			final SBR sbr = scelfe.getSBR();
 			if(sbr.isPSUsed()) {
 				chs = 2;
@@ -345,7 +348,7 @@ public class SyntacticElements implements Constants {
 
 		//SBR
 		if(sbrPresent) {
-			//if(data[channel].length==config.getFrameLength()) LOGGER.log(Level.WARNING, "SBR data present, but buffer has normal size!");
+			//if(data[channel].length==config.getFrameLength()) logger.warn( "SBR data present, but buffer has normal size!");
 			cpe.getSBR().process(data[channel], data[channel+1], false);
 		}
 	}

@@ -17,8 +17,10 @@
 
 package com.tulskiy.musique.audio.player.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.sound.sampled.*;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
@@ -26,7 +28,7 @@ import java.util.logging.Logger;
  */
 public class AudioOutput {
     public static final int BUFFER_SIZE = (int) (Math.pow(2, 15) / 24) * 24;
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(getClass().getName());
 
     private SourceDataLine line;
     private FloatControl volumeControl;
@@ -47,17 +49,17 @@ public class AudioOutput {
                 return;
             }
         }
-        logger.fine("Audio format: " + fmt);
+        logger.info("Audio format: " + fmt);
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, fmt, BUFFER_SIZE);
-        logger.fine("Dataline info: " + info);
+        logger.info("Dataline info: " + info);
         if (mixer != null && mixer.isLineSupported(info)) {
             line = (SourceDataLine) mixer.getLine(info);
-            logger.fine("Mixer: " + mixer.getMixerInfo().getDescription());
+            logger.info("Mixer: " + mixer.getMixerInfo().getDescription());
         } else {
             line = AudioSystem.getSourceDataLine(fmt);
             mixer = null;
         }
-        logger.fine("Line: " + line);
+        logger.info("Line: " + line);
         line.open(fmt, BUFFER_SIZE);
         line.start();
         if (line.isControlSupported(FloatControl.Type.VOLUME)) {

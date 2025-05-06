@@ -107,7 +107,7 @@ public class Mp4TagReverseDnsField extends Mp4TagField implements TagTextField {
         if (parentHeader.getDataLength() == meanBoxHeader.getLength() + nameBoxHeader.getLength()) {
             id = IDENTIFIER + ":" + issuer + ":" + descriptor;
             setContent("");
-            //logger.warning(ErrorMessage.MP4_REVERSE_DNS_FIELD_HAS_NO_DATA.getMsg(id));
+            //logger.warn(ErrorMessage.MP4_REVERSE_DNS_FIELD_HAS_NO_DATA.getMsg(id));
         }
         //Usual Case
         else {
@@ -189,7 +189,7 @@ public class Mp4TagReverseDnsField extends Mp4TagField implements TagTextField {
     }
 
     public byte[] getRawContentDataOnly() throws UnsupportedEncodingException {
-        //logger.fine("Getting Raw data for:" + getId());
+        //logger.info("Getting Raw data for:" + getId());
         try {
             //Create DataBox data
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

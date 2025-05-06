@@ -36,12 +36,13 @@ import com.tulskiy.musique.audio.formats.wavpack.WavPackDecoder;
 import com.tulskiy.musique.audio.formats.wavpack.WavPackEncoder;
 import com.tulskiy.musique.playlist.Track;
 import com.tulskiy.musique.util.Util;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Set;
-import java.util.logging.Logger;
 
 /**
  * Author: Denis Tulskiy
@@ -50,7 +51,7 @@ import java.util.logging.Logger;
 public class Codecs {
     private static HashMap<String, Decoder> decoders = new HashMap<String, Decoder>();
     private static HashMap<String, Encoder> encoders = new HashMap<String, Encoder>();
-    private static final Logger logger = Logger.getLogger(Codecs.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(Codecs.class.getName());
 
     static {
         decoders.put("mp3", new MP3Decoder());
@@ -100,7 +101,7 @@ public class Codecs {
             if ("audio/aac".equals(contentType)) {
                 return decoders.get("aac");
             }
-            logger.warning("Unsupported ContentType: " + contentType);
+            logger.warn("Unsupported ContentType: " + contentType);
             return null;
         }
         String ext = Util.getFileExt(location.toString()).toLowerCase();

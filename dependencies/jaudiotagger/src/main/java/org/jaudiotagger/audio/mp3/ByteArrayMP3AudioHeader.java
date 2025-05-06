@@ -73,10 +73,10 @@ public class ByteArrayMP3AudioHeader extends MP3AudioHeader {
         if (MPEGFrameHeader.isMPEGFrame(bb)) {
             try {
                 MPEGFrameHeader.parseMPEGHeader(bb);
-//                MP3AudioHeader.logger.finer("Check next frame confirms is an audio header ");
+//                MP3AudioHeader.logger.infor("Check next frame confirms is an audio header ");
                 result = true;
             } catch (InvalidAudioFrameException ex) {
-//                MP3AudioHeader.logger.finer("Check next frame has identified this is not an audio header");
+//                MP3AudioHeader.logger.infor("Check next frame has identified this is not an audio header");
                 result = false;
             }
         }

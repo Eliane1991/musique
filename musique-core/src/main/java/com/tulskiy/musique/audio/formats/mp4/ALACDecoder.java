@@ -41,7 +41,7 @@ public class ALACDecoder implements Decoder {
     public boolean open(Track track) {
         alacContext = AlacUtils.AlacOpenFileInput(track.getTrackData().getFile().getAbsolutePath());
         if (alacContext.error) {
-            logger.warning("Error while opening alac file: " + alacContext.error_message);
+            logger.warn("Error while opening alac file: " + alacContext.error_message);
             return false;
         }
         int channels = AlacUtils.AlacGetNumChannels(alacContext);

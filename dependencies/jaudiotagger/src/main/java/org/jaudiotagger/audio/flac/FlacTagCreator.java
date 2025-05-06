@@ -26,18 +26,19 @@ import org.jaudiotagger.audio.generic.AbstractTagCreator;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.flac.FlacTag;
 import org.jaudiotagger.tag.vorbiscomment.VorbisCommentCreator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.ListIterator;
-import java.util.logging.Logger;
 
 /**
  * Create the tag data ready for writing to flac file
  */
 public class FlacTagCreator extends AbstractTagCreator {
     // Logger Object
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.audio.flac");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.audio.flac");
 
     public static final int DEFAULT_PADDING = 4000;
     private static final VorbisCommentCreator creator = new VorbisCommentCreator();

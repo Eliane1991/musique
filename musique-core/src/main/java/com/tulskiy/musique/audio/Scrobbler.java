@@ -29,13 +29,14 @@ import com.tulskiy.musique.util.Util;
 import de.umass.lastfm.scrobble.ResponseStatus;
 import de.umass.lastfm.scrobble.Source;
 import de.umass.lastfm.scrobble.SubmissionData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.logging.Logger;
 
 import static de.umass.lastfm.scrobble.Scrobbler.newScrobbler;
 
@@ -47,7 +48,7 @@ public class Scrobbler {
     private static final String CLIENT_ID = "mqe";
     private static final String CLIENT_VERSION = "1.0";
 
-    private Logger logger = Logger.getLogger(getClass().getName());
+    private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private de.umass.lastfm.scrobble.Scrobbler scrobbler;
     private Application app = Application.getInstance();
     private Configuration config = app.getConfiguration();
@@ -137,7 +138,7 @@ public class Scrobbler {
             scrobbler = null;
         } else {
             try {
-                logger.fine("Authorizing user: " + user);
+                logger.info("Authorizing user: " + user);
                 scrobbler = newScrobbler(CLIENT_ID, CLIENT_VERSION, user);
                 ResponseStatus status = scrobbler.handshake(password);
                 authorized = status.ok();
@@ -147,7 +148,7 @@ public class Scrobbler {
                         case ResponseStatus.BANNED:
                             config.setBoolean("lastfm.enabled", false);
                     }
-                    logger.warning("Scrobbler handshake returned error: " + status.getMessage());
+                    logger.warn("Scrobbler handshake returned error: " + status.getMessage());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -182,7 +183,7 @@ public class Scrobbler {
                             continue;
                         }
                     }
-                    logger.fine("Submitting data: " + data.toString());
+                    logger.info("Submitting data: " + data.toString());
                     ResponseStatus status = scrobbler.submit(data);
                     if (status.ok()) {
                         waitTime = MIN_WAIT_TIME;
@@ -196,7 +197,7 @@ public class Scrobbler {
                                 authorized = false;
                                 continue;
                             case ResponseStatus.BANNED:
-                                logger.warning("Last.fm says that we're banned :(");
+                                logger.warn("Last.fm says that we're banned :(");
                                 config.setBoolean("lastfm.enabled", false);
                                 submitQueue.clear();
                                 return;

@@ -35,6 +35,8 @@ import org.jaudiotagger.audio.wav.WavFileReader;
 import org.jaudiotagger.audio.wav.WavFileWriter;
 import org.jaudiotagger.logging.ErrorMessage;
 import org.jaudiotagger.tag.TagException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,7 +44,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * <p/>
@@ -87,7 +88,7 @@ import java.util.logging.Logger;
 public class AudioFileIO {
 
     //Logger
-    public static Logger logger = Logger.getLogger("org.jaudiotagger.audio");
+    public static Logger logger = LoggerFactory.getLogger("org.jaudiotagger.audio");
 
     // !! Do not forget to also add new supported extensions to AudioFileFilter
     // !!
@@ -277,9 +278,9 @@ public class AudioFileIO {
      * @throws java.io.FileNotFoundException
      */
     public void checkFileExists(File file) throws FileNotFoundException {
-//        logger.info("Reading file:" + "path" + file.getPath() + ":abs:" + file.getAbsolutePath());
+
         if (!file.exists()) {
-//            logger.severe("Unable to find:" + file.getPath());
+
             throw new FileNotFoundException(ErrorMessage.UNABLE_TO_FIND_FILE.getMsg(file.getPath()));
         }
     }
